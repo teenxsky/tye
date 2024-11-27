@@ -132,3 +132,7 @@ package-lock.json
 yarn.lock
 
 /types
+
+*.mjs
+
+
