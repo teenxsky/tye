@@ -3,7 +3,7 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import { GameScene } from './Three/GameScene.js'
+import { GameScene } from './GameScene/GameScene.jse.js'
 
 function main() {
     // Get a reference to the container element
