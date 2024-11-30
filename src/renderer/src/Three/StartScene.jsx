@@ -13,7 +13,7 @@ let renderer
 let scene
 let loop
 
-class GameScene {
+class StartScene {
     constructor(container) {
         // Instances of camera, scene, and renderer
         camera = createCamera()
@@ -48,4 +48,5 @@ class GameScene {
         loop.stop()
     }
 }
-export { GameScene }
+export { StartScene }
+

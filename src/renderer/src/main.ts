@@ -1,21 +1,21 @@
-import './assets/main.css'
+import '@renderer/assets/main.css'
 
 import { createApp } from 'vue'
-import App from './App.vue'
+import App from '@renderer/App.vue'
 
-import { GameScene } from './GameScene/GameScene.js'
+// import { Start } from './Scenes/Start.js'
 
-function main() {
-    // Get a reference to the container element
-    const container = document.querySelector('#scene-container')
+// function main() {
+//     // Get a reference to the container element
+//     const container = document.querySelector('#scene-container')
 
-    // Create an instance of the World app
-    const gameScene = new GameScene(container)
+//     // Create an instance of the World app
+//     const startScene = new Start(container)
 
-    // Start the loop (produce a stream of frames)
-    gameScene.start()
-}
+//     // Start the loop (produce a stream of frames)
+//     startScene.start()
+// }
 
-main()
+// main()
 
 createApp(App).mount('#app')
