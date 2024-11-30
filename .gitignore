@@ -135,4 +135,6 @@ yarn.lock
 
 *.mjs
 
+*.env
+
 
