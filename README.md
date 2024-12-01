@@ -1,34 +1,14 @@
-# tye
+[![logo.png](https://s.iimg.su/s/01/Vsqif7xzxarvGvHHhilQn35logR4KpLQTxzAIXpA.png)](https://iimg.su/i/1RrXi)
 
-An Electron application with Vue and TypeScript
+--- 
 
-## Recommended IDE Setup
+## **Developers**
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
 
-## Project Setup
+[teenxsky](https://github.com/teenxsky) - Ruslan Kutorgin
+[r0manch1k](https://github.com/r0manch1k) - Roman Sokolovsky 
+[EmotionlessDev](https://github.com/EmotionlessDev) - Artem Svirin
 
-### Install
-
-```bash
-$ npm install
-```
-
-### Development
-
-```bash
-$ npm run dev
-```
-
-### Build
-
-```bash
-# For windows
-$ npm run build:win
-
-# For macOS
-$ npm run build:mac
-
-# For Linux
-$ npm run build:linux
-```
+ ---
+ 
+Electron, Vue, Three.js
