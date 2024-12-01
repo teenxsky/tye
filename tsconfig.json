@@ -1,7 +1,17 @@
 {
   "files": [],
-  "references": [{ "path": "./tsconfig.node.json" }, { "path": "./tsconfig.web.json" }],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.web.json"
+    }
+  ],
   "compilerOptions": {
     "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "allowImportingTsExtensions": true
   }
 }
