@@ -1,4 +1,4 @@
-[![logo.png](https://s.iimg.su/s/01/Vsqif7xzxarvGvHHhilQn35logR4KpLQTxzAIXpA.png)](https://iimg.su/i/1RrXi)
+[![Снимок экрана 2024-12-02 в 09.19.46.png](https://s.iimg.su/s/01/29mC5m64FBS7PDcLL3v8HCQsx7Jc5KHBXJ9jY178.png)](https://iimg.su/i/qu5cJ)
 
 --- 
 
