@@ -8,7 +8,3 @@
 [teenxsky](https://github.com/teenxsky) - Ruslan Kutorgin
 [r0manch1k](https://github.com/r0manch1k) - Roman Sokolovsky 
 [EmotionlessDev](https://github.com/EmotionlessDev) - Artem Svirin
-
- ---
- 
-Electron, Vue, Three.js
