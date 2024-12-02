@@ -52,3 +52,17 @@ body {
     background: black;
     app-region: drag;
 }
+
+.shadow-blue {
+    text-shadow: rgb(5, 0, 255) 3px 3px 0;
+}
+
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}

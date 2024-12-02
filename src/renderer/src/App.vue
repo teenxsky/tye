@@ -1,5 +1,7 @@
 <template>
-    <Menu v-if="state.currentScene === 'menu'" />
+    <Transition>
+        <Menu v-if="state.currentScene === 'menu'" />
+    </Transition>
 </template>
 
 <script lang="ts" setup>

@@ -12,57 +12,43 @@
         <h3 class="blink shadow-blue">PRESS ENTER TO CONTINUE</h3>
         <h4>©<span class="shadow-blue">2024</span> Tell Your Friends</h4>
     </div>
-    <div ref="sceneContainer" class="scene-container"></div>
 </template>
 
 <script lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import { StartScene } from '@renderer/Three/StartScene.jsx'
+import { onMounted, onUnmounted } from 'vue'
 import {
     state,
     keyEnterSound,
-    keySound,
     startTheme,
+    playSound,
+    stopSound,
 } from '@renderer/components/Composable.js'
 
 export default {
     name: 'Start',
-    components: {
-        StartScene,
-    },
+    components: {},
     setup() {
-        let sceneContainer = ref(null)
-
-        const initScene = () => {
-            const scene = new StartScene(sceneContainer.value)
-            scene.start()
-        }
-
         const handleKeyPress = (event: KeyboardEvent) => {
-            console.log(event.key)
             if (event.key === 'Enter') {
-                keyEnterSound.cloneNode(true).play()
-                state.value.currentMenuScene = 'start'
-            } else {
-                keySound.cloneNode(true).play()
+                state.value.currentMenuScene = 'options'
+                playSound(keyEnterSound)
             }
         }
 
         onMounted(() => {
-            initScene()
+            // playSound(startTheme)
+            startTheme.currentTime = 0
             startTheme.play()
             window.addEventListener('keydown', handleKeyPress)
         })
 
         onUnmounted(() => {
-            startTheme.stop()
-            state.value.currentMenuScene = 'options'
+            stopSound(startTheme)
             window.removeEventListener('keydown', handleKeyPress)
         })
 
         return {
             handleKeyPress,
-            sceneContainer,
         }
     },
 }
@@ -97,7 +83,7 @@ export default {
 
 h1 {
     font-family: 'JMH';
-    font-size: 8rem;
+    font-size: 10rem;
     letter-spacing: 1rem;
     margin: 0;
     width: fit-content;
@@ -106,6 +92,8 @@ h1 {
 }
 
 .tm {
+    text-justify: none;
+    display: inline-block;
     font-size: 1rem;
     color: white;
     transform: skewY(-5deg) scaleY(1.2) scaleX(0.8);
@@ -161,22 +149,18 @@ h1 {
     -webkit-background-clip: text;
 }
 
-.shadow-blue {
-    text-shadow: rgb(5, 0, 255) 3px 3px 0;
-}
-
 h3 {
-    font-size: 2rem;
+    font-size: 3rem;
     margin: 0;
     margin-top: 18rem;
     color: white;
 }
 
 h4 {
-    font-size: 1.5rem;
+    font-size: 2rem;
     opacity: 0.9;
     margin: 0;
-    margin-top: 8rem;
+    margin-top: 10rem;
     margin-bottom: 3rem;
     color: white;
 }
