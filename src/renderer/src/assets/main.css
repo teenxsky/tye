@@ -1,4 +1,68 @@
-body {
+@font-face {
+    font-family: 'VCR';
+    font-style: normal;
+    src: url('./fonts/VCR.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Press Start 2P';
+    font-style: normal;
+    src: url('./fonts/PressStart2P.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Limit';
+    font-style: normal;
+    src: url('./fonts/Limit.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Binary Waters';
+    font-style: normal;
+    src: url('./fonts/BinaryWaters.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'JMH';
+    font-style: normal;
+    src: url('./fonts/JMH.otf') format('truetype');
+}
+
+* {
     margin: 0;
     padding: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+body {
+    height: 100vh;
+    /* filter: blur(1px); */
+    overflow: hidden;
+}
+
+.titlebar {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    background: black;
+    app-region: drag;
+}
+
+.shadow-blue {
+    text-shadow: rgb(5, 0, 255) 3px 3px 0;
+}
+
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
 }
