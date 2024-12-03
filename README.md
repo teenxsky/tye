@@ -1,4 +1,4 @@
-[![Снимок экрана 2024-12-02 в 13.33.44.png](https://s.iimg.su/s/02/LU1gfmZg8yCNGWOr8FRp8sn0rkKgDmMFANvPM37u.png)](https://iimg.su/i/TChs2)
+[![image.png](https://s.iimg.su/s/03/YtHXunSeVlf3aKxP0q7fUhhN4kiLntVQmxQaETFH.png)](https://iimg.su/i/cBUOA)
 
 ---
 
