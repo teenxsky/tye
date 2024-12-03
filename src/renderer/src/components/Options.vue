@@ -18,9 +18,8 @@ import {
     state,
     keyEnterSound,
     keySound,
-    optionsTheme,
     playSound,
-    stopSound,
+    setMenuScene,
 } from '@renderer/components/Composable.js'
 import Button from '@renderer/components/Button.vue'
 
@@ -34,7 +33,7 @@ export default {
             { label: 'PLAY' },
             { label: 'HIGHSCORES' },
             { label: 'SETTINGS' },
-            { label: 'BACK' },
+            { label: 'CREDITS' },
         ])
         const selectedButtonIndex = ref(0)
 
@@ -44,8 +43,8 @@ export default {
 
         const handleButtonClick = (index) => {
             playSound(keyEnterSound)
-            if (options.value[index].label === 'BACK') {
-                state.value.currentMenuScene = 'start'
+            if (options.value[index].label === 'SETTINGS') {
+                setMenuScene('settings')
             } else {
                 // Handle other button clicks if needed
             }
@@ -73,20 +72,19 @@ export default {
                 selectedButtonIndex.value =
                     (selectedButtonIndex.value + 1) % options.value.length
                 playSound(keySound)
+            } else if (event.key === 'Escape') {
+                playSound(keyEnterSound)
+                setMenuScene('start')
             } else if (event.key === 'Enter') {
                 handleButtonClick(selectedButtonIndex.value)
             }
         }
 
         onMounted(() => {
-            optionsTheme.currentTime = 0
-            optionsTheme.play()
-            // playSound(optionsTheme)
             window.addEventListener('keydown', handleKeyPress)
         })
 
         onUnmounted(() => {
-            stopSound(optionsTheme)
             window.removeEventListener('keydown', handleKeyPress)
         })
 

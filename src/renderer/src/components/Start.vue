@@ -5,7 +5,6 @@
                 <h1 class="cs-2">
                     TELL YOUR <br />
                     ENEMIES
-                    <!-- <span class="tm">TM</span> -->
                 </h1>
             </div>
         </div>
@@ -17,11 +16,9 @@
 <script lang="ts">
 import { onMounted, onUnmounted } from 'vue'
 import {
-    state,
     keyEnterSound,
-    startTheme,
+    setMenuScene,
     playSound,
-    stopSound,
 } from '@renderer/components/Composable.js'
 
 export default {
@@ -30,20 +27,16 @@ export default {
     setup() {
         const handleKeyPress = (event: KeyboardEvent) => {
             if (event.key === 'Enter') {
-                state.value.currentMenuScene = 'options'
+                setMenuScene('options')
                 playSound(keyEnterSound)
             }
         }
 
         onMounted(() => {
-            // playSound(startTheme)
-            startTheme.currentTime = 0
-            startTheme.play()
             window.addEventListener('keydown', handleKeyPress)
         })
 
         onUnmounted(() => {
-            stopSound(startTheme)
             window.removeEventListener('keydown', handleKeyPress)
         })
 
@@ -69,7 +62,7 @@ export default {
 }
 
 .shadow-wrapper {
-    filter: drop-shadow(-1px -1px 0 rgb(240, 255, 0))
+    /* filter: drop-shadow(-1px -1px 0 rgb(240, 255, 0))
         drop-shadow(1px -1px 0 rgb(240, 255, 0))
         drop-shadow(-1px 1px 0 rgb(240, 255, 0))
         drop-shadow(1px 1px 0 rgb(240, 255, 0))
@@ -78,7 +71,7 @@ export default {
         drop-shadow(0 5px 0px rgb(5, 0, 140))
         drop-shadow(0 10px 0px rgb(5, 0, 140))
         drop-shadow(0 5px 0px rgb(3, 0, 95))
-        drop-shadow(0 10px 0px rgb(3, 0, 95));
+        drop-shadow(0 10px 0px rgb(3, 0, 95)); */
 }
 
 h1 {
@@ -88,6 +81,7 @@ h1 {
     margin: 0;
     width: fit-content;
     color: transparent;
+    will-change: filter;
     transform: scaleY(1.5) perspective(20rem) rotateX(15deg);
 }
 

@@ -23,14 +23,46 @@ startTheme.load()
 startTheme.volume = 0
 optionsTheme.volume = 0
 
+export const music = [startTheme, optionsTheme]
+
+export const sounds = [keySound, keyEnterSound]
+
 export const state = ref({
     currentScene: 'menu',
-    currentMenuScene: 'start',
+    currentMenuScene: '',
 })
+
+export const setMenuScene = (scene: string) => {
+    if (scene === 'start') {
+        if (state.value.currentMenuScene === 'start') {
+            return
+        }
+
+        for (const theme of music) {
+            theme.pause()
+        }
+        playSound(startTheme)
+    } else if (scene === 'options') {
+        if (state.value.currentMenuScene === 'options') {
+            return
+        }
+
+        for (const theme of music) {
+            theme.pause()
+        }
+        playSound(optionsTheme)
+    }
+
+    state.value.currentMenuScene = scene
+}
+
+export const setScene = (scene: string) => {
+    state.value.currentScene = scene
+}
 
 export const playSound = (audio: HTMLAudioElement) => {
     audio.currentTime = 0 as number
-    ;(audio.cloneNode(true) as HTMLAudioElement).play()
+    audio.play()
 }
 
 export const stopSound = (audio: HTMLAudioElement) => {
