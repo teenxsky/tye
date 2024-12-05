@@ -15,11 +15,8 @@
 
 <script lang="ts">
 import { onMounted, onUnmounted } from 'vue'
-import {
-    keyEnterSound,
-    setMenuScene,
-    playSound,
-} from '@renderer/components/Composable.js'
+import { setMenuScene } from '@renderer/components/Scenes'
+import { playSound, keyEnterSound } from '@renderer/components/Audio'
 
 export default {
     name: 'Start',

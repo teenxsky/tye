@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import Menu from '@renderer/components/Menu.vue'
-import { state } from '@renderer/components/Composable'
+import { state } from '@renderer/components/Scenes'
 </script>
 
 <style></style>

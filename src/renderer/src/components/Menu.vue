@@ -9,7 +9,8 @@
 
 <script lang="ts">
 import { ref, onMounted } from 'vue'
-import { state, setMenuScene } from '@renderer/components/Composable.js'
+import { state, setMenuScene } from '@renderer/components/Scenes'
+import { loadSettings } from '@renderer/components/Settings'
 import Start from '@renderer/components/Start.vue'
 import Options from '@renderer/components/Options.vue'
 import Settings from '@renderer/components/Settings.vue'
@@ -31,6 +32,7 @@ export default {
         }
 
         onMounted(() => {
+            loadSettings()
             setMenuScene('start')
             initScene()
         })

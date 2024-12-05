@@ -1,4 +1,3 @@
-import { ref } from 'vue'
 import keySoundPath from '@renderer/assets/sounds/key.mp3'
 import keyEnterSoundPath from '@renderer/assets/sounds/key_enter.mp3'
 import startThemePath from '@renderer/assets/sounds/MetalSquad.mp3'
@@ -27,37 +26,16 @@ export const music = [startTheme, optionsTheme]
 
 export const sounds = [keySound, keyEnterSound]
 
-export const state = ref({
-    currentScene: 'menu',
-    currentMenuScene: '',
-})
-
-export const setMenuScene = (scene: string) => {
-    if (scene === 'start') {
-        if (state.value.currentMenuScene === 'start') {
-            return
-        }
-
-        for (const theme of music) {
-            theme.pause()
-        }
-        playSound(startTheme)
-    } else if (scene === 'options') {
-        if (state.value.currentMenuScene === 'options') {
-            return
-        }
-
-        for (const theme of music) {
-            theme.pause()
-        }
-        playSound(optionsTheme)
+export const setMusicVolume = (volume: number) => {
+    for (const theme of music) {
+        theme.volume = volume
     }
-
-    state.value.currentMenuScene = scene
 }
 
-export const setScene = (scene: string) => {
-    state.value.currentScene = scene
+export const setSoundVolume = (volume: number) => {
+    for (const sound of sounds) {
+        sound.volume = volume
+    }
 }
 
 export const playSound = (audio: HTMLAudioElement) => {

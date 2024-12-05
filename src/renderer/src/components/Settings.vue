@@ -1,43 +1,56 @@
 <template>
     <div class="settings-container">
         <h2 class="shadow-blue">SETTINGS</h2>
-        <div class="setting" :class="{ selected: selectedSettingIndex === 0 }">
-            <label for="music-volume" class="shadow-blue">MUSIC</label>
-            <input
-                id="music-volume"
-                type="range"
-                min="0"
-                max="1"
-                step="0.1"
-                v-model="musicVolume"
-                @input="updateMusicVolume"
-            />
-        </div>
-        <div class="setting" :class="{ selected: selectedSettingIndex === 1 }">
-            <label for="sound-volume" class="shadow-blue">SOUNDS</label>
-            <input
-                id="sound-volume"
-                type="range"
-                min="0"
-                max="1"
-                step="0.1"
-                v-model="soundVolume"
-                @input="updateSoundVolume"
-            />
+        <div class="settings-list">
+            <div
+                class="setting"
+                :class="{ selected: selectedSettingIndex === 0 }"
+            >
+                <label for="music-volume" class="shadow-blue">MUSIC</label>
+                <input
+                    id="music-volume"
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    v-model="musicVolume"
+                    @input="updateMusicVolume"
+                    tabindex="-1"
+                />
+            </div>
+            <div
+                class="setting"
+                :class="{ selected: selectedSettingIndex === 1 }"
+            >
+                <label for="sound-volume" class="shadow-blue">SOUNDS</label>
+                <input
+                    id="sound-volume"
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    v-model="soundVolume"
+                    @input="updateSoundVolume"
+                    tabindex="-1"
+                />
+            </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { setMenuScene } from '@renderer/components/Scenes'
 import {
-    state,
-    keyEnterSound,
-    keySound,
-    playSound,
     music,
     sounds,
-} from '@renderer/components/Composable.js'
+    keySound,
+    keyEnterSound,
+    playSound,
+    setMusicVolume,
+    setSoundVolume,
+} from '@renderer/components/Audio'
+import { saveSettings } from '@renderer/components/Settings'
 
 export default {
     name: 'Settings',
@@ -47,15 +60,11 @@ export default {
         const selectedSettingIndex = ref(0)
 
         const updateMusicVolume = () => {
-            for (const theme of Object.values(music)) {
-                theme.volume = musicVolume.value
-            }
+            setMusicVolume(musicVolume.value)
         }
 
         const updateSoundVolume = () => {
-            for (const sound of Object.values(sounds)) {
-                sound.volume = soundVolume.value
-            }
+            setSoundVolume(soundVolume.value)
         }
 
         const handleKeyPress = (event: KeyboardEvent) => {
@@ -111,7 +120,8 @@ export default {
                 playSound(keySound)
             } else if (event.key === 'Escape') {
                 playSound(keyEnterSound)
-                state.value.currentMenuScene = 'options'
+                saveSettings()
+                setMenuScene('options')
             }
         }
 
@@ -148,12 +158,21 @@ export default {
     z-index: 10;
 }
 
+.settings-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    margin-top: 8rem;
+}
+
 .setting {
     display: flex;
     justify-content: space-between;
     align-items: center;
     color: white;
-    width: 50%;
+    width: 100%;
     font-size: 5rem;
 }
 
@@ -164,7 +183,6 @@ export default {
 h2 {
     font-size: 5rem;
     color: white;
-    margin-bottom: 10rem;
 }
 
 label {
