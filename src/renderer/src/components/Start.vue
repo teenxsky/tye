@@ -14,13 +14,8 @@
 
 <script lang="ts">
 import { onMounted, onUnmounted } from 'vue'
-import {
-    state,
-    keyEnterSound,
-    startTheme,
-    playSound,
-    stopSound,
-} from '@renderer/components/Composable.js'
+import { setMenuScene } from '@renderer/components/Scenes'
+import { playSound, keyEnterSound } from '@renderer/components/Audio'
 
 export default {
     name: 'Start',
@@ -28,20 +23,16 @@ export default {
     setup() {
         const handleKeyPress = (event: KeyboardEvent) => {
             if (event.key === 'Enter') {
-                state.value.currentMenuScene = 'options'
+                setMenuScene('options')
                 playSound(keyEnterSound)
             }
         }
 
         onMounted(() => {
-            // playSound(startTheme)
-            startTheme.currentTime = 0
-            startTheme.play()
             window.addEventListener('keydown', handleKeyPress)
         })
 
         onUnmounted(() => {
-            stopSound(startTheme)
             window.removeEventListener('keydown', handleKeyPress)
         })
 
