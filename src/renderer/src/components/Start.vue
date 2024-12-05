@@ -44,9 +44,8 @@ export default {
 </script>
 
 <style>
-
 .start-title {
-    font-size: 120px;
+    font-size: 10rem;
     background-image: linear-gradient(
         180deg,
         rgb(178, 30, 30),
@@ -70,6 +69,7 @@ export default {
         rgb(178, 30, 30) 90%,
         rgb(178, 30, 30)
     );
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     position: relative;
@@ -80,14 +80,17 @@ export default {
     content: attr(data-text);
     left: 0;
     position: absolute;
-text-shadow:
-    -1px -1px 0 rgb(240, 255, 0),
-    1px -1px 0 rgb(240, 255, 0),
-    -1px 1px 0 rgb(240, 255, 0),
-    1px 1px 0 rgb(240, 255, 0),
-    0 10px 0 rgb(0, 0, 240),
-    0 15px 0 rgb(0, 0, 150),
-    0 20px 0 rgb(0, 0, 100);
+    text-shadow:
+        -1px -1px 0 rgb(240, 255, 0),
+        1px -1px 0 rgb(240, 255, 0),
+        -1px 1px 0 rgb(240, 255, 0),
+        1px 1px 0 rgb(240, 255, 0),
+        0 5px 0 rgb(0, 0, 240),
+        0 10px 0 rgb(0, 0, 240),
+        0 15px 0 rgb(0, 0, 150),
+        0 20px 0 rgb(0, 0, 150),
+        0 25px 0 rgb(0, 0, 100),
+        0 20px 0 rgb(0, 0, 100);
 
     top: 0;
     z-index: -1;
@@ -107,12 +110,12 @@ text-shadow:
 }
 
 .shadow-wrapper {
-    transform: scaleY(1.8) perspective(20rem) rotateX(15deg) scaleX(1.4);
+    transform: scaleY(1.5) perspective(20rem) rotateX(15deg) scaleX(1);
 }
 
 h1 {
     font-family: 'JMH';
-    font-size: 10rem;
+    font-size: 5rem;
     letter-spacing: 1rem;
     margin: 0;
     width: fit-content;
