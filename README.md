@@ -1,34 +1,9 @@
-# tye
+[![image.png](https://s.iimg.su/s/03/YtHXunSeVlf3aKxP0q7fUhhN4kiLntVQmxQaETFH.png)](https://iimg.su/i/cBUOA)
 
-An Electron application with Vue and TypeScript
+---
 
-## Recommended IDE Setup
+**Tell Your Enemies** is a battle for survival, a cosmic test of reflexes and resolve. Inspired by Space Invaders, reimagined in 3D, it’s a journey through endless waves of enemies and relentless challenges.
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin)
+With a retro-futuristic atmosphere, explosive visuals powered by Three.js, and a soundtrack that feels like it’s alive, this is more than a game — it’s a confrontation with destiny.
 
-## Project Setup
-
-### Install
-
-```bash
-$ npm install
-```
-
-### Development
-
-```bash
-$ npm run dev
-```
-
-### Build
-
-```bash
-# For windows
-$ npm run build:win
-
-# For macOS
-$ npm run build:mac
-
-# For Linux
-$ npm run build:linux
-```
+**Tell Your Enemies**. They’re waiting for you.
