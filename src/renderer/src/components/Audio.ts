@@ -1,4 +1,3 @@
-import { ref } from 'vue'
 import keySoundPath from '@renderer/assets/sounds/key.mp3'
 import keyEnterSoundPath from '@renderer/assets/sounds/key_enter.mp3'
 import startThemePath from '@renderer/assets/sounds/MetalSquad.mp3'
@@ -23,14 +22,25 @@ startTheme.load()
 startTheme.volume = 0
 optionsTheme.volume = 0
 
-export const state = ref({
-    currentScene: 'menu',
-    currentMenuScene: 'start',
-})
+export const music = [startTheme, optionsTheme]
+
+export const sounds = [keySound, keyEnterSound]
+
+export const setMusicVolume = (volume: number) => {
+    for (const theme of music) {
+        theme.volume = volume
+    }
+}
+
+export const setSoundVolume = (volume: number) => {
+    for (const sound of sounds) {
+        sound.volume = volume
+    }
+}
 
 export const playSound = (audio: HTMLAudioElement) => {
     audio.currentTime = 0 as number
-    ;(audio.cloneNode(true) as HTMLAudioElement).play()
+    audio.play()
 }
 
 export const stopSound = (audio: HTMLAudioElement) => {
