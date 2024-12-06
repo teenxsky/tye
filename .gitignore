@@ -133,7 +133,6 @@ yarn.lock
 
 /types
 
-*.mjs
 
 *.env
 

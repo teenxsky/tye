@@ -14,7 +14,19 @@ export default defineConfig({
             alias: {
                 '@renderer': resolve('src/renderer/src'),
             },
+            extensions: [
+                '',
+                '.js',
+                '.jsx',
+                '.ts',
+                '.tsx',
+                '.json',
+                '.mjs',
+                '.wasm',
+                '.vue',
+            ],
         },
         plugins: [vue()],
+        assetsInclude: ['**/*.gltf', '**/*.glb'],
     },
 })

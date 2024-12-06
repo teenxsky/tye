@@ -1,5 +1,3 @@
-const { env } = require('process')
-
 /* eslint-env node */
 require('@rushstack/eslint-patch/modern-module-resolution')
 
@@ -11,8 +9,10 @@ module.exports = {
         '@electron-toolkit/eslint-config-ts/eslint-recommended',
         '@vue/eslint-config-typescript/recommended',
         '@vue/eslint-config-prettier',
+        'prettier',
     ],
     rules: {
+        'vue/no-unused-vars': 'off',
         'prettier/prettier': 'error',
         'vue/component-name-in-template-casing': ['error', 'PascalCase'],
         'vue/require-default-prop': 'off',

@@ -8,41 +8,40 @@
 </template>
 
 <script lang="ts">
-import { ref, onMounted } from 'vue'
-import { state, setMenuScene } from '@renderer/components/Scenes'
-import { loadSettings } from '@renderer/components/Settings'
-import Start from '@renderer/components/Start.vue'
-import Options from '@renderer/components/Options.vue'
-import Settings from '@renderer/components/Settings.vue'
-import { MenuScene } from '@renderer/Three/MenuScene.jsx'
+    import { ref, onMounted } from 'vue'
+    import { state } from '@renderer/components/Scenes'
+    import { loadSettings } from '@renderer/components/Settings'
+    import Start from '@renderer/components/Start.vue'
+    import Options from '@renderer/components/Options.vue'
+    import Settings from '@renderer/components/Settings.vue'
+    import { MenuScene } from '@renderer/Three/MenuScene.jsx'
 
-export default {
-    name: 'Menu',
-    components: {
-        Start,
-        Options,
-        Settings,
-    },
-    setup() {
-        const sceneContainer = ref<HTMLDivElement | null>(null)
+    export default {
+        name: 'Menu',
+        components: {
+            Start,
+            Options,
+            Settings,
+        },
+        setup() {
+            const sceneContainer = ref<HTMLDivElement | null>(null)
 
-        const initScene = () => {
-            const scene = new MenuScene(sceneContainer.value)
-            scene.start()
-        }
+            const initScene = () => {
+                const scene = new MenuScene(sceneContainer.value)
+                scene.start()
+            }
 
-        onMounted(() => {
-            loadSettings()
-            setMenuScene('start')
-            initScene()
-        })
+            onMounted(() => {
+                loadSettings()
+                initScene()
+            })
 
-        return {
-            state,
-            sceneContainer,
-        }
-    },
-}
+            return {
+                state,
+                sceneContainer,
+            }
+        },
+    }
 </script>
 
 <style></style>
