@@ -5,6 +5,7 @@
   "main": "./out/main/index.js",
   "author": "example.com",
   "homepage": "https://electron-vite.org",
+  "type": "module",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts,.vue --fix",
@@ -23,11 +24,13 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
     "dotenv": "^16.4.5",
     "electron-updater": "^6.3.9",
     "express": "^4.21.1",
     "mongodb": "^6.11.0",
+    "mongoose": "^8.8.3",
     "three": "^0.170.0"
   },
   "devDependencies": {
@@ -49,5 +52,7 @@
     "vite": "^6.0.0",
     "vue": "^3.5.13",
     "vue-tsc": "^2.1.10"
-  }
+  },
+  "keywords": [],
+  "license": "ISC"
 }

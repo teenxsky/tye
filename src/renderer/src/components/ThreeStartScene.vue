@@ -10,7 +10,7 @@ import { StartScene } from '@renderer/Three/StartScene.jsx'
 export default {
     name: 'ThreeStartScene',
     setup() {
-        let sceneContainer = ref(null)
+        const sceneContainer = ref(null)
 
         const initScene = () => {
             const scene = new StartScene(sceneContainer.value)
