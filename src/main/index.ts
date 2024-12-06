@@ -2,9 +2,34 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { startServer, stopServer } from '../../server/app.js'
+
+let server: any
+
+const startExpressServer = () => {
+    if (server) {
+        console.log('Server already running')
+        return
+    }
+    server = startServer()
+}
+
+const stopExpressServer = async () => {
+    if (!server) {
+        return
+    }
+
+    try {
+        await stopServer()
+        server = null
+        console.log('Server stopped successfully')
+    } catch (error) {
+        console.error('Error stopping server:', error)
+        throw error
+    }
+}
 
 function createWindow(): void {
-    // Create the browser window.
     const mainWindow = new BrowserWindow({
         width: 900,
         height: 700,
@@ -52,6 +77,9 @@ app.whenReady().then(() => {
         optimizer.watchWindowShortcuts(window)
     })
 
+    // Start server
+    startExpressServer()
+
     // IPC test
     ipcMain.on('ping', () => console.log('pong'))
 
@@ -67,10 +95,20 @@ app.whenReady().then(() => {
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
+app.on('window-all-closed', async () => {
     if (process.platform !== 'darwin') {
         app.quit()
     }
+})
+
+app.on('will-quit', async (event) => {
+    event.preventDefault()
+    await stopExpressServer()
+    app.quit()
+})
+
+process.on('uncaughtException', async (error) => {
+    console.error('Uncaught Exception:', error)
 })
 
 // In this file you can include the rest of your app"s specific main process
