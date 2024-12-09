@@ -3,17 +3,22 @@ import { Clock } from 'three'
 const clock = new Clock()
 
 class Loop {
-    constructor(camera, scene, renderer) {
+    constructor(camera, scene, renderer, composer = null) {
         this.camera = camera
         this.scene = scene
         this.renderer = renderer
+        this.composer = composer
         this.objectsToUpdate = []
     }
 
     start() {
         this.renderer.setAnimationLoop(() => {
             this.tick()
-            this.renderer.render(this.scene, this.camera)
+            if (this.composer) {
+                this.composer.render(this.scene, this.camera)
+            } else {
+                this.renderer.render(this.scene, this.camera)
+            }
         })
     }
 

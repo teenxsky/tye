@@ -28,8 +28,8 @@ class GameScene {
         scene = createScene('black')
         renderer = createRenderer()
         
-        camera.position.set(0, -30, 10)
-        camera.lookAt(0, 0, 0)
+        // camera.position.set(0, -30, 0)
+        // camera.lookAt(0, 0, 0)
 
         loop = new Loop(camera, scene, renderer)
         container.append(renderer.domElement)
@@ -41,6 +41,7 @@ class GameScene {
         scene.add(light)
 
         let space = createSpace()
+        space.isMoving = true
         loop.objectsToUpdate.push(space)
         scene.add(space)
 
@@ -68,6 +69,9 @@ class GameScene {
 
     onObjectLoaded(obj) {
         obj.addToScene(scene)
+        obj.translateZ(-45)
+        obj.translateY(-8)
+        obj.rotateX(-8 * Math.PI / 20)
         loop.objectsToUpdate.push(obj)
         
     }

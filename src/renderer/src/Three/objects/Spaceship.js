@@ -25,6 +25,10 @@ class Spaceship {
         )
     }
 
+    get position() {
+        return this.root.position
+    }
+
     addToScene(scene) {
         const clonedScene = SkeletonUtils.clone(this.model.gltf.scene)
         this.root = new THREE.Object3D()
@@ -46,6 +50,22 @@ class Spaceship {
 
     translateZ(distance) {
         this.root.translateZ(distance)
+    }
+
+    setRotation(x, y, z) {
+        this.root.rotation.set(x, y, z)
+    }
+
+    rotateX(angle) {
+        this.root.rotateX(angle)
+    }
+
+    rotateY(angle) {
+        this.root.rotateY(angle)
+    }
+
+    rotateZ(angle) {
+        this.root.rotateZ(angle)
     }
 }
 
