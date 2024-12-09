@@ -31,7 +31,7 @@ function createSpace(starsCount = 500) {
         points.push(vertex_br)
     }
 
-    const starsMat = new THREE.PointsMaterial({ color: 0xFFFFFF })
+    const starsMat = new THREE.PointsMaterial({ color: 0xffffff })
 
     starsGeo.setFromPoints(points)
     stars = new THREE.Points(starsGeo, starsMat)

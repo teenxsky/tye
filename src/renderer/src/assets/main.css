@@ -45,6 +45,15 @@ body {
     overflow: hidden;
 }
 
+.scene-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
 .titlebar {
     height: 70px;
     display: flex;
@@ -53,8 +62,14 @@ body {
     app-region: drag;
 }
 
-.shadow-blue {
-    text-shadow: rgb(5, 0, 255) 3px 3px 0;
+.non-highlighted {
+    color: white;
+    text-shadow: rgb(50, 90, 230) 6px 6px 0;
+}
+
+.highlighted {
+    color: rgb(240, 230, 20);
+    text-shadow: rgb(250, 0, 10) 6px 6px 0;
 }
 
 .v-enter-active,

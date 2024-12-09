@@ -1,9 +1,17 @@
 import { ref } from 'vue'
-import { music, startTheme, optionsTheme, stopSound, playSound } from './Audio'
+import {
+    music,
+    startTheme,
+    optionsTheme,
+    gameTheme,
+    stopSound,
+    playSound,
+} from './Audio'
 
 export const state = ref({
     currentScene: 'menu',
     currentMenuScene: '',
+    currentGameScene: '',
 })
 
 export const setMenuScene = (scene: string) => {
@@ -30,6 +38,23 @@ export const setMenuScene = (scene: string) => {
     state.value.currentMenuScene = scene
 }
 
+setMenuScene('start')
+
 export const setScene = (scene: string) => {
+    if (scene === 'game') {
+        for (const theme of music) {
+            stopSound(theme)
+        }
+    }
     state.value.currentScene = scene
+}
+
+export const setGameScene = (scene: string) => {
+    if (scene === 'start') {
+        for (const theme of music) {
+            stopSound(theme)
+        }
+        playSound(gameTheme)
+    }
+    state.value.currentGameScene = scene
 }
