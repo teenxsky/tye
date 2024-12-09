@@ -5,25 +5,36 @@ import { createRenderer } from './components/renderer.js'
 import { createSpace } from './components/objects/space.js'
 import { Loop } from './systems/Loop.js'
 import { Resizer } from './systems/Resizer.js'
-import { Spaceship } from './objects/spaceship.js'
-import fighter from '@renderer/assets/fighters/fighter01/result.glb'
+import { InputManager } from './systems/InputManager.js'
+import { Player } from './objects/Player.js'
+import playerModel from '@renderer/assets/fighters/fighter01/result.gltf'
+import enemyModel from '@renderer/assets/fighters/fighter02/result.gltf'
+import * as THREE from 'three'
 
 let camera
 let renderer
 let scene
 let loop
 
+const inputManager = new InputManager()
+
+const loadingManager = new THREE.LoadingManager()
+
 class GameScene {
-    constructor(container) {
+    constructor(container, handlers) {
+        this.handlers = handlers
+
         camera = createCamera()
         scene = createScene('black')
         renderer = createRenderer()
         
-        loop = new Loop(camera, scene, renderer)
-        container.append(renderer.domElement)
-        
         camera.position.set(0, -30, 10)
         camera.lookAt(0, 0, 0)
+
+        loop = new Loop(camera, scene, renderer)
+        container.append(renderer.domElement)
+
+        loop.objectsToUpdate.push(inputManager)
         
         const { light, lightHelper } = createLights('white')
         loop.objectsToUpdate.push(light)
@@ -38,35 +49,27 @@ class GameScene {
             this.render()
         }
 
+        loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
+            console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
+        }
+
+        loadingManager.onLoad = () => {
+            this.handlers.setLoading(false)
+        }
+
         this.init()
     }
 
     init() {
-        const spaceship = new Spaceship(fighter, scene)
-        // spaceship.setPos(0, 0, 0)
-        // loop.objectsToUpdate.push(spaceship)
-        window.addEventListener('keydown', (event) => this.handleKeyDown(event, spaceship))
-        window.addEventListener('keyup', (event) => this.handleKeyUp(event, spaceship))
+        this.spaceship = new Player(playerModel, {
+            onLoaded: this.onObjectLoaded.bind(this)
+        }, loadingManager, inputManager)
     }
 
-    handleKeyDown(event, spaceship) {
-        switch (event.key) {
-            case 'ArrowLeft':
-                spaceship.moveLeft()
-                break
-            case 'ArrowRight':
-                spaceship.moveRight()
-                break
-        }
-    }
-
-    handleKeyUp(event, spaceship) {
-        switch (event.key) {
-            case 'ArrowLeft':
-            case 'ArrowRight':
-                spaceship.setVelocity(0, 0, 0)
-                break
-        }
+    onObjectLoaded(obj) {
+        obj.addToScene(scene)
+        loop.objectsToUpdate.push(obj)
+        
     }
 
     render() {

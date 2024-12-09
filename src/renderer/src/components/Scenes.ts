@@ -11,6 +11,7 @@ import {
 export const state = ref({
     currentScene: 'menu',
     currentMenuScene: '',
+    currentGameScene: '',
 })
 
 export const setMenuScene = (scene: string) => {
@@ -44,7 +45,16 @@ export const setScene = (scene: string) => {
         for (const theme of music) {
             stopSound(theme)
         }
-        playSound(gameTheme)
     }
     state.value.currentScene = scene
+}
+
+export const setGameScene = (scene: string) => {
+    if (scene === 'start') {
+        for (const theme of music) {
+            stopSound(theme)
+        }
+        playSound(gameTheme)
+    }
+    state.value.currentGameScene = scene
 }

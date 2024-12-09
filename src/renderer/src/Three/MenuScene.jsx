@@ -3,6 +3,7 @@ import { createLights } from './components/lights.js'
 import { createScene } from './components/scene.js'
 import { createRenderer } from './components/renderer.js'
 import { createSpace } from './components/objects/space.js'
+import { createGalaxy } from './components/objects/galaxy.js'
 import { Loop } from './systems/Loop.js'
 import { Resizer } from './systems/Resizer.js'
 
@@ -27,6 +28,10 @@ class MenuScene {
         let space = createSpace()
         loop.objectsToUpdate.push(space)
         scene.add(space)
+
+        // let galaxy = createGalaxy()
+        // loop.objectsToUpdate.push(galaxy)
+        // scene.add(galaxy)
 
         const resizer = new Resizer(container, camera, renderer)
         resizer.onResize = () => {

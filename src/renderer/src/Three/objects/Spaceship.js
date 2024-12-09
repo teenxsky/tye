@@ -3,8 +3,7 @@ import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js'
 import * as THREE from 'three'
 
 class Spaceship {
-    constructor(url, scene) {
-        const manager = new THREE.LoadingManager()
+    constructor(url, handlers, manager) {
         const gltfLoader = new GLTFLoader(manager)
 
         const model = {
@@ -16,34 +15,37 @@ class Spaceship {
             model.url,
             (gltf) => {
                 model.gltf = gltf
-                this.addToScene(model, scene)
+                this.model = model
+                handlers.onLoaded(this)
             },
             undefined,
             (error) => {
-                console.log('Error loading 3D model:', error)
+                console.log('Error loading 3D model:', error, this)
             }
         )
-
-        self.model = model
     }
 
-    addToScene(model, scene) {
-        const clonedScene = SkeletonUtils.clone(model.gltf.scene)
+    addToScene(scene) {
+        const clonedScene = SkeletonUtils.clone(this.model.gltf.scene)
         this.root = new THREE.Object3D()
         this.root.add(clonedScene)
         scene.add(this.root)
     }
 
-    moveLeft() {
-        this.root.position.x -= 5
-    }
-
-    moveRight() {
-        this.root.position.x += 5
-    }
-
     setPos(x, y, z) {
         this.root.position.set(x, y, z)
+    }
+
+    translateX(distance) {
+        this.root.translateX(distance)
+    }
+
+    translateY(distance) {
+        this.root.translateY(distance)
+    }
+
+    translateZ(distance) {
+        this.root.translateZ(distance)
     }
 }
 

@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-    import { ref, onMounted } from 'vue'
+    import { ref, onMounted, onUnmounted } from 'vue'
     import { state } from '@renderer/components/Scenes'
     import { loadSettings } from '@renderer/components/Settings'
     import Start from '@renderer/components/Start.vue'
@@ -25,15 +25,20 @@
         },
         setup() {
             const sceneContainer = ref<HTMLDivElement | null>(null)
+            let scene = ref<MenuScene | null>(null)
 
             const initScene = () => {
-                const scene = new MenuScene(sceneContainer.value)
+                scene = new MenuScene(sceneContainer.value)
                 scene.start()
             }
 
             onMounted(() => {
                 loadSettings()
                 initScene()
+            })
+
+            onUnmounted(() => {
+                scene.stop()
             })
 
             return {

@@ -7,8 +7,8 @@
                 </h1>
             </div>
         </div>
-        <h3 class="blink shadow-blue">PRESS ENTER TO CONTINUE</h3>
-        <h4>©<span class="shadow-blue">2024</span> Tell Your Friends</h4>
+        <h3 class="blink non-highlighted">PRESS ENTER TO CONTINUE</h3>
+        <h4>©<span class="non-highlighted">2024</span> Tell Your Friends</h4>
     </div>
 </template>
 
@@ -44,26 +44,26 @@
         font-size: 10rem;
         background-image: linear-gradient(
             180deg,
-            rgb(178, 30, 30),
-            rgb(178, 30, 30) 10%,
+            rgb(190, 0, 0),
+            rgb(190, 0, 0) 10%,
 
-            rgb(191, 28, 28),
-            rgb(191, 28, 28) 20%,
+            rgb(210, 0, 0),
+            rgb(210, 0, 0) 20%,
 
-            rgb(217, 35, 35) 20%,
-            rgb(217, 35, 35) 40%,
+            rgb(230, 0, 0) 20%,
+            rgb(230, 0, 0) 40%,
 
-            rgb(242, 37, 37) 40%,
-            rgb(242, 37, 37) 60%,
+            rgb(255, 0, 0) 40%,
+            rgb(255, 0, 0) 60%,
 
-            rgb(217, 35, 35) 60%,
-            rgb(217, 35, 35) 80%,
+            rgb(230, 0, 0) 60%,
+            rgb(230, 0, 0) 80%,
 
-            rgb(191, 28, 28) 80%,
-            rgb(191, 28, 28) 90%,
+            rgb(210, 0, 0) 80%,
+            rgb(210, 0, 0) 90%,
 
-            rgb(178, 30, 30) 90%,
-            rgb(178, 30, 30)
+            rgb(190, 0, 0) 90%,
+            rgb(190, 0, 0)
         );
         background-clip: text;
         -webkit-background-clip: text;
@@ -81,13 +81,22 @@
             -1px -1px 0 rgb(240, 255, 0),
             1px -1px 0 rgb(240, 255, 0),
             -1px 1px 0 rgb(240, 255, 0),
-            1px 1px 0 rgb(240, 255, 0),
-            0 5px 0 rgb(0, 0, 240),
+            2px 2px 0 rgb(240, 255, 0),
+            0 5px 0 rgb(50, 90, 230),
+            -2px 5px 0 rgb(50, 90, 230),
+            2px 5px 0 rgb(50, 90, 230),
             0 10px 0 rgb(0, 0, 240),
+            -2px 10px 0 rgb(0, 0, 240),
+            2px 10px 0 rgb(0, 0, 240),
             0 15px 0 rgb(0, 0, 150),
-            0 20px 0 rgb(0, 0, 150),
+            2px 15px 0 rgb(0, 0, 150),
+            -2px 20px 0 rgb(0, 0, 150),
             0 25px 0 rgb(0, 0, 100),
-            0 20px 0 rgb(0, 0, 100);
+            2px 25px 0 rgb(0, 0, 100),
+            -2px 25px 0 rgb(0, 0, 100),
+            0 20px 0 rgb(0, 0, 100),
+            2px 20px 0 rgb(0, 0, 100),
+            -2px 20px 0 rgb(0, 0, 100);
 
         top: 0;
         z-index: -1;
