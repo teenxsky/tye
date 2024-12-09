@@ -22,6 +22,17 @@
             </div>
         </div>
     </div>
+    <div v-if="showMenu" class="menu">
+        <Button
+            v-for="(button, index) in menuOptions"
+            :key="index"
+            :isSelected="selectedButtonIndex === index"
+            @select="selectButton(index)"
+            @click="handleButtonClick(index)"
+        >
+            {{ button.label }}
+        </Button>
+    </div>
     <div ref="sceneContainer" class="scene-container"></div>
 </template>
 
@@ -33,14 +44,28 @@
         setScene,
         setGameScene,
     } from '@renderer/components/Scenes'
-    import { playSound, keyEnterSound } from '@renderer/components/Audio'
+    import {
+        playSound,
+        keyEnterSound,
+        keySound,
+    } from '@renderer/components/Audio'
+    import Button from './Button.vue'
 
     export default {
         name: 'Game',
+        components: {
+            Button,
+        },
         setup() {
             const sceneContainer = ref<HTMLDivElement | null>(null)
             let scene = ref<GameScene | null>(null)
             const isLoading = ref(true)
+            const showMenu = ref(false)
+            const selectedButtonIndex = ref(0)
+            const options = ref([
+                { label: 'RESUME', action: 'resume' },
+                { label: 'QUIT', action: 'quit' },
+            ])
 
             const initScene = () => {
                 scene = new GameScene(sceneContainer.value, {
@@ -62,11 +87,65 @@
             }
 
             const handleKeyPress = (event: KeyboardEvent) => {
-                if (event.key === 'Escape') {
-                    setMenuScene('start')
-                    setScene('menu')
+                if (
+                    event.key === 'ArrowUp' ||
+                    event.key === 'W' ||
+                    event.key === 'w' ||
+                    event.key === 'Ц' ||
+                    event.key === 'ц'
+                ) {
+                    selectedButtonIndex.value =
+                        (selectedButtonIndex.value - 1 + options.value.length) %
+                        options.value.length
+                    playSound(keySound)
+                } else if (
+                    event.key === 'ArrowDown' ||
+                    event.key === 'S' ||
+                    event.key === 'S' ||
+                    event.key === 'Ы' ||
+                    event.key === 'ы'
+                ) {
+                    selectedButtonIndex.value =
+                        (selectedButtonIndex.value + 1) % options.value.length
+                    playSound(keySound)
+                } else if (event.key === 'Escape') {
+                    if (showMenu.value) {
+                        resumeGame()
+                    } else {
+                        showMenu.value = true
+                        selectedButtonIndex.value = 0
+                        scene.stop()
+                    }
+                    playSound(keyEnterSound)
+                } else if (event.key === 'Enter') {
+                    handleButtonClick(selectedButtonIndex.value)
                     playSound(keyEnterSound)
                 }
+            }
+
+            const handleButtonClick = (index: number) => {
+                const action = options.value[index].action
+                if (action === 'resume') {
+                    resumeGame()
+                } else if (action === 'quit') {
+                    quitGame()
+                }
+            }
+
+            const selectButton = (index: number) => {
+                selectedButtonIndex.value = index
+                playSound(keySound)
+            }
+
+            const resumeGame = () => {
+                showMenu.value = false
+                scene.start()
+            }
+
+            const quitGame = () => {
+                setMenuScene('start')
+                setScene('menu')
+                playSound(keyEnterSound)
             }
 
             onMounted(() => {
@@ -82,6 +161,11 @@
             return {
                 sceneContainer,
                 isLoading,
+                showMenu,
+                menuOptions: options,
+                selectedButtonIndex,
+                selectButton,
+                handleButtonClick,
             }
         },
     }
@@ -130,5 +214,20 @@
 
     .align-center {
         text-align: center;
+    }
+
+    .menu {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* transform: translate(-50%, -50%); */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 10;
     }
 </style>

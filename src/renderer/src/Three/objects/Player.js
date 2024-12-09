@@ -6,13 +6,20 @@ class Player extends Spaceship {
 
         this.inputManager = inputManager
         this.speed = 20
+
+        this.maxX = 15
     }
 
     tick(delta) {
         const direction =
             (this.inputManager.keys.right.pressed ? 1 : 0) +
             (this.inputManager.keys.left.pressed ? -1 : 0)
-        this.translateX(direction * this.speed * delta)
+        if (
+            Math.abs(this.position.x + direction * this.speed * delta) <
+            this.maxX
+        ) {
+            this.translateX(direction * this.speed * delta)
+        }
     }
 }
 
