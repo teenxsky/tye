@@ -27,9 +27,6 @@ class GameScene {
         camera = createCamera()
         scene = createScene('black')
         renderer = createRenderer()
-        
-        // camera.position.set(0, -30, 0)
-        // camera.lookAt(0, 0, 0)
 
         loop = new Loop(camera, scene, renderer)
         container.append(renderer.domElement)

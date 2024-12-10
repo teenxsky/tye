@@ -28,7 +28,16 @@ class InputManager {
         }
 
         addKey('ArrowLeft', 'left')
+        addKey('A', 'left')
+        addKey('a', 'left')
+        addKey('Ф', 'left')
+        addKey('ф', 'left')
         addKey('ArrowRight', 'right')
+        addKey('D', 'right')
+        addKey('d', 'right')
+        addKey('В', 'right')
+        addKey('в', 'right')
+        addKey(' ', 'shot') // Space
 
         window.addEventListener('keydown', (e) => {
             setKeyFromKey(e.key, true)

@@ -25,10 +25,12 @@ class MenuScene {
 
         composer = new EffectComposer(renderer)
         composer.setSize(window.innerWidth, window.innerHeight)
+
         const renderPass = new RenderPass(scene, camera)
         composer.addPass(renderPass)
 
-        const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 
+        const bloomPass = new UnrealBloomPass(
+            new THREE.Vector2(window.innerWidth, window.innerHeight), 
             10, 
             1, 
             0.5

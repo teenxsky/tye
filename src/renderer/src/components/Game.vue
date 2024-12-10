@@ -101,7 +101,7 @@
                 } else if (
                     event.key === 'ArrowDown' ||
                     event.key === 'S' ||
-                    event.key === 'S' ||
+                    event.key === 's' ||
                     event.key === 'Ы' ||
                     event.key === 'ы'
                 ) {
@@ -118,8 +118,10 @@
                     }
                     playSound(keyEnterSound)
                 } else if (event.key === 'Enter') {
-                    handleButtonClick(selectedButtonIndex.value)
-                    playSound(keyEnterSound)
+                    if (showMenu.value) {
+                        handleButtonClick(selectedButtonIndex.value)
+                        playSound(keyEnterSound)
+                    }
                 }
             }
 

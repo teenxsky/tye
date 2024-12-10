@@ -1,4 +1,5 @@
 import { Spaceship } from './Spaceship.js'
+import { shotSound, playSound } from '@renderer/components/Audio'
 
 class Player extends Spaceship {
     constructor(url, handlers, manager, inputManager) {
@@ -10,6 +11,10 @@ class Player extends Spaceship {
         this.maxX = 15
     }
 
+    shot() {
+        playSound(shotSound)
+    }
+
     tick(delta) {
         const direction =
             (this.inputManager.keys.right.pressed ? 1 : 0) +
@@ -19,6 +24,10 @@ class Player extends Spaceship {
             this.maxX
         ) {
             this.translateX(direction * this.speed * delta)
+        }
+
+        if (this.inputManager.keys.shot.pressed) {
+            this.shot()
         }
     }
 }
