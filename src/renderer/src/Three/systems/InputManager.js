@@ -13,10 +13,12 @@ class InputManager {
             if (!keyState) {
                 return
             }
-            if (keyState.pressed !== pressed) {
-                keyState.pressed = pressed
-                keyState.justPressed = pressed
+
+            if (pressed && !keyState.pressed) {
+                keyState.justPressed = 1
             }
+
+            keyState.pressed = pressed
         }
 
         const setKeyFromKey = (key, pressed) => {
@@ -49,8 +51,12 @@ class InputManager {
 
     tick(delta) {
         for (const keyState of Object.values(this.keys)) {
-            if (keyState.justPressed) {
-                keyState.justPressed = false
+            if (keyState.justPressed > 0) {
+                keyState.justPressed++
+
+                if (keyState.justPressed > 2) {
+                    keyState.justPressed = 0
+                }
             }
         }
     }

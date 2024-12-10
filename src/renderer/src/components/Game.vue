@@ -88,22 +88,24 @@
 
             const handleKeyPress = (event: KeyboardEvent) => {
                 if (
-                    event.key === 'ArrowUp' ||
-                    event.key === 'W' ||
-                    event.key === 'w' ||
-                    event.key === 'Ц' ||
-                    event.key === 'ц'
+                    showMenu.value &&
+                    (event.key === 'ArrowUp' ||
+                        event.key === 'W' ||
+                        event.key === 'w' ||
+                        event.key === 'Ц' ||
+                        event.key === 'ц')
                 ) {
                     selectedButtonIndex.value =
                         (selectedButtonIndex.value - 1 + options.value.length) %
                         options.value.length
                     playSound(keySound)
                 } else if (
-                    event.key === 'ArrowDown' ||
-                    event.key === 'S' ||
-                    event.key === 's' ||
-                    event.key === 'Ы' ||
-                    event.key === 'ы'
+                    showMenu.value &&
+                    (event.key === 'ArrowDown' ||
+                        event.key === 'S' ||
+                        event.key === 's' ||
+                        event.key === 'Ы' ||
+                        event.key === 'ы')
                 ) {
                     selectedButtonIndex.value =
                         (selectedButtonIndex.value + 1) % options.value.length

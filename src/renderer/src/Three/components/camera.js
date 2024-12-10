@@ -2,13 +2,12 @@ import { PerspectiveCamera } from 'three'
 
 function createCamera() {
     const camera = new PerspectiveCamera(
-        35, // FOV = Field Of View
-        1, // Aspect ratio (dummy value)
-        0.1, // Near clipping plane
-        1000 // Far clipping plane
+        40,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
     )
 
-    // Move the camera back so we can view the scene
     camera.position.set(0, 0, 0)
     camera.tick = (delta) => {}
 

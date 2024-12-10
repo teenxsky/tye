@@ -1,5 +1,5 @@
 import { Spaceship } from './Spaceship.js'
-import { shotSound, playSound } from '@renderer/components/Audio'
+import { Laser } from './Laser.js'
 
 class Player extends Spaceship {
     constructor(url, handlers, manager, inputManager) {
@@ -8,17 +8,21 @@ class Player extends Spaceship {
         this.inputManager = inputManager
         this.speed = 20
 
-        this.maxX = 15
+        this.maxX = 18
     }
 
     shot() {
-        playSound(shotSound)
+        let laserPosition = this.position.clone()
+        laserPosition.z -= 5
+        const laser = new Laser(laserPosition, this.handlers)
+        this.handlers.addObjToScene(laser)
     }
 
     tick(delta) {
         const direction =
             (this.inputManager.keys.right.pressed ? 1 : 0) +
             (this.inputManager.keys.left.pressed ? -1 : 0)
+
         if (
             Math.abs(this.position.x + direction * this.speed * delta) <
             this.maxX
@@ -26,7 +30,7 @@ class Player extends Spaceship {
             this.translateX(direction * this.speed * delta)
         }
 
-        if (this.inputManager.keys.shot.pressed) {
+        if (this.inputManager.keys.shot.justPressed > 0) {
             this.shot()
         }
     }

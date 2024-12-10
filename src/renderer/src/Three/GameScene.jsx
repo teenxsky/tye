@@ -10,6 +10,7 @@ import { Player } from './objects/Player.js'
 import playerModel from '@renderer/assets/fighters/fighter01/result.gltf'
 import enemyModel from '@renderer/assets/fighters/fighter02/result.gltf'
 import * as THREE from 'three'
+import { add } from 'three/webgpu'
 
 let camera
 let renderer
@@ -30,8 +31,6 @@ class GameScene {
 
         loop = new Loop(camera, scene, renderer)
         container.append(renderer.domElement)
-
-        loop.objectsToUpdate.push(inputManager)
         
         const { light, lightHelper } = createLights('white')
         loop.objectsToUpdate.push(light)
@@ -56,21 +55,28 @@ class GameScene {
         }
 
         this.init()
+
+        loop.objectsToUpdate.push(inputManager)
     }
 
     init() {
         this.spaceship = new Player(playerModel, {
-            onLoaded: this.onObjectLoaded.bind(this)
+            onLoaded: this.onObjectLoaded.bind(this),
+            addObjToScene: this.addObjToScene.bind(this)
         }, loadingManager, inputManager)
     }
 
     onObjectLoaded(obj) {
         obj.addToScene(scene)
         obj.translateZ(-45)
-        obj.translateY(-8)
+        obj.translateY(-10)
         obj.rotateX(-8 * Math.PI / 20)
         loop.objectsToUpdate.push(obj)
-        
+    }
+
+    addObjToScene(obj) {
+        scene.add(obj)
+        loop.objectsToUpdate.push(obj)
     }
 
     render() {

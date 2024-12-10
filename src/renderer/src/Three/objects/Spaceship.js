@@ -11,12 +11,14 @@ class Spaceship {
             gltf: null,
         }
 
+        this.handlers = handlers
+
         gltfLoader.load(
             model.url,
             (gltf) => {
                 model.gltf = gltf
                 this.model = model
-                handlers.onLoaded(this)
+                this.handlers.onLoaded(this)
             },
             undefined,
             (error) => {
