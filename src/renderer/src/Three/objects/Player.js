@@ -1,21 +1,66 @@
+import * as THREE from 'three'
 import { Spaceship } from './Spaceship.js'
 import { Laser } from './Laser.js'
+import playerModel from '@renderer/assets/fighters/fighter01/result.gltf'
+import { outOfAmmoSound, playSound } from '@renderer/components/Audio'
 
 class Player extends Spaceship {
-    constructor(url, handlers, manager, inputManager) {
-        super(url, handlers, manager)
+    constructor(handlers, manager, inputManager) {
+        super(playerModel, handlers, manager)
 
         this.inputManager = inputManager
+
+        this.angleX = (-8 * Math.PI) / 20
+        this.posZ = -50
+        this.pozY = -10
+        this.currentAngleZ = 0
+
         this.speed = 20
 
         this.maxX = 18
+
+        this.lasers = []
+
+        this.ammoAmount = 10
+        this.currentAmmo = this.ammoAmount
+
+        this.elapsedTime = 0
+
+        this.ammoRegenRate = 0.1
+    }
+
+    computePosition() {
+        this.currentAngleZ = Math.atan2(this.position.x, 50)
+        this.rotation = new THREE.Euler(this.angleX, 0, -this.currentAngleZ)
+        this.position = new THREE.Vector3(
+            this.position.x,
+            this.pozY,
+            this.posZ - Math.abs(this.position.x / 20)
+        )
     }
 
     shot() {
-        let laserPosition = this.position.clone()
-        laserPosition.z -= 5
-        const laser = new Laser(laserPosition, this.handlers)
-        this.handlers.addObjToScene(laser)
+        if (this.currentAmmo > 0) {
+            const position = this.position.clone()
+            const rotation = this.rotation.clone()
+            const laser = new Laser(position, rotation, this.handlers)
+            this.lasers.push(laser)
+            this.currentAmmo -= 1
+            this.handlers
+        } else {
+            playSound(outOfAmmoSound)
+        }
+    }
+
+    regenAmmo(delta) {
+        this.elapsedTime += delta
+        if (this.elapsedTime >= 0.5) {
+            if (this.currentAmmo < this.ammoAmount) {
+                this.currentAmmo += 1
+            }
+
+            this.elapsedTime = 0
+        }
     }
 
     tick(delta) {
@@ -33,6 +78,18 @@ class Player extends Spaceship {
         if (this.inputManager.keys.shot.justPressed > 0) {
             this.shot()
         }
+
+        for (const laser of this.lasers) {
+            if (!laser.isAlive) {
+                this.lasers.filter((l) => l !== laser)
+            }
+        }
+
+        this.regenAmmo(delta)
+
+        this.handlers.setCameraPosition(this.position, this.rotation)
+
+        this.computePosition()
     }
 }
 

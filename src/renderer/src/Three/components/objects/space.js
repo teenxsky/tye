@@ -55,12 +55,12 @@ function createSpace(starsCount = 1500) {
         }
 
         const positions = starsGeo.attributes.position.array
-        const speed = delta * 80
+        const speed = delta * 250
 
         for (let i = 0; i < positions.length; i += 3) {
             positions[i + 2] += speed
 
-            if (positions[i + 2] > 10) {
+            if (positions[i + 2] > 0) {
                 positions[i + 2] = -1000
             }
         }

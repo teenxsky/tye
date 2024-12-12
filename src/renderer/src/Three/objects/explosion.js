@@ -1,12 +1,8 @@
 import * as THREE from 'three'
 import explosionPath from '@renderer/assets/effects/explosion.png'
-import {
-    explosion_1Sound,
-    explosion_2Sound,
-    playSound,
-} from '@renderer/components/Audio'
+import { explosions, playSound } from '@renderer/components/Audio'
 
-function createExplosion(position, scale = 5) {
+function createExplosion(position, handlers, scale = 8) {
     let currentTile = 0
     let tilesAmount = 8
 
@@ -24,7 +20,9 @@ function createExplosion(position, scale = 5) {
     const animationSpeed = 0.1
     let elapsedTime = 0
 
-    playSound(Math.random() > 0.5 ? explosion_1Sound : explosion_2Sound)
+    handlers.addObjectToScene(explosion)
+
+    playSound(explosions[Math.floor(Math.random() * 3)])
 
     explosion.tick = (delta) => {
         elapsedTime += delta
@@ -34,9 +32,9 @@ function createExplosion(position, scale = 5) {
             currentTile++
 
             if (currentTile >= tilesAmount) {
+                handlers.removeObjectFromScene(explosion)
                 explosion.material.dispose()
                 explosion.geometry.dispose()
-                explosion.parent.remove(explosion)
                 return
             }
         }

@@ -7,15 +7,15 @@ import { Loop } from './systems/Loop.js'
 import { Resizer } from './systems/Resizer.js'
 import { InputManager } from './systems/InputManager.js'
 import { Player } from './objects/Player.js'
-import playerModel from '@renderer/assets/fighters/fighter01/result.gltf'
-import enemyModel from '@renderer/assets/fighters/fighter02/result.gltf'
 import * as THREE from 'three'
-import { add } from 'three/webgpu'
+import { EnemyWave } from './objects/EnemyWave.js'
+import { GameProcess } from './objects/GameProcess.js'
 
 let camera
 let renderer
 let scene
 let loop
+let gameProcess
 
 const inputManager = new InputManager()
 
@@ -26,6 +26,7 @@ class GameScene {
         this.handlers = handlers
 
         camera = createCamera()
+
         scene = createScene('black')
         renderer = createRenderer()
 
@@ -47,36 +48,106 @@ class GameScene {
         }
 
         loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
-            console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
+            // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
         }
 
         loadingManager.onLoad = () => {
             this.handlers.setLoading(false)
+            this.onAllObjectsLoaded()
         }
 
         this.init()
 
         loop.objectsToUpdate.push(inputManager)
+
     }
 
     init() {
-        this.spaceship = new Player(playerModel, {
+        const handlers = {
             onLoaded: this.onObjectLoaded.bind(this),
-            addObjToScene: this.addObjToScene.bind(this)
-        }, loadingManager, inputManager)
+            addObjectToScene: this.addObjectToScene.bind(this),
+            removeObjectFromScene: this.removeObjectFromScene.bind(this),
+            setCameraPosition: this.setCameraPosition.bind(this)
+        }
+
+        this.spaceship = new Player(handlers, loadingManager, inputManager)
+
+        this.enemyWave = new EnemyWave(handlers, loadingManager)
+
     }
 
     onObjectLoaded(obj) {
         obj.addToScene(scene)
-        obj.translateZ(-45)
-        obj.translateY(-10)
-        obj.rotateX(-8 * Math.PI / 20)
         loop.objectsToUpdate.push(obj)
     }
 
-    addObjToScene(obj) {
+    onAllObjectsLoaded() {
+        const handlers = {
+            onLoaded: this.onObjectLoaded.bind(this),
+            addObjectToScene: this.addObjectToScene.bind(this),
+            removeObjectFromScene: this.removeObjectFromScene.bind(this),
+            setCurrentScore: this.setCurrentScore.bind(this),
+            setCurrentLives: this.setCurrentLives.bind(this),
+            setLivesAmount: this.setLivesAmount.bind(this),
+            setCurrentWave: this.setCurrentWave.bind(this),
+            setCurrentAmmo: this.setCurrentAmmo.bind(this),
+            setAmmoAmount: this.setAmmoAmount.bind(this),
+
+        }
+
+        gameProcess = new GameProcess(this.spaceship, this.enemyWave, handlers)
+
+        loop.objectsToUpdate.push(gameProcess)
+    }
+
+    setCurrentScore(score) {
+        this.handlers.setCurrentScore(score)
+    }
+
+    setCurrentLives(value) {
+        this.handlers.setCurrentLives(value)
+    }
+
+    setLivesAmount(value) {
+        this.handlers.setLivesAmount(value)
+    }
+
+    setCurrentWave(value) {
+        this.handlers.setCurrentWave(value)
+    }
+
+    setCurrentAmmo(value) {
+        this.handlers.setCurrentAmmo(value)
+    }
+
+    setAmmoAmount(value) {
+        this.handlers.setAmmoAmount(value)
+    }
+
+    addObjectToScene(obj) {
         scene.add(obj)
         loop.objectsToUpdate.push(obj)
+    }
+
+    removeObjectFromScene(obj) {
+        scene.remove(obj)
+        loop.objectsToUpdate = loop.objectsToUpdate.filter((o) => o !== obj)
+    }
+
+    handleKeyPress(e) {
+        if (e.key === 'c' || 
+            e.key === 'C' || 
+            e.key === 'с' || 
+            e.key === 'С') {
+            camera.changeView() 
+        }
+    }
+
+    setCameraPosition(position, rotation) {
+        if (camera.currentView === 'pov') {
+            camera.position.copy(position)
+            camera.rotation.y = rotation.y * 3
+        }
     }
 
     render() {
@@ -85,10 +156,12 @@ class GameScene {
 
     start() {
         loop.start()
+        window.addEventListener('keydown', this.handleKeyPress.bind(this))
     }
 
     stop() {
         loop.stop()
+        window.removeEventListener('keydown', this.handleKeyPress.bind(this))
     }
 }
 

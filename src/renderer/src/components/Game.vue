@@ -1,24 +1,38 @@
 <template>
-    <div v-if="isLoading" class="loading non-highlighted">Loading...</div>
+    <div v-if="isLoading" class="loading non-highlighted">
+        {{ loadingText }}
+    </div>
     <div class="hud">
         <div class="hud__block">
             <div class="hud__item highlighted">
                 <span>HI </span>
-                <span>0</span>
+                <span>{{ highScore }}</span>
             </div>
             <div class="hud__item non-highlighted">
                 <span>SC </span>
-                <span>0</span>
+                <span>{{ currentScore }}</span>
             </div>
         </div>
-        <div class="hud__block align-right highlighted">
+        <div class="hud__block align-right">
             <div class="hud__item">
-                <span>LIVES </span>
-                <span>2/3</span>
+                <span class="highlighted">AMMO </span>
+                <span
+                    class="non-highlighted"
+                    :class="{ alert: currentAmmo === 0 }"
+                    >{{ currentAmmo }}/{{ ammoAmount }}</span
+                >
             </div>
-            <div class="hud__item highlighted">
-                <span>NITRO </span>
-                <span>0</span>
+        </div>
+        <div class="hud__block align-right">
+            <div class="hud__item">
+                <span class="highlighted">LIVES </span>
+                <span class="non-highlighted"
+                    >{{ currentLives }}/{{ livesAmount }}</span
+                >
+            </div>
+            <div class="hud__item">
+                <span class="highlighted">WAVE </span>
+                <span class="non-highlighted">{{ currentWave }}</span>
             </div>
         </div>
     </div>
@@ -60,7 +74,17 @@
             const sceneContainer = ref<HTMLDivElement | null>(null)
             let scene = ref<GameScene | null>(null)
             const isLoading = ref(true)
+            let loadingText = ref('Loading')
             const showMenu = ref(false)
+
+            const highScore = ref(0)
+            const currentScore = ref(0)
+            const currentLives = ref(3)
+            const livesAmount = ref(3)
+            const currentWave = ref(1)
+            const currentAmmo = ref(0)
+            const ammoAmount = ref(0)
+
             const selectedButtonIndex = ref(0)
             const options = ref([
                 { label: 'RESUME', action: 'resume' },
@@ -70,12 +94,51 @@
             const initScene = () => {
                 scene = new GameScene(sceneContainer.value, {
                     setLoading: setLoading,
+                    setHighScore: setHighScore,
+                    setCurrentScore: setCurrentScore,
+                    setCurrentLives: setCurrentLives,
+                    setLivesAmount: setLivesAmount,
+                    setCurrentWave: setCurrentWave,
+                    setCurrentAmmo: setCurrentAmmo,
+                    setAmmoAmount: setAmmoAmount,
                     onGameOver: () => {
                         setMenuScene('start')
                         setScene('menu')
                     },
                 })
                 scene.start()
+            }
+
+            const setHighScore = (value) => {
+                highScore.value = value
+            }
+
+            const setCurrentScore = (value) => {
+                currentScore.value = value
+
+                if (value > highScore.value) {
+                    highScore.value = value
+                }
+            }
+
+            const setCurrentLives = (value) => {
+                currentLives.value = value
+            }
+
+            const setLivesAmount = (value) => {
+                livesAmount.value = value
+            }
+
+            const setCurrentWave = (value) => {
+                currentWave.value = value
+            }
+
+            const setCurrentAmmo = (value) => {
+                currentAmmo.value = value
+            }
+
+            const setAmmoAmount = (value) => {
+                ammoAmount.value = value
             }
 
             const setLoading = (value) => {
@@ -154,6 +217,21 @@
 
             onMounted(() => {
                 window.addEventListener('keydown', handleKeyPress)
+
+                const loadingStates = [
+                    'Loading',
+                    'Loading.',
+                    'Loading..',
+                    'Loading...',
+                ]
+
+                let currentIndex = 0
+
+                setInterval(() => {
+                    currentIndex = (currentIndex + 1) % loadingStates.length
+                    loadingText.value = loadingStates[currentIndex]
+                }, 700)
+
                 initScene()
             })
 
@@ -170,6 +248,14 @@
                 selectedButtonIndex,
                 selectButton,
                 handleButtonClick,
+                loadingText,
+                highScore,
+                currentScore,
+                currentLives,
+                livesAmount,
+                currentWave,
+                currentAmmo,
+                ammoAmount,
             }
         },
     }
@@ -177,13 +263,19 @@
 
 <style>
     .loading {
+        font-family: 'Press Start 2P';
         position: absolute;
         color: white;
-        top: 50%;
-        left: 50%;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        background-color: black;
+        justify-content: center;
+        align-items: center;
         font-size: 3rem;
-        font-family: 'Press Start 2P';
-        transform: translate(-50%, -50%);
+        z-index: 10;
     }
 
     .hud {

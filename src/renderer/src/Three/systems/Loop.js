@@ -30,12 +30,6 @@ class Loop {
         const delta = clock.getDelta()
         for (const object of this.objectsToUpdate) {
             object.tick(delta)
-
-            if (object.isAlive && !object.isAlive()) {
-                this.objectsToUpdate = this.objectsToUpdate.filter(
-                    (obj) => obj !== object
-                )
-            }
         }
     }
 }

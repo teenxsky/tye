@@ -41,6 +41,7 @@
 
 body {
     height: 100vh;
+    width: 100vw;
     /* filter: blur(1px); */
     overflow: hidden;
 }
@@ -70,6 +71,11 @@ body {
 .highlighted {
     color: rgb(240, 230, 20);
     text-shadow: rgb(250, 0, 10) 6px 6px 0;
+}
+
+.alert {
+    color: rgb(250, 0, 10);
+    text-shadow: rgb(240, 230, 20) 6px 6px 0;
 }
 
 .v-enter-active,
