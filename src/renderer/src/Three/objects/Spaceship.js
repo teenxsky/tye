@@ -11,12 +11,14 @@ class Spaceship {
             gltf: null,
         }
 
+        this.handlers = handlers
+
         gltfLoader.load(
             model.url,
             (gltf) => {
                 model.gltf = gltf
                 this.model = model
-                handlers.onLoaded(this)
+                this.handlers.onLoaded(this)
             },
             undefined,
             (error) => {
@@ -29,6 +31,18 @@ class Spaceship {
         return this.root.position
     }
 
+    set position(position) {
+        this.root.position.copy(position)
+    }
+
+    get rotation() {
+        return this.root.rotation
+    }
+
+    set rotation(rotation) {
+        this.root.rotation.copy(rotation)
+    }
+
     addToScene(scene) {
         const clonedScene = SkeletonUtils.clone(this.model.gltf.scene)
         this.root = new THREE.Object3D()
@@ -36,8 +50,8 @@ class Spaceship {
         scene.add(this.root)
     }
 
-    setPos(x, y, z) {
-        this.root.position.set(x, y, z)
+    setPosition(position) {
+        this.root.position.copy(position)
     }
 
     translateX(distance) {
@@ -66,6 +80,16 @@ class Spaceship {
 
     rotateZ(angle) {
         this.root.rotateZ(angle)
+    }
+
+    reset() {
+        this.root.visible = true
+    }
+
+    destroy() {
+        // this.handlers.removeObjectFromScene(this.model.gltf.scene)
+        // this.handlers.removeObjectFromScene(this.root)
+        this.root.visible = false
     }
 }
 

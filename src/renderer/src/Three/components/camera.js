@@ -2,14 +2,42 @@ import { PerspectiveCamera } from 'three'
 
 function createCamera() {
     const camera = new PerspectiveCamera(
-        35, // FOV = Field Of View
-        1, // Aspect ratio (dummy value)
-        0.1, // Near clipping plane
-        1000 // Far clipping plane
+        40,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
     )
 
-    // Move the camera back so we can view the scene
     camera.position.set(0, 0, 0)
+
+    camera.currentView = 'pov'
+
+    camera.changeView = () => {
+        if (camera.currentView === 'pov') {
+            camera.currentView = 'default'
+        } else if (camera.currentView === 'default') {
+            camera.currentView = 'top'
+        } else if (camera.currentView === 'top') {
+            camera.currentView = 'pov'
+        }
+
+        if (camera.currentView === 'default') {
+            camera.fov = 22
+            camera.position.set(0, 50, 80)
+            camera.rotation.set(0, 0, 0)
+            camera.rotateX(-Math.PI / 10)
+        } else if (camera.currentView === 'top') {
+            camera.fov = 40
+            camera.position.set(0, 0, 0)
+            camera.rotation.set(0, 0, 0)
+        } else if (camera.currentView === 'pov') {
+            camera.fov = 20
+        }
+        camera.updateProjectionMatrix()
+    }
+
+    camera.changeView()
+
     camera.tick = (delta) => {}
 
     return camera

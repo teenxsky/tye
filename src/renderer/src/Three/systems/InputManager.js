@@ -13,10 +13,12 @@ class InputManager {
             if (!keyState) {
                 return
             }
-            if (keyState.pressed !== pressed) {
-                keyState.pressed = pressed
-                keyState.justPressed = pressed
+
+            if (pressed && !keyState.pressed) {
+                keyState.justPressed = 1
             }
+
+            keyState.pressed = pressed
         }
 
         const setKeyFromKey = (key, pressed) => {
@@ -28,7 +30,16 @@ class InputManager {
         }
 
         addKey('ArrowLeft', 'left')
+        addKey('A', 'left')
+        addKey('a', 'left')
+        addKey('Ф', 'left')
+        addKey('ф', 'left')
         addKey('ArrowRight', 'right')
+        addKey('D', 'right')
+        addKey('d', 'right')
+        addKey('В', 'right')
+        addKey('в', 'right')
+        addKey(' ', 'shot') // Space
 
         window.addEventListener('keydown', (e) => {
             setKeyFromKey(e.key, true)
@@ -40,8 +51,12 @@ class InputManager {
 
     tick(delta) {
         for (const keyState of Object.values(this.keys)) {
-            if (keyState.justPressed) {
-                keyState.justPressed = false
+            if (keyState.justPressed > 0) {
+                keyState.justPressed++
+
+                if (keyState.justPressed > 2) {
+                    keyState.justPressed = 0
+                }
             }
         }
     }

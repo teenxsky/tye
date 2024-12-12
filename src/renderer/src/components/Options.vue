@@ -67,7 +67,7 @@
                     playSound(keySound)
                 } else if (
                     event.key === 'ArrowDown' ||
-                    event.key === 'S' ||
+                    event.key === 's' ||
                     event.key === 'S' ||
                     event.key === 'Ы' ||
                     event.key === 'ы'
