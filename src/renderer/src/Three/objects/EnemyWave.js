@@ -29,7 +29,7 @@ class EnemyWave {
         this.enemyModels = {}
         this.enemiesOnTheScene = []
 
-        this.waveSpeed = 2
+        this.waveSpeed = 1
 
         for (let i = 0; i < this.rows; i++) {
             this.enemyModels[i] = []
@@ -51,11 +51,13 @@ class EnemyWave {
         let maxX = 38
         for (let i = 0; i < rows; i++) {
             const spacing = (2 * maxX) / (this.cols - 1)
+            let enemies = []
             for (let j = 0; j < this.cols; j++) {
                 const enemy = this.enemyModels[i][j]
 
                 enemy.reset()
-                this.enemiesOnTheScene.push(enemy)
+                // this.enemiesOnTheScene.push(enemy)
+                enemies.push(enemy)
 
                 const position = new THREE.Vector3(
                     -maxX + j * spacing,
@@ -73,6 +75,8 @@ class EnemyWave {
 
                 enemy.position = position
             }
+            this.enemiesOnTheScene.push(enemies)
+            console.log(this.enemiesOnTheScene)
             maxX += 8
         }
 
@@ -82,7 +86,7 @@ class EnemyWave {
     startShooting(shootingInterval) {
         for (let j = 0; j < this.cols; j++) {
             for (let i = 0; i < this.rows; i++) {
-                const enemy = this.enemiesOnTheScene[i * this.cols + j]
+                const enemy = this.enemiesOnTheScene[i][j]
                 if (enemy.visible) {
                     enemy.setShootingInterval(
                         Math.random() * shootingInterval + shootingInterval / 2
@@ -95,19 +99,22 @@ class EnemyWave {
     }
 
     moveWave(delta) {
-        for (const enemy of this.enemiesOnTheScene) {
-            if (!enemy.visible) {
-                continue
-            }
+        for (let i = 0; i < this.enemiesOnTheScene.length; i++) {
+            for (let j = 0; j < this.enemiesOnTheScene[i].length; j++) {
+                const enemy = this.enemiesOnTheScene[i][j]
+                if (!enemy.visible) {
+                    continue
+                }
 
-            const velocity = new THREE.Vector3(
-                0,
-                0,
-                Math.cos(Math.atan2(-enemy.position.x, 50))
-            )
-            enemy.position.add(
-                velocity.clone().multiplyScalar(delta * this.waveSpeed)
-            )
+                const velocity = new THREE.Vector3(
+                    0,
+                    0,
+                    Math.cos(Math.atan2(-enemy.position.x, 50))
+                )
+                enemy.position.add(
+                    velocity.clone().multiplyScalar(delta * this.waveSpeed / 3) // wtf is this
+                )
+            }
         }
     }
 
