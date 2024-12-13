@@ -4,7 +4,13 @@ import { shotSound, playSound } from '@renderer/components/Audio'
 import { createExplosion } from './explosion.js'
 
 class Laser extends THREE.Mesh {
-    constructor(position, rotation, handlers, color = 0x74d600) {
+    constructor(
+        position,
+        rotation,
+        handlers,
+        reverseShooting = false,
+        color = 0x74d600
+    ) {
         const geometry = new THREE.BoxGeometry(0.3, 0.3, 5)
         const material = new THREE.MeshBasicMaterial({ color: color })
         super(geometry, material)
@@ -13,7 +19,7 @@ class Laser extends THREE.Mesh {
 
         this.isAlive = true
 
-        this.maxDistance = Math.random() * 200 + 200
+        this.maxDistance = Math.random() * 400 + 300
         this.travelledDistance = 0
 
         this.position.copy(position)
@@ -26,6 +32,10 @@ class Laser extends THREE.Mesh {
             -Math.cos(angleZ) * 50
         )
 
+        if (reverseShooting) {
+            this.velocity.multiplyScalar(-1)
+        }
+
         this.handlers.addObjectToScene(this)
 
         playSound(shotSound)
@@ -36,7 +46,7 @@ class Laser extends THREE.Mesh {
         this.position.add(this.velocity.clone().multiplyScalar(delta))
         this.travelledDistance += distance
 
-        if (this.travelledDistance >= this.maxDistance) {
+        if (Math.abs(this.travelledDistance) >= this.maxDistance) {
             this.explode()
         }
     }

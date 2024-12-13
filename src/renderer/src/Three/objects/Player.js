@@ -19,8 +19,6 @@ class Player extends Spaceship {
 
         this.maxX = 18
 
-        this.lasers = []
-
         this.ammoAmount = 10
         this.currentAmmo = this.ammoAmount
 
@@ -79,12 +77,7 @@ class Player extends Spaceship {
             this.shot()
         }
 
-        for (const laser of this.lasers) {
-            if (!laser.isAlive) {
-                console.log('removing laser')
-                this.lasers.splice(this.lasers.indexOf(laser), 1)
-            }
-        }
+        this.removeUnusedObjects()
 
         this.regenAmmo(delta)
 

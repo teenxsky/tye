@@ -19,10 +19,11 @@ function createSpace(starsCount = 1500) {
     // ]
 
     const starColors = [
-        new THREE.Color(0x062987),
-        new THREE.Color(0x0548c6),
-        new THREE.Color(0xefbe0a),
-        new THREE.Color(0xe10430),
+        new THREE.Color(0xffffff),
+        // new THREE.Color(0x062987),
+        // new THREE.Color(0x0548c6),
+        // new THREE.Color(0xefbe0a),
+        // new THREE.Color(0xe10430),
     ]
 
     for (let i = 0; i < starsCount; i++) {

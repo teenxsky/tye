@@ -7,13 +7,14 @@ class Enemy extends Spaceship {
 
         this.speed = 20
 
-        this.lasers = []
-
         this.scoreOnDestroy = 10
 
         this.shakeAmplitude = 0.03
         this.shakeFrequency = 3
         this.elapsedTime = 0
+
+        this.shootingInterval = null
+        this.timeToNextShot = 0
     }
 
     lookAt(target) {
@@ -21,7 +22,29 @@ class Enemy extends Spaceship {
         this.rotateX((-8 * Math.PI) / 20)
     }
 
+    shot() {
+        const position = this.position.clone()
+        const rotation = this.rotation.clone()
+        const laser = new Laser(
+            position,
+            rotation,
+            this.handlers,
+            true,
+            0xff0000
+        )
+        this.lasers.push(laser)
+    }
+
+    setShootingInterval(shootingInterval) {
+        this.shootingInterval = shootingInterval
+        this.timeToNextShot = this.shootingInterval
+    }
+
     tick(delta) {
+        if (!this.root.visible) {
+            return
+        }
+
         this.elapsedTime += delta
 
         const shakeOffsetY =
@@ -33,6 +56,23 @@ class Enemy extends Spaceship {
             Math.cos(this.elapsedTime * this.shakeFrequency) *
             this.shakeAmplitude
         this.translateX(shakeOffsetX)
+
+        if (this.shootingInterval !== null) {
+            this.timeToNextShot -= delta * 1000
+            if (this.timeToNextShot <= 0) {
+                this.shot()
+                this.setShootingInterval(this.shootingInterval)
+            }
+        }
+
+        this.removeUnusedObjects()
+    }
+
+    reset() {
+        super.reset()
+        this.lasers = []
+        this.shootingInterval = null
+        this.timeToNextShot = 0
     }
 }
 

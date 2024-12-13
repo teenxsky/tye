@@ -16,31 +16,23 @@ class GameProcess {
         this.handlers.setCurrentAmmo(this.player.currentAmmo)
         this.handlers.setAmmoAmount(this.player.ammoAmount)
 
-        this.generateWave()
-    }
-
-    generateWave() {
-        this.enemyWave.generateWave(this.player.position)
+        this.generateNextWave()
     }
 
     enemyShot(enemy, laser) {
         laser.explode()
         enemy.destroy()
-        this.enemyWave.enemiesOnTheScene.splice(
-            this.enemyWave.enemiesOnTheScene.indexOf(enemy),
-            1
-        )
+        this.enemyWave.startShooting(5000 - this.currentWave * 100)
         this.currentScore += enemy.scoreOnDestroy
         this.handlers.setCurrentScore(this.currentScore)
     }
 
     playerShot(player, laser) {
         laser.explode()
-        player.destroy()
         this.currentLives -= 1
         this.handlers.setCurrentLives(this.currentLives)
         if (this.currentLives === 0) {
-            this.handlers.gameOver()
+            this.gameOver()
         }
     }
 
@@ -59,7 +51,9 @@ class GameProcess {
             enemy.lookAt(this.player.position)
 
             for (const laser of enemy.lasers) {
-                if (laser.position.distanceTo(this.player.root.position) < 2) {
+                if (
+                    laser.position.distanceTo(this.player.root.position) < 3.5
+                ) {
                     if (this.player.visible) {
                         this.playerShot(this.player, laser)
                     }
@@ -68,18 +62,28 @@ class GameProcess {
         }
     }
 
+    generateNextWave() {
+        this.currentWave += 1
+        this.handlers.setCurrentWave(this.currentWave)
+        this.enemyWave.generateWave(
+            Math.max(4 + this.currentWave, 10),
+            5000 - this.currentWave * 100,
+            this.player.position
+        )
+    }
+
     gameOver() {
-        console.log('Game Over')
+        this.player.destroy()
     }
 
     tick(delta) {
         this.intersetcts()
         this.handlers.setCurrentAmmo(this.player.currentAmmo)
 
+        this.enemyWave.moveWave(delta)
+
         if (this.enemyWave.enemiesOnTheScene.length === 0) {
-            this.currentWave += 1
-            this.handlers.setCurrentWave(this.currentWave)
-            this.generateWave()
+            this.generateNextWave()
         }
     }
 }
