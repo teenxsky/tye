@@ -63,8 +63,10 @@ class EnemyWave {
                     -70 + playerPosition.z - i * 40
                 )
 
+                enemy.rotationX = (-8 * Math.PI) / 20
+
                 enemy.rotation = new THREE.Euler(
-                    (-8 * Math.PI) / 20,
+                    enemy.rotationX,
                     0,
                     Math.atan2(-position.x, 50)
                 )

@@ -106,7 +106,6 @@
         font-family: 'Press Start 2P';
         text-align: center;
         display: flex;
-        background-color: black;
         flex-direction: column;
         align-items: center;
         justify-content: center;

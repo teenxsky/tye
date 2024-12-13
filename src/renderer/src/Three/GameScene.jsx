@@ -77,6 +77,11 @@ class GameScene {
 
     }
 
+    gameOver() {
+        this.stop()
+        this.handlers.gameOver()
+    }
+
     onObjectLoaded(obj) {
         obj.addToScene(scene)
         loop.objectsToUpdate.push(obj)
@@ -93,6 +98,7 @@ class GameScene {
             setCurrentWave: this.setCurrentWave.bind(this),
             setCurrentAmmo: this.setCurrentAmmo.bind(this),
             setAmmoAmount: this.setAmmoAmount.bind(this),
+            gameOver: this.gameOver.bind(this)
 
         }
 

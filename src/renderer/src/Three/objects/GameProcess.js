@@ -1,3 +1,5 @@
+import { lostLiveSound, playSound } from '@renderer/components/Audio'
+
 class GameProcess {
     constructor(player, enemyWave, handlers) {
         this.player = player
@@ -33,6 +35,8 @@ class GameProcess {
         this.handlers.setCurrentLives(this.currentLives)
         if (this.currentLives === 0) {
             this.gameOver()
+        } else {
+            playSound(lostLiveSound)
         }
     }
 
@@ -49,6 +53,11 @@ class GameProcess {
 
         for (const enemy of this.enemyWave.enemiesOnTheScene) {
             enemy.lookAt(this.player.position)
+
+            if (enemy.position.z > this.player.position.z) {
+                this.playerShot(this.player, enemy)
+                this.enemyShot(enemy, this.player)
+            }
 
             for (const laser of enemy.lasers) {
                 if (
@@ -73,6 +82,7 @@ class GameProcess {
     }
 
     gameOver() {
+        this.handlers.gameOver()
         this.player.destroy()
     }
 

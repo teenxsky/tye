@@ -4,6 +4,7 @@ import {
     startTheme,
     optionsTheme,
     gameTheme,
+    gameOverTheme,
     stopSound,
     playSound,
 } from './Audio'

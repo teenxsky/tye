@@ -13,6 +13,8 @@ class Enemy extends Spaceship {
         this.shakeFrequency = 3
         this.elapsedTime = 0
 
+        this.rotationX = 0
+
         this.shootingInterval = null
         this.timeToNextShot = 0
     }

@@ -61,8 +61,8 @@ function createSpace(starsCount = 1500) {
         for (let i = 0; i < positions.length; i += 3) {
             positions[i + 2] += speed
 
-            if (positions[i + 2] > 0) {
-                positions[i + 2] = -1000
+            if (positions[i + 2] > 10) {
+                positions[i + 2] = -1000 + (positions[i + 2] % 1000)
             }
         }
 

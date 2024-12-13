@@ -3,6 +3,12 @@
         <div v-if="isLoading" class="loading non-highlighted">
             {{ loadingText }}
         </div>
+        <div v-if="isGameOver">
+            <GameOver
+                :currentScore="currentScore"
+                :highScore="highScore"
+            ></GameOver>
+        </div>
         <div class="hud">
             <div class="hud__block">
                 <div class="hud__item highlighted">
@@ -64,13 +70,18 @@
         playSound,
         keyEnterSound,
         keySound,
+        music,
+        stopSound,
+        gameOverTheme,
     } from '@renderer/components/Audio'
     import Button from './Button.vue'
+    import GameOver from './GameOver.vue'
 
     export default {
         name: 'Game',
         components: {
             Button,
+            GameOver,
         },
         setup() {
             const sceneContainer = ref<HTMLDivElement | null>(null)
@@ -86,6 +97,8 @@
             const currentWave = ref(1)
             const currentAmmo = ref(0)
             const ammoAmount = ref(0)
+
+            const isGameOver = ref(false)
 
             const selectedButtonIndex = ref(0)
             const options = ref([
@@ -103,12 +116,21 @@
                     setCurrentWave: setCurrentWave,
                     setCurrentAmmo: setCurrentAmmo,
                     setAmmoAmount: setAmmoAmount,
+                    gameOver: gameOver,
                     onGameOver: () => {
                         setMenuScene('start')
                         setScene('menu')
                     },
                 })
                 scene.start()
+            }
+
+            const gameOver = () => {
+                isGameOver.value = true
+                for (const theme of music) {
+                    stopSound(theme)
+                }
+                playSound(gameOverTheme)
             }
 
             const setHighScore = (value) => {
@@ -176,7 +198,11 @@
                         (selectedButtonIndex.value + 1) % options.value.length
                     playSound(keySound)
                 } else if (event.key === 'Escape') {
-                    if (showMenu.value) {
+                    if (isGameOver.value) {
+                        setMenuScene('start')
+                        setScene('menu')
+                        playSound(keyEnterSound)
+                    } else if (showMenu.value) {
                         resumeGame()
                     } else {
                         showMenu.value = true
@@ -258,6 +284,7 @@
                 currentWave,
                 currentAmmo,
                 ammoAmount,
+                isGameOver,
             }
         },
     }
