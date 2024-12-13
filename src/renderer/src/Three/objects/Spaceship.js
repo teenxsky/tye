@@ -50,10 +50,6 @@ class Spaceship {
         scene.add(this.root)
     }
 
-    setPosition(position) {
-        this.root.position.copy(position)
-    }
-
     translateX(distance) {
         this.root.translateX(distance)
     }
@@ -80,6 +76,14 @@ class Spaceship {
 
     rotateZ(angle) {
         this.root.rotateZ(angle)
+    }
+
+    get visible() {
+        return this.root.visible
+    }
+
+    set visible(value) {
+        this.root.visible = value
     }
 
     reset() {

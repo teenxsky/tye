@@ -16,6 +16,11 @@ class Enemy extends Spaceship {
         this.elapsedTime = 0
     }
 
+    lookAt(target) {
+        this.root.lookAt(target)
+        this.rotateX((-8 * Math.PI) / 20)
+    }
+
     tick(delta) {
         this.elapsedTime += delta
 

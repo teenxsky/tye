@@ -26,7 +26,7 @@ class Player extends Spaceship {
 
         this.elapsedTime = 0
 
-        this.ammoRegenRate = 0.1
+        this.ammoRegenRate = 1
     }
 
     computePosition() {
@@ -81,7 +81,8 @@ class Player extends Spaceship {
 
         for (const laser of this.lasers) {
             if (!laser.isAlive) {
-                this.lasers.filter((l) => l !== laser)
+                console.log('removing laser')
+                this.lasers.splice(this.lasers.indexOf(laser), 1)
             }
         }
 

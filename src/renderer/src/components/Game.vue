@@ -1,53 +1,55 @@
 <template>
-    <div v-if="isLoading" class="loading non-highlighted">
-        {{ loadingText }}
-    </div>
-    <div class="hud">
-        <div class="hud__block">
-            <div class="hud__item highlighted">
-                <span>HI </span>
-                <span>{{ highScore }}</span>
+    <div class="game-container">
+        <div v-if="isLoading" class="loading non-highlighted">
+            {{ loadingText }}
+        </div>
+        <div class="hud">
+            <div class="hud__block">
+                <div class="hud__item highlighted">
+                    <span>HI </span>
+                    <span>{{ highScore }}</span>
+                </div>
+                <div class="hud__item non-highlighted">
+                    <span>SC </span>
+                    <span>{{ currentScore }}</span>
+                </div>
             </div>
-            <div class="hud__item non-highlighted">
-                <span>SC </span>
-                <span>{{ currentScore }}</span>
+            <div class="hud__block align-right">
+                <div class="hud__item">
+                    <span class="highlighted">AMMO </span>
+                    <span
+                        class="non-highlighted"
+                        :class="{ unavailable: currentAmmo === 0 }"
+                        >{{ currentAmmo }}/{{ ammoAmount }}</span
+                    >
+                </div>
+            </div>
+            <div class="hud__block align-right">
+                <div class="hud__item">
+                    <span class="highlighted">LIVES </span>
+                    <span class="non-highlighted"
+                        >{{ currentLives }}/{{ livesAmount }}</span
+                    >
+                </div>
+                <div class="hud__item">
+                    <span class="highlighted">WAVE </span>
+                    <span class="non-highlighted">{{ currentWave }}</span>
+                </div>
             </div>
         </div>
-        <div class="hud__block align-right">
-            <div class="hud__item">
-                <span class="highlighted">AMMO </span>
-                <span
-                    class="non-highlighted"
-                    :class="{ alert: currentAmmo === 0 }"
-                    >{{ currentAmmo }}/{{ ammoAmount }}</span
-                >
-            </div>
+        <div v-if="showMenu" class="menu">
+            <Button
+                v-for="(button, index) in menuOptions"
+                :key="index"
+                :isSelected="selectedButtonIndex === index"
+                @select="selectButton(index)"
+                @click="handleButtonClick(index)"
+            >
+                {{ button.label }}
+            </Button>
         </div>
-        <div class="hud__block align-right">
-            <div class="hud__item">
-                <span class="highlighted">LIVES </span>
-                <span class="non-highlighted"
-                    >{{ currentLives }}/{{ livesAmount }}</span
-                >
-            </div>
-            <div class="hud__item">
-                <span class="highlighted">WAVE </span>
-                <span class="non-highlighted">{{ currentWave }}</span>
-            </div>
-        </div>
+        <div ref="sceneContainer" class="scene-container"></div>
     </div>
-    <div v-if="showMenu" class="menu">
-        <Button
-            v-for="(button, index) in menuOptions"
-            :key="index"
-            :isSelected="selectedButtonIndex === index"
-            @select="selectButton(index)"
-            @click="handleButtonClick(index)"
-        >
-            {{ button.label }}
-        </Button>
-    </div>
-    <div ref="sceneContainer" class="scene-container"></div>
 </template>
 
 <script lang="ts">
@@ -262,6 +264,10 @@
 </script>
 
 <style>
+    .game-container {
+        background-color: black;
+    }
+
     .loading {
         font-family: 'Press Start 2P';
         position: absolute;

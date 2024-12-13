@@ -26,8 +26,10 @@ class GameProcess {
     enemyShot(enemy, laser) {
         laser.explode()
         enemy.destroy()
-        this.enemyWave.enemiesOnTheScene =
-            this.enemyWave.enemiesOnTheScene.filter((e) => e !== enemy)
+        this.enemyWave.enemiesOnTheScene.splice(
+            this.enemyWave.enemiesOnTheScene.indexOf(enemy),
+            1
+        )
         this.currentScore += enemy.scoreOnDestroy
         this.handlers.setCurrentScore(this.currentScore)
     }
@@ -46,15 +48,21 @@ class GameProcess {
         for (const laser of this.player.lasers) {
             for (const enemy of this.enemyWave.enemiesOnTheScene) {
                 if (laser.position.distanceTo(enemy.root.position) < 2) {
-                    this.enemyShot(enemy, laser)
+                    if (enemy.visible) {
+                        this.enemyShot(enemy, laser)
+                    }
                 }
             }
         }
 
         for (const enemy of this.enemyWave.enemiesOnTheScene) {
+            enemy.lookAt(this.player.position)
+
             for (const laser of enemy.lasers) {
                 if (laser.position.distanceTo(this.player.root.position) < 2) {
-                    this.playerShot(this.player, laser)
+                    if (this.player.visible) {
+                        this.playerShot(this.player, laser)
+                    }
                 }
             }
         }

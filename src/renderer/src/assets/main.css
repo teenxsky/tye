@@ -73,9 +73,9 @@ body {
     text-shadow: rgb(250, 0, 10) 6px 6px 0;
 }
 
-.alert {
+.unavailable {
     color: rgb(250, 0, 10);
-    text-shadow: rgb(240, 230, 20) 6px 6px 0;
+    text-shadow: rgb(130, 0, 4) 6px 6px 0;
 }
 
 .v-enter-active,

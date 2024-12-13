@@ -26,45 +26,57 @@ class EnemyWave {
             [enemyModel_4]: 20,
         }
 
-        this.enemies = []
+        this.enemyModels = {}
         this.enemiesOnTheScene = []
 
-        for (let i = 0; i < this.rows * this.cols; i++) {
-            const url = this.enemyModelsURL[i % this.enemyModelsURL.length]
-            const enemy = new Enemy(url, this.handlers, this.manager)
-            enemy.scoreOnDestroy = this.enemyScores[url]
-            this.enemies.push(enemy)
+        // for (let i = 0; i < this.rows * this.cols; i++) {
+        //     const url = this.enemyModelsURL[i % this.enemyModelsURL.length]
+        //     const enemy = new Enemy(url, this.handlers, this.manager)
+        //     enemy.scoreOnDestroy = this.enemyScores[url]
+        //     this.enemyModels[url] = enemy
+        // }
+
+        for (let i = 0; i < this.rows; i++) {
+            this.enemyModels[i] = []
+
+            for (let j = 0; j < this.cols; j++) {
+                const url = this.enemyModelsURL[i % this.enemyModelsURL.length]
+                const enemy = new Enemy(url, this.handlers, this.manager)
+                enemy.scoreOnDestroy = this.enemyScores[url]
+                this.enemyModels[i].push(enemy)
+            }
         }
     }
 
     generateWave(playerPosition = new THREE.Vector3(0, 0, 0)) {
-        const maxX = 37
-        const spacing = (2 * maxX) / (this.cols - 1)
-        for (let row = 0; row < this.rows; row++) {
-            for (let col = 0; col < this.cols; col++) {
-                const enemy = this.enemies[row * this.cols + col]
+        let maxX = 36
+        for (let i = 0; i < this.rows; i++) {
+            const spacing = (2 * maxX) / (this.cols - 1)
+            for (let j = 0; j < this.cols; j++) {
+                const enemy = this.enemyModels[i][j]
 
                 enemy.reset()
                 this.enemiesOnTheScene.push(enemy)
 
                 const position = new THREE.Vector3(
-                    -maxX + spacing * col - enemy.root.scale.x / 2,
+                    -maxX + j * spacing,
                     -10,
-                    -50 + playerPosition.z - row * 40
+                    -50 + playerPosition.z - i * 40
                 )
 
-                enemy.rotateY(Math.atan2(-position.x, 50))
-                enemy.rotateX((-8 * Math.PI) / 20)
-                enemy.setPosition(position)
+                enemy.rotation = new THREE.Euler(
+                    (-8 * Math.PI) / 20,
+                    0,
+                    Math.atan2(-position.x, 50)
+                )
+
+                enemy.position = position
             }
+            maxX += 8
         }
     }
 
-    tick(delta) {
-        for (const enemy of this.enemies) {
-            enemy.tick(delta)
-        }
-    }
+    tick(delta) {}
 }
 
 export { EnemyWave }

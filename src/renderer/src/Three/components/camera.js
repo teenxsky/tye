@@ -31,7 +31,7 @@ function createCamera() {
             camera.position.set(0, 0, 0)
             camera.rotation.set(0, 0, 0)
         } else if (camera.currentView === 'pov') {
-            camera.fov = 20
+            camera.fov = 50
         }
         camera.updateProjectionMatrix()
     }
