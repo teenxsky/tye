@@ -13,5 +13,11 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "allowImportingTsExtensions": true
-  }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ]
 }

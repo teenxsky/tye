@@ -1,4 +1,4 @@
-appId: com.electron.app
+appId: com.tye.app
 productName: tye
 directories:
   buildResources: build
