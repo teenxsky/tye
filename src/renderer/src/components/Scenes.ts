@@ -25,8 +25,21 @@ export const setMenuScene = (scene: string) => {
             }
             playSound(optionsTheme)
         }
+    } else if (scene === 'highscores') {
+        if (state.value.currentMenuScene !== 'highscores') {
+            for (const theme of music) {
+                stopSound(theme)
+            }
+            playSound(startTheme)
+        }
+    } else if (scene == 'lost-connection') {
+        if (state.value.currentMenuScene !== 'lost-connection') {
+            for (const theme of music) {
+                stopSound(theme)
+            }
+            playSound(startTheme)
+        }
     }
-
     state.value.currentMenuScene = scene
 }
 

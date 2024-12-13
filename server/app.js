@@ -5,9 +5,10 @@ import bpPkg from 'body-parser'
 import secureRoutes from './routes/secure.js'
 
 dotenv.config()
+const { MONGO_URI } = process.env
+const PORT = process.env.VITE_PORT
 const { urlencoded, json } = bpPkg
 const { connect, connection } = mgPkg
-const { MONGO_URI, PORT } = process.env
 
 const mongooseOptions = {
     serverSelectionTimeoutMS: 5000,
@@ -62,7 +63,7 @@ connection.on('timeout', async () => {
 })
 
 app.use(json())
-app.use(urlencoded({ extended: true }))
+app.use(urlencoded({ extended: false }))
 
 app.use('/', secureRoutes)
 

@@ -1,10 +1,10 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, Menu } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { startServer, stopServer } from '../../server/app.js'
 
-let server: any
+let server
 
 const startExpressServer = () => {
     if (server) {
@@ -18,7 +18,6 @@ const stopExpressServer = async () => {
     if (!server) {
         return
     }
-
     try {
         await stopServer()
         server = null
@@ -34,16 +33,52 @@ function createWindow(): void {
         width: 900,
         height: 700,
         show: false,
-        autoHideMenuBar: true,
+        // autoHideMenuBar: true,
         ...(process.platform === 'linux' ? { icon } : {}),
         webPreferences: {
             preload: join(__dirname, '../preload/index.js'),
             sandbox: false,
+            nodeIntegration: true,
+            contextIsolation: false,
+            // webSecurity: true,
+            // devTools: false, // TODO: DISABLE DEVTOOLS WHEN RELEASING
         },
         titleBarStyle: 'hidden',
         ...(process.platform !== 'darwin' ? { titleBarOverlay: true } : {}),
         trafficLightPosition: { x: 10, y: 10 },
     })
+
+    const template: Electron.MenuItemConstructorOptions[] = [
+        {
+            label: 'Tell Your Enemies',
+            submenu: [
+                { role: 'about' },
+                { type: 'separator' },
+                { role: 'hide' },
+                { role: 'hideOthers' },
+                { role: 'unhide' },
+                { type: 'separator' },
+                { role: 'quit' },
+            ],
+        },
+        {
+            label: 'Help',
+            submenu: [
+                {
+                    label: 'Documentation',
+                    click: () => {
+                        shell.openExternal('https://github.com/teenxsky/tye')
+                    },
+                },
+            ],
+        },
+    ]
+
+    if (process.platform === 'darwin') {
+        Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+    } else {
+        Menu.setApplicationMenu(null)
+    }
 
     mainWindow.on('ready-to-show', () => {
         mainWindow.show()
@@ -66,6 +101,16 @@ function createWindow(): void {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+
+app.setAboutPanelOptions({
+    iconPath: join(__dirname, '../../resources/icon.png'),
+    applicationName: 'Tell Your Enemies',
+    applicationVersion: '1.0.0',
+    version: '1.0.0',
+    credits: 'by Roman Sokolovsky, Kutorgin Ruslan,\nArtem Svirin',
+    copyright: 'Copyright ',
+})
+
 app.whenReady().then(() => {
     // Set app user model id for windows
     electronApp.setAppUserModelId('com.electron')

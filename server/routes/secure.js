@@ -92,10 +92,12 @@ router.get(
     '/scores',
     signatureMiddleware,
     asyncMiddleware(async (req, res, next) => {
+        res.setHeader('Content-Type', 'application/json')
         try {
             const users = await UserModel.find({}, 'username highScore -_id')
                 .sort({ highScore: -1, username: 1 })
                 .limit(MAX_RECORDS)
+
             res.status(200).json(users)
         } catch {
             res.status(500).json()

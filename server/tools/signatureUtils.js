@@ -1,8 +1,7 @@
 import crypto from 'crypto'
-import dotenv from 'dotenv'
 
-dotenv.config()
-const { API_KEY, PRIVATE_KEY } = process.env
+const API_KEY = import.meta.env.VITE_API_KEY
+const PRIVATE_KEY = import.meta.env.VITE_PRIVATE_KEY
 
 function createStringToSign(method, path, timestamp, requestId, headers, body) {
     const canonicalHeaders = Object.keys(headers)

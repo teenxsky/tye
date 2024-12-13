@@ -5,18 +5,6 @@ import { createStringToSign } from '../tools/signatureUtils.js'
 dotenv.config()
 const { PUBLIC_KEY } = process.env
 
-// const usedRequestIds = new Map()
-
-// TODO: добавить node-cache, чтобы кешировать requestId
-// setInterval(() => {
-//     const fiveSecondsAgo = Date.now() - 5 * 1000
-//     for (const [requestId, timestamp] of usedRequestIds) {
-//         if (timestamp < fiveSecondsAgo) {
-//             usedRequestIds.delete(requestId)
-//         }
-//     }
-// }, 30 * 1000)
-
 function validateSignature(req, res, next) {
     try {
         const signature = req.headers['x-signature']

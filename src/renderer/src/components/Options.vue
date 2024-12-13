@@ -40,6 +40,8 @@ export default {
             playSound(keyEnterSound)
             if (options.value[index].label === 'SETTINGS') {
                 setMenuScene('settings')
+            } else if (options.value[index].label === 'HIGHSCORES') {
+                setMenuScene('highscores')
             } else {
                 // Handle other button clicks if needed
             }
@@ -60,7 +62,7 @@ export default {
             } else if (
                 event.key === 'ArrowDown' ||
                 event.key === 'S' ||
-                event.key === 'S' ||
+                event.key === 's' ||
                 event.key === 'Ы' ||
                 event.key === 'ы'
             ) {

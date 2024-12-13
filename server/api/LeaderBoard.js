@@ -1,8 +1,5 @@
-import dotenv from 'dotenv'
 import { makeSignature } from '../tools/signatureUtils.js'
-
-dotenv.config()
-const { PORT } = process.env
+const PORT = import.meta.env.VITE_PORT
 
 async function getScores(timeoutMs = 3500) {
     const controller = new AbortController()
@@ -13,7 +10,6 @@ async function getScores(timeoutMs = 3500) {
         const path = '/scores'
 
         const { signature, headers } = makeSignature(method, path)
-
         const response = await fetch(`http://localhost:${PORT}${path}`, {
             method: method,
             headers: {
@@ -203,15 +199,4 @@ async function setScore(username, score, timeoutMs = 3500) {
     }
 }
 
-// const isExist = await usernameIsExist('gando')
-// await setScore('zurab', 524)
-const isTop = await isTopScore(523)
-const isUnique = await usernameIsUnique('zzrab')
-const topRank = await getPlayerRank('zzrab', 524)
-const scores = await getScores()
-
-console.log(isTop, topRank)
-console.log(isUnique)
-console.log(scores)
-
-// export { getScores, usernameIsExist, isTopScore, setScore }
+export { getScores, usernameIsUnique, getPlayerRank, isTopScore, setScore }

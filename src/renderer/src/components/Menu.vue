@@ -3,6 +3,8 @@
         <Start v-if="state.currentMenuScene === 'start'" />
         <Options v-else-if="state.currentMenuScene === 'options'" />
         <Settings v-else-if="state.currentMenuScene === 'settings'" />
+        <Highscores v-else-if="state.currentMenuScene === 'highscores'" />
+        <LostConnection v-else-if="state.currentMenuScene === 'lost-connection'" />
     </Transition>
     <div ref="sceneContainer" class="scene-container"></div>
 </template>
@@ -15,6 +17,8 @@ import Start from '@renderer/components/Start.vue'
 import Options from '@renderer/components/Options.vue'
 import Settings from '@renderer/components/Settings.vue'
 import { MenuScene } from '@renderer/Three/MenuScene.jsx'
+import Highscores from '@renderer/components/Highscores.vue'
+import LostConnection from '@renderer/components/LostConnection.vue'
 
 export default {
     name: 'Menu',
@@ -22,6 +26,8 @@ export default {
         Start,
         Options,
         Settings,
+        Highscores,
+        LostConnection,
     },
     setup() {
         const sceneContainer = ref<HTMLDivElement | null>(null)
