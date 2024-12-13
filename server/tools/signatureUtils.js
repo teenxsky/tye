@@ -1,4 +1,7 @@
-import crypto from 'crypto'
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-require-imports */
+require('dotenv').config()
+const crypto = require('crypto')
 
 const API_KEY = import.meta.env.VITE_API_KEY
 const PRIVATE_KEY = import.meta.env.VITE_PRIVATE_KEY
