@@ -48,6 +48,7 @@ class GameScene {
         }
 
         loadingManager.onStart = (url, itemsLoaded, itemsTotal) => {
+            this.handlers.setLoading(true)
             // console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.')
         }
 

@@ -19,14 +19,12 @@ class Player extends Spaceship {
 
         this.maxX = 18
 
-        this.lasers = []
-
         this.ammoAmount = 10
         this.currentAmmo = this.ammoAmount
 
         this.elapsedTime = 0
 
-        this.ammoRegenRate = 0.1
+        this.ammoRegenRate = 1
     }
 
     computePosition() {
@@ -79,11 +77,7 @@ class Player extends Spaceship {
             this.shot()
         }
 
-        for (const laser of this.lasers) {
-            if (!laser.isAlive) {
-                this.lasers.filter((l) => l !== laser)
-            }
-        }
+        this.removeUnusedObjects()
 
         this.regenAmmo(delta)
 

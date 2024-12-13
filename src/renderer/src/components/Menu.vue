@@ -1,10 +1,12 @@
 <template>
-    <Transition>
-        <Start v-if="state.currentMenuScene === 'start'" />
-        <Options v-else-if="state.currentMenuScene === 'options'" />
-        <Settings v-else-if="state.currentMenuScene === 'settings'" />
-    </Transition>
-    <div ref="sceneContainer" class="scene-container"></div>
+    <div class="menu-container">
+        <Transition>
+            <Start v-if="state.currentMenuScene === 'start'" />
+            <Options v-else-if="state.currentMenuScene === 'options'" />
+            <Settings v-else-if="state.currentMenuScene === 'settings'" />
+        </Transition>
+        <div ref="sceneContainer" class="scene-container"></div>
+    </div>
 </template>
 
 <script lang="ts">

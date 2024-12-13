@@ -6,7 +6,7 @@ import enemyModel_3 from '@renderer/assets/fighters/fighter04/result.gltf'
 import enemyModel_4 from '@renderer/assets/fighters/fighter05/result.gltf'
 
 class EnemyWave {
-    constructor(handlers, manager, rows = 5, cols = 10) {
+    constructor(handlers, manager, rows = 10, cols = 10) {
         this.manager = manager
         this.handlers = handlers
         this.rows = rows
@@ -26,45 +26,90 @@ class EnemyWave {
             [enemyModel_4]: 20,
         }
 
-        this.enemies = []
+        this.enemyModels = {}
         this.enemiesOnTheScene = []
 
-        for (let i = 0; i < this.rows * this.cols; i++) {
-            const url = this.enemyModelsURL[i % this.enemyModelsURL.length]
-            const enemy = new Enemy(url, this.handlers, this.manager)
-            enemy.scoreOnDestroy = this.enemyScores[url]
-            this.enemies.push(enemy)
+        this.waveSpeed = 2
+
+        for (let i = 0; i < this.rows; i++) {
+            this.enemyModels[i] = []
+
+            for (let j = 0; j < this.cols; j++) {
+                const url = this.enemyModelsURL[i % this.enemyModelsURL.length]
+                const enemy = new Enemy(url, this.handlers, this.manager)
+                enemy.scoreOnDestroy = this.enemyScores[url]
+                this.enemyModels[i].push(enemy)
+            }
         }
     }
 
-    generateWave(playerPosition = new THREE.Vector3(0, 0, 0)) {
-        const maxX = 37
-        const spacing = (2 * maxX) / (this.cols - 1)
-        for (let row = 0; row < this.rows; row++) {
-            for (let col = 0; col < this.cols; col++) {
-                const enemy = this.enemies[row * this.cols + col]
+    generateWave(
+        rows,
+        shootingInterval = 3000,
+        playerPosition = new THREE.Vector3(0, 0, 0)
+    ) {
+        let maxX = 38
+        for (let i = 0; i < rows; i++) {
+            const spacing = (2 * maxX) / (this.cols - 1)
+            for (let j = 0; j < this.cols; j++) {
+                const enemy = this.enemyModels[i][j]
 
                 enemy.reset()
                 this.enemiesOnTheScene.push(enemy)
 
                 const position = new THREE.Vector3(
-                    -maxX + spacing * col - enemy.root.scale.x / 2,
+                    -maxX + j * spacing,
                     -10,
-                    -50 + playerPosition.z - row * 40
+                    -70 + playerPosition.z - i * 40
                 )
 
-                enemy.rotateY(Math.atan2(-position.x, 50))
-                enemy.rotateX((-8 * Math.PI) / 20)
-                enemy.setPosition(position)
+                enemy.rotation = new THREE.Euler(
+                    (-8 * Math.PI) / 20,
+                    0,
+                    Math.atan2(-position.x, 50)
+                )
+
+                enemy.position = position
+            }
+            maxX += 8
+        }
+
+        this.startShooting(shootingInterval)
+    }
+
+    startShooting(shootingInterval) {
+        for (let j = 0; j < this.cols; j++) {
+            for (let i = 0; i < this.rows; i++) {
+                const enemy = this.enemiesOnTheScene[i * this.cols + j]
+                if (enemy.visible) {
+                    enemy.setShootingInterval(
+                        Math.random() * shootingInterval + shootingInterval / 2
+                    )
+
+                    break
+                }
             }
         }
     }
 
-    tick(delta) {
-        for (const enemy of this.enemies) {
-            enemy.tick(delta)
+    moveWave(delta) {
+        for (const enemy of this.enemiesOnTheScene) {
+            if (!enemy.visible) {
+                continue
+            }
+
+            const velocity = new THREE.Vector3(
+                0,
+                0,
+                Math.cos(Math.atan2(-enemy.position.x, 50))
+            )
+            enemy.position.add(
+                velocity.clone().multiplyScalar(delta * this.waveSpeed)
+            )
         }
     }
+
+    tick(delta) {}
 }
 
 export { EnemyWave }

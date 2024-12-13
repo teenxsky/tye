@@ -6,12 +6,17 @@ class Spaceship {
     constructor(url, handlers, manager) {
         const gltfLoader = new GLTFLoader(manager)
 
+        this.url = url
+        this.manager = manager
+
         const model = {
             url: url,
             gltf: null,
         }
 
         this.handlers = handlers
+
+        this.lasers = []
 
         gltfLoader.load(
             model.url,
@@ -25,6 +30,14 @@ class Spaceship {
                 console.log('Error loading 3D model:', error, this)
             }
         )
+    }
+
+    removeUnusedObjects() {
+        for (const laser of this.lasers) {
+            if (!laser.isAlive) {
+                this.lasers.splice(this.lasers.indexOf(laser), 1)
+            }
+        }
     }
 
     get position() {
@@ -48,10 +61,6 @@ class Spaceship {
         this.root = new THREE.Object3D()
         this.root.add(clonedScene)
         scene.add(this.root)
-    }
-
-    setPosition(position) {
-        this.root.position.copy(position)
     }
 
     translateX(distance) {
@@ -80,6 +89,14 @@ class Spaceship {
 
     rotateZ(angle) {
         this.root.rotateZ(angle)
+    }
+
+    get visible() {
+        return this.root.visible
+    }
+
+    set visible(value) {
+        this.root.visible = value
     }
 
     reset() {
