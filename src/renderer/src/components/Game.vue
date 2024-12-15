@@ -61,6 +61,7 @@
 <script lang="ts">
     import { ref, onMounted, onUnmounted } from 'vue'
     import { GameScene } from '@renderer/Three/GameScene.jsx'
+    import { loadScore, saveScore } from '@renderer/components/Scores'
     import {
         setMenuScene,
         setScene,
@@ -90,7 +91,7 @@
             let loadingText = ref('Loading')
             const showMenu = ref(false)
 
-            const highScore = ref(0)
+            const highScore = ref(loadScore())
             const currentScore = ref(0)
             const currentLives = ref(3)
             const livesAmount = ref(3)
@@ -127,6 +128,9 @@
 
             const gameOver = () => {
                 isGameOver.value = true
+                if (currentScore.value >= highScore.value) {
+                    saveScore(currentScore.value)
+                }
                 for (const theme of music) {
                     stopSound(theme)
                 }
@@ -134,7 +138,9 @@
             }
 
             const setHighScore = (value) => {
-                highScore.value = value
+                if (value > highScore.value) {
+                    highScore.value = value
+                }
             }
 
             const setCurrentScore = (value) => {

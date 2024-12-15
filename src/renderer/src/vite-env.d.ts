@@ -90,3 +90,8 @@ declare module '@renderer/components/Audio' {
     export function setMusicVolume(volume: number): void
     export function setSoundVolume(volume: number): void
 }
+
+declare module '@renderer/components/Scores' {
+    export function loadScore(): number
+    export function saveScore(score: number): void
+}
