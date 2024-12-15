@@ -6,10 +6,14 @@ class GameProcess {
         this.enemyWave = enemyWave
         this.handlers = handlers
 
-        this.currentLives = 3
-        this.livesAmount = 3
+        this.currentLives = 10
+        this.livesAmount = 10
         this.currentScore = 0
         this.currentWave = 0
+
+        this.waveInterval = 10 // Интервал появления волн (в секундах)
+        this.minWaveInterval = 3 // Минимальный интервал между волнами
+        this.waveSpeedIncrement = 0.1 // Увеличение скорости волн
 
         this.handlers.setCurrentLives(this.currentLives)
         this.handlers.setLivesAmount(this.livesAmount)
@@ -25,20 +29,23 @@ class GameProcess {
         laser.explode()
         enemy.destroy()
         this.currentScore += enemy.scoreOnDestroy
-        // set shooting interval enemy behind current
+
+        // Назначаем интервалы стрельбы для врагов в следующем ряду
         if (posX < this.enemyWave.enemiesOnTheScene.length - 1) {
             this.enemyWave.enemiesOnTheScene[posX + 1][
                 posY
-            ].setShootingInterval((Math.random() % 4000) + 1500)
+            ].setShootingInterval(Math.random() * 6000 + 3500)
         }
 
         this.handlers.setCurrentScore(this.currentScore)
     }
 
     playerShot(player, laser) {
+        console.log('playerShot')
         laser.explode()
         this.currentLives -= 1
         this.handlers.setCurrentLives(this.currentLives)
+
         if (this.currentLives === 0) {
             this.gameOver()
         } else {
@@ -78,7 +85,7 @@ class GameProcess {
                         laser.position.distanceTo(this.player.root.position) <
                         3.5
                     ) {
-                        if (this.player.visible) {
+                        if (this.player.visible && laser.isAlive) {
                             this.playerShot(this.player, laser)
                         }
                     }
@@ -86,13 +93,19 @@ class GameProcess {
             }
         }
     }
+
     generateNextWave() {
         this.currentWave += 1
         this.handlers.setCurrentWave(this.currentWave)
-        this.enemyWave.generateWave(
-            Math.max(4 + this.currentWave, 10),
+
+        this.enemyWave.waveSpeed += this.waveSpeedIncrement
+        this.enemyWave.generateWave(Math.max(4 + this.currentWave, 10),
             5000 - this.currentWave * 100,
-            this.player.position
+            this.player.position)
+        // Уменьшаем интервал между волнами
+        this.waveInterval = Math.max(
+            this.waveInterval - 0.5,
+            this.minWaveInterval
         )
     }
 

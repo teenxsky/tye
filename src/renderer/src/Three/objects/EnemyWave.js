@@ -30,6 +30,7 @@ class EnemyWave {
         this.enemiesOnTheScene = []
 
         this.waveSpeed = 1
+        this.elapsedTime = 0
 
         for (let i = 0; i < this.rows; i++) {
             this.enemyModels[i] = []
@@ -99,23 +100,29 @@ class EnemyWave {
     }
 
     moveWave(delta) {
+        // Увеличение скорости со временем для динамики
+        this.waveSpeed = Math.min(this.waveSpeed + 0.1 * delta, 5) // Макс. скорость: 5
+        // Цикл по всем врагам
         for (let i = 0; i < this.enemiesOnTheScene.length; i++) {
             for (let j = 0; j < this.enemiesOnTheScene[i].length; j++) {
                 const enemy = this.enemiesOnTheScene[i][j]
-                if (!enemy.visible) {
-                    continue
-                }
+                if (!enemy.visible) continue
 
-                const velocity = new THREE.Vector3(
-                    0,
-                    0,
-                    Math.cos(Math.atan2(-enemy.position.x, 50))
-                )
-                enemy.position.add(
-                    velocity.clone().multiplyScalar(delta * this.waveSpeed / 3) // wtf is this
-                )
+                // Смещение волны по оси X (синусоида)
+                const waveOffsetX =
+                    Math.sin(enemy.position.z * 0.5 + this.elapsedTime) * 5
+
+                // Движение к игроку по оси Z
+                const velocityZ = new THREE.Vector3(0, 0, this.waveSpeed)
+
+                // Установка новой позиции
+                enemy.position.x += waveOffsetX * delta // Волнообразное движение
+                enemy.position.add(velocityZ.multiplyScalar(delta)) // Движение вперед
             }
         }
+
+        // Увеличение времени для синусоиды
+        this.elapsedTime += delta
     }
 
     tick(delta) {}
