@@ -15,7 +15,7 @@ class Player extends Spaceship {
         this.pozY = -10
         this.currentAngleZ = 0
 
-        this.speed = 20
+        this.speed = 30
 
         this.maxX = 18
 
