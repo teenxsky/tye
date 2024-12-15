@@ -53,9 +53,7 @@ class Laser extends THREE.Mesh {
 
     explode() {
         createExplosion(this.position, this.handlers)
-
         this.isAlive = false
-
         this.handlers.removeObjectFromScene(this)
         this.geometry.dispose()
         this.material.dispose()
