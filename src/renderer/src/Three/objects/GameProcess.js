@@ -1,4 +1,5 @@
 import { lostLiveSound, playSound } from '@renderer/components/Audio'
+import * as THREE from 'three'
 
 class GameProcess {
     constructor(player, enemyWave, handlers) {
@@ -7,7 +8,7 @@ class GameProcess {
         this.handlers = handlers
 
         this.currentLives = 10
-        this.livesAmount = 10
+        this.livesAmount = this.currentLives
         this.currentScore = 0
         this.currentWave = 0
 
@@ -98,14 +99,16 @@ class GameProcess {
         this.currentWave += 1
         this.handlers.setCurrentWave(this.currentWave)
 
-        this.enemyWave.waveSpeed += this.waveSpeedIncrement
-        this.enemyWave.generateWave(Math.max(4 + this.currentWave, 10),
+        const spawnPosition = new THREE.Vector3(
+            this.player.position.x,
+            this.player.position.y,
+            this.player.position.z - 25 // Смещение на 25 единиц вперёд по оси Z
+        )
+
+        this.enemyWave.generateWave(
+            Math.max(4 + this.currentWave, 10),
             5000 - this.currentWave * 100,
-            this.player.position)
-        // Уменьшаем интервал между волнами
-        this.waveInterval = Math.max(
-            this.waveInterval - 0.5,
-            this.minWaveInterval
+            spawnPosition
         )
     }
 

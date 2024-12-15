@@ -44,12 +44,24 @@ class EnemyWave {
         }
     }
 
+    isWaveCleared() {
+        for (let i = 0; i < this.enemiesOnTheScene.length; i++) {
+            for (let j = 0; j < this.enemiesOnTheScene[i].length; j++) {
+                if (this.enemiesOnTheScene[i][j].visible) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
     generateWave(
         rows,
         shootingInterval = 3000,
         playerPosition = new THREE.Vector3(0, 0, 0)
     ) {
-        let maxX = 38
+        let maxX = 28
+        const spawnDistanceZ = 50
         for (let i = 0; i < rows; i++) {
             const spacing = (2 * maxX) / (this.cols - 1)
             let enemies = []
@@ -63,7 +75,7 @@ class EnemyWave {
                 const position = new THREE.Vector3(
                     -maxX + j * spacing,
                     -10,
-                    -70 + playerPosition.z - i * 40
+                    -70 + playerPosition.z - spawnDistanceZ - i * 40
                 )
 
                 enemy.rotationX = (-8 * Math.PI) / 20
@@ -78,7 +90,6 @@ class EnemyWave {
             }
             this.enemiesOnTheScene.push(enemies)
             console.log(this.enemiesOnTheScene)
-            maxX += 8
         }
 
         this.startShooting(shootingInterval)
@@ -101,7 +112,7 @@ class EnemyWave {
 
     moveWave(delta) {
         // Увеличение скорости со временем для динамики
-        this.waveSpeed = Math.min(this.waveSpeed + 0.1 * delta, 5) // Макс. скорость: 5
+        this.waveSpeed = Math.min(this.waveSpeed + 0.1 * delta, 3) // Макс. скорость: 5
         // Цикл по всем врагам
         for (let i = 0; i < this.enemiesOnTheScene.length; i++) {
             for (let j = 0; j < this.enemiesOnTheScene[i].length; j++) {
@@ -119,6 +130,11 @@ class EnemyWave {
                 enemy.position.x += waveOffsetX * delta // Волнообразное движение
                 enemy.position.add(velocityZ.multiplyScalar(delta)) // Движение вперед
             }
+        }
+
+        if (this.isWaveCleared()) {
+            console.log('Wave cleared')
+            this.generateWave(this.rows)
         }
 
         // Увеличение времени для синусоиды
