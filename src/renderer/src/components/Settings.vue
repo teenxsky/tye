@@ -1,8 +1,8 @@
 <template>
     <div class="settings-container">
-        <h2 class="non-highlighted">SETTINGS</h2>
+        <h1 class="non-highlighted">SETTINGS</h1>
         <div class="settings-list">
-            <div class="setting">
+            <div class="setting-item">
                 <label
                     for="music-volume"
                     class="non-highlighted"
@@ -18,9 +18,10 @@
                     v-model="musicVolume"
                     @input="updateMusicVolume"
                     tabindex="-1"
+                    class="volume-slider"
                 />
             </div>
-            <div class="setting">
+            <div class="setting-item">
                 <label
                     for="sound-volume"
                     class="non-highlighted"
@@ -36,6 +37,7 @@
                     v-model="soundVolume"
                     @input="updateSoundVolume"
                     tabindex="-1"
+                    class="volume-slider"
                 />
             </div>
         </div>
@@ -150,35 +152,41 @@
 
 <style scoped>
     .settings-container {
-        font-family: 'Press Start 2P';
-        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        z-index: 10;
+        font-family: 'Press Start 2P';
+        color: white;
+        z-index: 1;
+    }
+
+    .settings-container h1 {
+        /* font-size: clamp(2rem, 5vw, 5rem); */
+        font-size: min(5.5vw, 5.5rem);
+        margin-bottom: clamp(2rem, 5vh, 5rem);
     }
 
     .settings-list {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 50%;
-        margin-top: 8rem;
-        margin-bottom: 8rem;
+        gap: clamp(1.5rem, 3vh, 3rem);
     }
 
-    .setting {
+    .setting-item {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        color: white;
-        width: 100%;
-        font-size: 5rem;
+        gap: clamp(1rem, 2vw, 2rem);
+        font-size: clamp(1rem, 3vw, 3rem);
+    }
+
+    .volume-slider {
+        width: clamp(10rem, 20vw, 20rem);
     }
 
     .selected {
@@ -186,14 +194,9 @@
         text-shadow: rgb(250, 0, 10) 3px 3px 0;
     }
 
-    h2 {
-        font-size: 5rem;
-        color: white;
-    }
-
     label {
         display: block;
-        font-size: 5rem;
+        font-size: min(5vw, 5rem);
         margin: 1rem;
     }
 
@@ -202,7 +205,7 @@
         -webkit-appearance: none;
         background: transparent;
         position: relative;
-        height: 4rem;
+        height: 3rem;
         width: 20rem;
         overflow: hidden;
         pointer-events: none;

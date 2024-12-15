@@ -85,7 +85,7 @@
         },
         setup() {
             const sceneContainer = ref<HTMLDivElement | null>(null)
-            let scene = ref<GameScene | null>(null)
+            let scene: GameScene | null = null
             const isLoading = ref(true)
             let loadingText = ref('Loading')
             const showMenu = ref(false)
@@ -264,7 +264,7 @@
             })
 
             onUnmounted(() => {
-                scene.stop()
+                scene?.stop()
                 window.removeEventListener('keydown', handleKeyPress)
             })
 
@@ -292,40 +292,46 @@
 
 <style>
     .game-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
         background-color: black;
+        overflow: hidden;
     }
 
     .loading {
+        position: fixed;
         font-family: 'Press Start 2P';
-        position: absolute;
         color: white;
         top: 0;
         left: 0;
-        height: 100%;
-        width: 100%;
+        width: 100vw;
+        height: 100vh;
         display: flex;
         background-color: black;
         justify-content: center;
         align-items: center;
-        font-size: 3rem;
+        font-size: clamp(1.5rem, 5vw, 3rem);
         z-index: 10;
     }
 
     .hud {
-        position: absolute;
+        position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
         display: flex;
-        height: 12rem;
+        height: clamp(6rem, 15vh, 12rem);
         align-items: center;
         justify-content: space-between;
-        padding: 0 3rem 0 3rem;
+        padding: 0 clamp(1rem, 3vw, 3rem);
         color: white;
-        /* border-top: 1px solid white; */
         background-color: black;
-        font-size: 3rem;
+        font-size: clamp(1rem, 3vw, 3rem);
         font-family: 'Press Start 2P';
+        z-index: 1;
     }
 
     .hud__block {
@@ -346,17 +352,24 @@
     }
 
     .menu {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
-        /* transform: translate(-50%, -50%); */
+        width: 100vw;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         background-color: rgba(0, 0, 0, 0.5);
         z-index: 10;
+    }
+
+    .scene-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
     }
 </style>

@@ -32,15 +32,16 @@ function createWindow(): void {
     const mainWindow = new BrowserWindow({
         width: 900,
         height: 700,
+        minWidth: 900,
+        minHeight: 700,
         show: false,
-        // autoHideMenuBar: true,
         ...(process.platform === 'linux' ? { icon } : {}),
         webPreferences: {
-            preload: join(__dirname, '../preload/index.js'),
+            preload: join(__dirname, './../preload/index.mjs'),
             sandbox: false,
             nodeIntegration: true,
             contextIsolation: false,
-            // webSecurity: true,
+            // webSecurity: false,
             // devTools: false, // TODO: DISABLE DEVTOOLS WHEN RELEASING
         },
         titleBarStyle: 'hidden',
@@ -79,6 +80,18 @@ function createWindow(): void {
     } else {
         Menu.setApplicationMenu(null)
     }
+
+    // mainWindow.on('will-resize', (event, size) => {
+    //     event.preventDefault()
+
+    //     const currentBounds = mainWindow.getBounds()
+    //     if (
+    //         currentBounds.width != size.width &&
+    //         currentBounds.height != size.height
+    //     ) {
+    //         mainWindow.setSize(size.width, size.height)
+    //     }
+    // })
 
     mainWindow.on('ready-to-show', () => {
         mainWindow.show()

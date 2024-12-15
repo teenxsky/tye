@@ -26,7 +26,7 @@
         margin: 1rem;
         color: white;
         background-color: transparent;
-        font-size: 5rem;
+        font-size: min(5vw, 5rem);
         border: none;
     }
 

@@ -3,6 +3,7 @@ import mgPkg from 'mongoose'
 import express from 'express'
 import bpPkg from 'body-parser'
 import secureRoutes from './routes/secure.js'
+import cors from 'cors'
 
 dotenv.config()
 const { MONGO_URI } = process.env
@@ -60,6 +61,36 @@ connection.on('error', async (error) => {
 connection.on('timeout', async () => {
     console.log('MongoDB connection timeout')
     connection.close()
+})
+
+app.use(
+    cors({
+        origin: [`http://localhost:${PORT}`, `http://localhost:5173`],
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+        allowedHeaders: [
+            'Content-Type',
+            'x-signature',
+            'x-api-key',
+            'x-request-id',
+            'x-timestamp',
+        ],
+        credentials: true,
+        preflightContinue: false,
+        optionsSuccessStatus: 204,
+    })
+)
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header(
+        'Access-Control-Allow-Methods',
+        'GET, POST, PUT, DELETE, OPTIONS'
+    )
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Content-Type, x-signature, x-timestamp, x-api-key'
+    )
+    next()
 })
 
 app.use(json())

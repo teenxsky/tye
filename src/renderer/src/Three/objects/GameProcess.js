@@ -1,3 +1,4 @@
+import { createExplosion } from './explosion.js'
 import { lostLiveSound, playSound } from '@renderer/components/Audio'
 
 class GameProcess {
@@ -22,7 +23,9 @@ class GameProcess {
     }
 
     enemyShot(enemy, laser) {
-        laser.explode()
+        if (laser && typeof laser.explode === 'function') {
+            laser.explode()
+        }
         enemy.destroy()
         this.enemyWave.startShooting(5000 - this.currentWave * 100)
         this.currentScore += enemy.scoreOnDestroy
@@ -30,9 +33,18 @@ class GameProcess {
     }
 
     playerShot(player, laser) {
-        laser.explode()
+        if (laser && typeof laser.explode === 'function') {
+            laser.explode()
+        } else {
+            createExplosion(laser.position || player.position, this.handlers)
+            if (laser && laser.dispose) {
+                laser.dispose()
+            }
+        }
+        
         this.currentLives -= 1
         this.handlers.setCurrentLives(this.currentLives)
+        
         if (this.currentLives === 0) {
             this.gameOver()
         } else {
@@ -60,9 +72,7 @@ class GameProcess {
             }
 
             for (const laser of enemy.lasers) {
-                if (
-                    laser.position.distanceTo(this.player.root.position) < 3.5
-                ) {
+                if (laser.position.distanceTo(this.player.root.position) < 3.5) {
                     if (this.player.visible) {
                         this.playerShot(this.player, laser)
                     }
@@ -82,6 +92,7 @@ class GameProcess {
     }
 
     gameOver() {
+        this.cleanup()
         this.handlers.gameOver()
         this.player.destroy()
     }
@@ -94,6 +105,35 @@ class GameProcess {
 
         if (this.enemyWave.enemiesOnTheScene.length === 0) {
             this.generateNextWave()
+        }
+    }
+
+    cleanup() {
+        // Очистка лазеров
+        if (this.player && this.player.lasers) {
+            this.player.lasers.forEach(laser => {
+                if (laser && laser.dispose) {
+                    laser.dispose()
+                }
+            })
+            this.player.lasers = []
+        }
+
+        // Очистка врагов
+        if (this.enemyWave && this.enemyWave.enemiesOnTheScene) {
+            this.enemyWave.enemiesOnTheScene.forEach(enemy => {
+                if (enemy && enemy.lasers) {
+                    enemy.lasers.forEach(laser => {
+                        if (laser && laser.dispose) {
+                            laser.dispose()
+                        }
+                    })
+                }
+                if (enemy && enemy.dispose) {
+                    enemy.dispose()
+                }
+            })
+            this.enemyWave.enemiesOnTheScene = []
         }
     }
 }

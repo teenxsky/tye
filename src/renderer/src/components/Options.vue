@@ -101,33 +101,36 @@
     }
 </script>
 
-<style>
-    .options-container {
-        font-family: 'Press Start 2P';
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        z-index: 10;
-    }
+<style scoped>
+.options-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P';
+    color: white;
+    z-index: 1;
+}
 
-    .blink {
-        animation: blink 2s linear infinite;
-    }
+.options-container h1 {
+    font-size: clamp(2rem, 5vw, 5rem);
+    margin-bottom: clamp(2rem, 5vh, 5rem);
+}
 
-    @keyframes blink {
-        0% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0.5;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
+.options-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(1rem, 2vh, 2rem);
+}
+
+.option-item {
+    font-size: clamp(1rem, 3vw, 3rem);
+    cursor: pointer;
+}
 </style>

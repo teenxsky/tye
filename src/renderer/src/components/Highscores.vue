@@ -1,228 +1,251 @@
 <template>
-    <div class="leaderboard">
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Username</th>
-                    <th>Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(score, index) in scores" :key="index">
-                    <td>{{ index + 1 }}</td>
-                    <td>{{ score.username }}</td>
-                    <td>{{ score.highScore }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <div v-if="!scores || scores.length === 0">No scores available</div>
+    <div class="highscores-container">
+        <div v-if="isLoading" class="loading non-highlighted">
+            {{ loadingText }}
+        </div>
+        <template v-else-if="scores === null">
+            <div class="lost-connection">
+                <h1 class="non-highlighted">Lost connection</h1>
+                <h2>
+                    There is no internet connection or this option is not
+                    available in your region
+                </h2>
+            </div>
+        </template>
+        <template v-else>
+            <h1 class="non-highlighted">HIGH SCORES</h1>
+            <div class="scores-table">
+                <div class="table-header">
+                    <div class="rank">#</div>
+                    <div class="name">NAME</div>
+                    <div class="score">SCORE</div>
+                </div>
+                <div class="table-body">
+                    <Button
+                        v-for="(score, index) in scores"
+                        :key="index"
+                        :isSelected="selectedScoreIndex === index"
+                        class="score-row"
+                    >
+                        <div class="score-content">
+                            <span class="rank">{{ index + 1 }}</span>
+                            <span class="name">{{ score.username }}</span>
+                            <span class="score">{{ score.highScore }}</span>
+                        </div>
+                    </Button>
+                </div>
+            </div>
+        </template>
     </div>
 </template>
 
 <script lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import { setMenuScene } from '@renderer/components/Scenes'
-import { keySound, keyEnterSound, playSound } from '@renderer/components/Audio'
-import Button from '@renderer/components/Button.vue'
-import { getScores } from '../../../../server/api/LeaderBoard'
+    import { ref, onMounted, onUnmounted } from 'vue'
+    import { setMenuScene } from '@renderer/components/Scenes'
+    import {
+        keySound,
+        keyEnterSound,
+        playSound,
+    } from '@renderer/components/Audio'
+    import Button from '@renderer/components/Button.vue'
+    import { getScores } from '../../../../server/api/LeaderBoard'
 
-export default {
-    name: 'Highscores',
-    components: {
-        Button,
-    },
-    setup() {
-        const selectedHishscoreIndex = ref(0)
-        const scores = ref(null)
+    export default {
+        name: 'Highscores',
+        components: {
+            Button,
+        },
+        setup() {
+            const selectedScoreIndex = ref(0)
+            const scores = ref(null)
+            const isLoading = ref(true)
+            const loadingText = ref('Loading')
 
-        const fetchScores = async () => {
-            try {
-                const result = await getScores()
-                if (result) {
-                    scores.value = result
-                } else {
-                    // TODO: make lost connection page
-                    setMenuScene('lost-connection')
+            const fetchScores = async () => {
+                try {
+                    const result = await getScores()
+                    if (result) {
+                        scores.value = result
+                    }
+                } catch (err) {
+                    console.error('Error fetching scores:', err)
+                } finally {
+                    isLoading.value = false
                 }
-            } catch (err) {
-                console.error('Error fetching scores:', err)
             }
-        }
 
-        const handleKeyPress = (event: KeyboardEvent) => {
-            if (
-                event.key === 'ArrowUp' ||
-                event.key === 'W' ||
-                event.key === 'w' ||
-                event.key === 'Ц' ||
-                event.key === 'ц'
-            ) {
-                selectedHishscoreIndex.value =
-                    (selectedHishscoreIndex.value - 1 + 2) % 2
-                playSound(keySound)
-            } else if (
-                event.key === 'ArrowDown' ||
-                event.key === 'S' ||
-                event.key === 's' ||
-                event.key === 'Ы' ||
-                event.key === 'ы'
-            ) {
-                selectedHishscoreIndex.value =
-                    (selectedHishscoreIndex.value + 1) % 2
-                playSound(keySound)
-            } else if (event.key === 'Escape') {
-                playSound(keyEnterSound)
-                setMenuScene('options')
+            const handleKeyPress = (event: KeyboardEvent) => {
+                if (
+                    event.key === 'ArrowUp' ||
+                    event.key === 'W' ||
+                    event.key === 'w' ||
+                    event.key === 'Ц' ||
+                    event.key === 'ц'
+                ) {
+                    selectedScoreIndex.value =
+                        (selectedScoreIndex.value - 1 + scores.value.length) %
+                        scores.value.length
+                    playSound(keySound)
+                } else if (
+                    event.key === 'ArrowDown' ||
+                    event.key === 'S' ||
+                    event.key === 's' ||
+                    event.key === 'Ы' ||
+                    event.key === 'ы'
+                ) {
+                    selectedScoreIndex.value =
+                        (selectedScoreIndex.value + 1) % scores.value.length
+                    playSound(keySound)
+                } else if (event.key === 'Escape') {
+                    playSound(keyEnterSound)
+                    setMenuScene('options')
+                }
             }
-        }
 
-        onMounted(() => {
-            window.addEventListener('keydown', handleKeyPress)
-            fetchScores()
-        })
+            onMounted(() => {
+                window.addEventListener('keydown', handleKeyPress)
 
-        onUnmounted(() => {
-            window.removeEventListener('keydown', handleKeyPress)
-        })
+                const loadingStates = [
+                    'Loading',
+                    'Loading.',
+                    'Loading..',
+                    'Loading...',
+                ]
 
-        return { selectedHishscoreIndex, scores }
-    },
-}
+                let currentIndex = 0
+
+                const loadingInterval = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % loadingStates.length
+                    loadingText.value = loadingStates[currentIndex]
+                }, 700)
+
+                fetchScores()
+
+                return () => clearInterval(loadingInterval)
+            })
+
+            onUnmounted(() => {
+                window.removeEventListener('keydown', handleKeyPress)
+            })
+
+            return { selectedScoreIndex, scores, isLoading, loadingText }
+        },
+    }
 </script>
 
 <style scoped>
-.leaderboard {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-}
+    .highscores-container {
+        font-family: 'Press Start 2P';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+    }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+    .lost-connection {
+        text-align: center;
+        padding: 2rem;
+    }
 
-th,
-td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
+    .lost-connection h1 {
+        font-size: min(5.5vw, 5.5rem);
+        margin-bottom: 4rem;
+    }
 
-th {
-    font-weight: bold;
-}
+    .lost-connection h2 {
+        font-size: min(2.5vw, 2.5rem);
+        line-height: 1.5;
+    }
 
-tr:nth-child(even) {
-    background-color: rgba(255, 255, 255, 0.05);
-}
+    h1 {
+        font-size: min(5.5vw, 5.5rem);
+        margin-bottom: 4rem;
+    }
 
-.settings-container {
-    font-family: 'Press Start 2P';
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    z-index: 10;
-}
+    .scores-table {
+        width: min(800px, 80vw);
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
 
-.highscores-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
-    margin-top: 8rem;
-}
+    .table-header {
+        display: grid;
+        grid-template-columns: 0.5fr 2fr 1fr;
+        padding: 1rem;
+        color: rgb(240, 230, 20);
+        text-shadow: rgb(250, 0, 10) 3px 3px 0;
+        font-size: min(2.5vw, 2.5rem);
+        position: sticky;
+        top: 0;
+        background-color: black;
+    }
 
-.setting {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-    width: 100%;
-    font-size: 5rem;
-}
+    .table-body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
 
-.setting.selected {
-    color: rgb(240, 255, 0);
-}
+    .score-row {
+        width: 100%;
+        padding: 0.5rem 1rem;
+        margin: 0;
+        text-align: left;
+    }
 
-h2 {
-    font-size: 5rem;
-    color: white;
-}
+    .score-content {
+        display: grid;
+        grid-template-columns: 0.5fr 2fr 1fr;
+        width: 100%;
+        font-size: min(2vw, 2rem);
+    }
 
-label {
-    display: block;
-    font-size: 5rem;
-    margin: 1rem;
-}
+    .rank {
+        text-align: left;
+    }
 
-input[type='range'] {
-    appearance: none;
-    -webkit-appearance: none;
-    background: transparent;
-    position: relative;
-    height: 4rem;
-    width: 20rem;
-    overflow: hidden;
-    pointer-events: none;
-}
+    .name {
+        text-align: left;
+    }
 
-::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 100%;
-    background: #222;
-}
+    .score {
+        text-align: right;
+    }
 
-::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 0;
-    background: white;
-    box-shadow: -20rem 10rem 0 20rem white;
-    pointer-events: none;
-}
+    .loading {
+        position: fixed;
+        font-family: 'Press Start 2P';
+        color: white;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        background-color: black;
+        justify-content: center;
+        align-items: center;
+        font-size: clamp(1.5rem, 5vw, 3rem);
+        z-index: 10;
+    }
 
-::-moz-range-track {
-    width: 100%;
-    height: 100%;
-    background: #222;
-}
+    .scores-table::-webkit-scrollbar {
+        width: 10px;
+    }
 
-::-moz-range-thumb {
-    width: 0;
-    height: 100%;
-    background: white;
-    pointer-events: none;
-}
+    .scores-table::-webkit-scrollbar-track {
+        background: #222;
+    }
 
-::-ms-track {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-}
-
-::-ms-fill-lower {
-    background: #222;
-}
-
-:-ms-fill-upper {
-    background: #222;
-}
-
-::-ms-thumb {
-    width: 0;
-    height: 100%;
-    background: white;
-    pointer-events: none;
-}
+    .scores-table::-webkit-scrollbar-thumb {
+        background: #444;
+    }
 </style>

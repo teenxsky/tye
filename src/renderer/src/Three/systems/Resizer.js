@@ -1,7 +1,9 @@
 const setSize = (container, camera, renderer) => {
-    camera.aspect = window.innerWidth / window.innerHeight
+    const width = container.clientWidth
+    const height = container.clientHeight
+    camera.aspect = width / height
     camera.updateProjectionMatrix()
-    renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setSize(width, height)
     renderer.setPixelRatio(window.devicePixelRatio)
 }
 

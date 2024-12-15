@@ -1,9 +1,9 @@
 import { Enemy } from './Enemy.js'
 import * as THREE from 'three'
-import enemyModel_1 from '@renderer/assets/fighters/fighter02/result.gltf'
-import enemyModel_2 from '@renderer/assets/fighters/fighter03/result.gltf'
-import enemyModel_3 from '@renderer/assets/fighters/fighter04/result.gltf'
-import enemyModel_4 from '@renderer/assets/fighters/fighter05/result.gltf'
+import enemyModel_1 from '/fighters/fighter02/result.gltf'
+import enemyModel_2 from '/fighters/fighter03/result.gltf'
+import enemyModel_3 from '/fighters/fighter04/result.gltf'
+import enemyModel_4 from '/fighters/fighter05/result.gltf'
 
 class EnemyWave {
     constructor(handlers, manager, rows = 10, cols = 10) {

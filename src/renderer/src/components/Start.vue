@@ -39,9 +39,9 @@
     }
 </script>
 
-<style>
+<style scoped>
     .start-title {
-        font-size: 10rem;
+        font-size: min(8vw, 8rem);
         background-image: linear-gradient(
             180deg,
             rgb(190, 0, 0),
@@ -70,36 +70,45 @@
         -webkit-text-fill-color: transparent;
         position: relative;
         text-transform: uppercase;
+        max-width: 90vw;
+        word-wrap: break-word;
+        text-align: center;
+        margin: 0 auto;
+        margin-top: min(4vw, 4rem);
         /* animation: jump 1s linear infinite; */
     }
 
     .start-title:after {
         content: attr(data-text);
-        left: 0;
+        left: 50%;
+        transform: translateX(-50%);
         position: absolute;
         text-shadow:
-            -1px -1px 0 rgb(240, 255, 0),
-            1px -1px 0 rgb(240, 255, 0),
-            -1px 1px 0 rgb(240, 255, 0),
-            2px 2px 0 rgb(240, 255, 0),
-            0 5px 0 rgb(50, 90, 230),
-            -2px 5px 0 rgb(50, 90, 230),
-            2px 5px 0 rgb(50, 90, 230),
-            0 10px 0 rgb(0, 0, 240),
-            -2px 10px 0 rgb(0, 0, 240),
-            2px 10px 0 rgb(0, 0, 240),
-            0 15px 0 rgb(0, 0, 150),
-            2px 15px 0 rgb(0, 0, 150),
-            -2px 20px 0 rgb(0, 0, 150),
-            0 25px 0 rgb(0, 0, 100),
-            2px 25px 0 rgb(0, 0, 100),
-            -2px 25px 0 rgb(0, 0, 100),
-            0 20px 0 rgb(0, 0, 100),
-            2px 20px 0 rgb(0, 0, 100),
-            -2px 20px 0 rgb(0, 0, 100);
-
+            calc(-0.08vw) calc(-0.08vw) 0 rgb(240, 255, 0),
+            calc(0.08vw) calc(-0.08vw) 0 rgb(240, 255, 0),
+            calc(-0.08vw) calc(0.08vw) 0 rgb(240, 255, 0),
+            calc(0.16vw) calc(0.16vw) 0 rgb(240, 255, 0),
+            0 calc(0.4vw) 0 rgb(50, 90, 230),
+            calc(-0.16vw) calc(0.4vw) 0 rgb(50, 90, 230),
+            calc(0.16vw) calc(0.4vw) 0 rgb(50, 90, 230),
+            0 calc(0.8vw) 0 rgb(0, 0, 240),
+            calc(-0.16vw) calc(0.8vw) 0 rgb(0, 0, 240),
+            calc(0.16vw) calc(0.8vw) 0 rgb(0, 0, 240),
+            0 calc(1.2vw) 0 rgb(0, 0, 150),
+            calc(0.16vw) calc(1.2vw) 0 rgb(0, 0, 150),
+            calc(-0.16vw) calc(1.6vw) 0 rgb(0, 0, 150),
+            0 calc(2vw) 0 rgb(0, 0, 100),
+            calc(0.16vw) calc(2vw) 0 rgb(0, 0, 100),
+            calc(-0.16vw) calc(2vw) 0 rgb(0, 0, 100),
+            0 calc(1.6vw) 0 rgb(0, 0, 100),
+            calc(0.16vw) calc(1.6vw) 0 rgb(0, 0, 100),
+            calc(-0.16vw) calc(1.6vw) 0 rgb(0, 0, 100);
         top: 0;
         z-index: -1;
+        max-width: 90vw;
+        word-wrap: break-word;
+        width: 100%;
+        text-align: center;
     }
 
     .start-container {
@@ -109,30 +118,39 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100%;
-        width: 100%;
-        position: absolute;
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        top: 0;
+        left: 0;
         z-index: 10;
+        padding: 1rem;
+        box-sizing: border-box;
     }
 
     .shadow-wrapper {
-        transform: scaleY(1.5) perspective(20rem) rotateX(15deg) scaleX(1);
+        transform: scaleY(1.5) perspective(20vw) rotateX(15deg) scaleX(1);
+        max-width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     h1 {
         font-family: 'JMH';
-        font-size: 5rem;
-        letter-spacing: 1rem;
-        margin: 0;
+        font-size: min(4vw, 4rem);
+        letter-spacing: min(0.8vw, 0.8rem);
+        margin: 0 auto;
         width: fit-content;
         color: transparent;
-        /* transform: scaleY(1.5) perspective(20rem) rotateX(15deg); */
+        max-width: 100%;
+        text-align: center;
     }
 
     .tm {
         text-justify: none;
         display: inline-block;
-        font-size: 1rem;
+        font-size: min(0.8vw, 0.8rem);
         color: white;
         transform: skewY(-5deg) scaleY(1.2) scaleX(0.8);
     }
@@ -157,6 +175,7 @@
         );
         background-clip: text;
         -webkit-background-clip: text;
+        text-align: center;
     }
 
     .cs-2 {
@@ -185,22 +204,26 @@
         );
         background-clip: text;
         -webkit-background-clip: text;
+        text-align: center;
     }
 
     h3 {
-        font-size: 3rem;
-        margin: 0;
-        margin-top: 18rem;
+        font-size: min(2.5vw, 2.5rem);
+        margin: 0 auto;
+        margin-top: min(15vw, 15rem);
         color: white;
+        text-align: center;
     }
 
     h4 {
-        font-size: 2rem;
+        font-size: min(1.5vw, 1.5rem);
         opacity: 0.9;
-        margin: 0;
-        margin-top: 10rem;
-        margin-bottom: 3rem;
+        margin: 0 auto;
+        margin-top: min(8vw, 8rem);
+        margin-bottom: min(2vw, 2rem);
         color: white;
+        text-align: center;
+        letter-spacing: 0.2rem;
     }
 
     .blink {
@@ -227,15 +250,15 @@
 
     @keyframes jump {
         0% {
-            font-size: 10rem;
+            font-size: min(8vw, 8rem);
         }
 
         50% {
-            font-size: 10.5rem;
+            font-size: min(8.4vw, 8.4rem);
         }
 
         100% {
-            font-size: 10rem;
+            font-size: min(8vw, 8rem);
         }
     }
 
@@ -243,5 +266,8 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>

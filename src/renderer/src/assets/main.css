@@ -1,31 +1,31 @@
 @font-face {
     font-family: 'VCR';
     font-style: normal;
-    src: url('./fonts/VCR.ttf') format('truetype');
+    src: url('/fonts/VCR.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'Press Start 2P';
     font-style: normal;
-    src: url('./fonts/PressStart2P.ttf') format('truetype');
+    src: url('/fonts/PressStart2P.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'Limit';
     font-style: normal;
-    src: url('./fonts/Limit.ttf') format('truetype');
+    src: url('/fonts/Limit.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'Binary Waters';
     font-style: normal;
-    src: url('./fonts/BinaryWaters.ttf') format('truetype');
+    src: url('/fonts/BinaryWaters.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'JMH';
     font-style: normal;
-    src: url('./fonts/JMH.otf') format('truetype');
+    src: url('/fonts/JMH.otf') format('truetype');
 }
 
 * {
@@ -40,9 +40,9 @@
 }
 
 body {
-    height: 100vh;
-    width: 100vw;
-    /* filter: blur(1px); */
+    height: 100%;
+    width: 100%;
+    position: absolute;
     overflow: hidden;
 }
 

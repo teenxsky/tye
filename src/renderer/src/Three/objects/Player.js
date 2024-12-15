@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { Spaceship } from './Spaceship.js'
 import { Laser } from './Laser.js'
-import playerModel from '@renderer/assets/fighters/fighter01/result.gltf'
+import playerModel from '/fighters/fighter01/result.gltf'
 import { outOfAmmoSound, playSound } from '@renderer/components/Audio'
 
 class Player extends Spaceship {

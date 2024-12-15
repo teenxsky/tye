@@ -41,7 +41,44 @@ class Laser extends THREE.Mesh {
         playSound(shotSound)
     }
 
+    dispose() {
+        if (this.isAlive) {
+            this.isAlive = false
+            
+            if (this.handlers && typeof this.handlers.removeObjectFromScene === 'function') {
+                this.handlers.removeObjectFromScene(this)
+            }
+
+            if (this.geometry) {
+                this.geometry.dispose()
+                this.geometry = null
+            }
+            
+            if (this.material) {
+                if (Array.isArray(this.material)) {
+                    this.material.forEach(mat => {
+                        if (mat && typeof mat.dispose === 'function') {
+                            mat.dispose()
+                        }
+                    })
+                } else if (typeof this.material.dispose === 'function') {
+                    this.material.dispose()
+                }
+                this.material = null
+            }
+        }
+    }
+
+    explode() {
+        if (this.isAlive) {
+            createExplosion(this.position.clone(), this.handlers)
+            this.dispose()
+        }
+    }
+
     tick(delta) {
+        if (!this.isAlive || !this.geometry || !this.material) return
+
         const distance = this.velocity.length() * delta
         this.position.add(this.velocity.clone().multiplyScalar(delta))
         this.travelledDistance += distance
@@ -49,16 +86,6 @@ class Laser extends THREE.Mesh {
         if (Math.abs(this.travelledDistance) >= this.maxDistance) {
             this.explode()
         }
-    }
-
-    explode() {
-        createExplosion(this.position, this.handlers)
-
-        this.isAlive = false
-
-        this.handlers.removeObjectFromScene(this)
-        this.geometry.dispose()
-        this.material.dispose()
     }
 }
 

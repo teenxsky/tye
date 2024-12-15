@@ -27,28 +27,15 @@ export const setMenuScene = (scene: string) => {
         if (
             state.value.currentMenuScene !== 'options' &&
             state.value.currentMenuScene !== 'settings' &&
-            state.value.currentMenuScene !== 'credits'
+            state.value.currentMenuScene !== 'credits' &&
+            state.value.currentMenuScene !== 'highscores'
         ) {
             for (const theme of music) {
                 stopSound(theme)
             }
             playSound(optionsTheme)
         }
-    } else if (scene === 'highscores') {
-        if (state.value.currentMenuScene !== 'highscores') {
-            for (const theme of music) {
-                stopSound(theme)
-            }
-            playSound(startTheme)
-        }
-    } else if (scene == 'lost-connection') {
-        if (state.value.currentMenuScene !== 'lost-connection') {
-            for (const theme of music) {
-                stopSound(theme)
-            }
-            playSound(startTheme)
-        }
-    }
+    } 
     state.value.currentMenuScene = scene
 }
 

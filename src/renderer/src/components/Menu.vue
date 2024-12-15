@@ -5,7 +5,7 @@
             <Options v-else-if="state.currentMenuScene === 'options'" />
             <Settings v-else-if="state.currentMenuScene === 'settings'" />
             <Highscores v-else-if="state.currentMenuScene === 'highscores'" />
-            <LostConnection v-else-if="state.currentMenuScene === 'lost-connection'" />
+            <Credits v-else-if="state.currentMenuScene === 'credits'" />
         </Transition>
         <div ref="sceneContainer" class="scene-container"></div>
     </div>
@@ -20,20 +20,20 @@
     import Settings from '@renderer/components/Settings.vue'
     import { MenuScene } from '@renderer/Three/MenuScene.jsx'
     import Highscores from '@renderer/components/Highscores.vue'
-    import LostConnection from '@renderer/components/LostConnection.vue'
+    import Credits from '@renderer/components/Credits.vue'
 
     export default {
         name: 'Menu',
         components: {
             Start,
             Options,
+            Credits,
             Settings,
             Highscores,
-            LostConnection,
         },
         setup() {
             const sceneContainer = ref<HTMLDivElement | null>(null)
-            let scene = ref<MenuScene | null>(null)
+            let scene: MenuScene | null = null
 
             const initScene = () => {
                 scene = new MenuScene(sceneContainer.value)
@@ -46,7 +46,7 @@
             })
 
             onUnmounted(() => {
-                scene.stop()
+                scene?.stop()
             })
 
             return {
@@ -57,4 +57,48 @@
     }
 </script>
 
-<style></style>
+<style>
+.menu-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    overflow: hidden;
+}
+
+.scene-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+}
+
+/* Общие стили для всех меню */
+h1, h2 {
+    font-size: clamp(2rem, 5vw, 5rem);
+    color: white;
+    margin-bottom: clamp(1rem, 2vh, 2rem);
+}
+
+button, label {
+    font-size: clamp(1rem, 3vw, 3rem);
+    margin: clamp(0.5rem, 1vh, 1rem) 0;
+}
+
+.menu-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+</style>

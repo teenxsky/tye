@@ -44,11 +44,11 @@
 <style scoped>
     .game-over-container {
         font-family: 'Press Start 2P';
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
+        width: 100vw;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -59,15 +59,15 @@
     }
 
     .game-over-container p {
-        font-size: 5rem;
-        margin: 10px 0;
+        font-size: clamp(2rem, 5vw, 5rem);
+        margin: clamp(0.5rem, 1vh, 1rem) 0;
         text-align: center;
     }
 
     .game-over-container button {
-        padding: 10px 20px;
-        font-size: 1em;
-        margin-top: 20px;
+        padding: clamp(0.5rem, 1vw, 1rem) clamp(1rem, 2vw, 2rem);
+        font-size: clamp(1rem, 2vw, 2rem);
+        margin-top: clamp(1rem, 2vh, 2rem);
         cursor: pointer;
     }
 </style>
