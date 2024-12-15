@@ -7,6 +7,7 @@
             <GameOver
                 :currentScore="currentScore"
                 :highScore="highScore"
+                :isNewHighScore="isNewHighScore"
             ></GameOver>
         </div>
         <div class="hud">
@@ -92,6 +93,7 @@
             const showMenu = ref(false)
 
             const highScore = ref(loadScore())
+            const isNewHighScore = ref(false)
             const currentScore = ref(0)
             const currentLives = ref(3)
             const livesAmount = ref(3)
@@ -128,7 +130,8 @@
 
             const gameOver = () => {
                 isGameOver.value = true
-                if (currentScore.value >= highScore.value) {
+                isNewHighScore.value = true
+                if (isNewHighScore.value) {
                     saveScore(currentScore.value)
                 }
                 for (const theme of music) {
@@ -138,16 +141,14 @@
             }
 
             const setHighScore = (value) => {
-                if (value > highScore.value) {
-                    highScore.value = value
-                }
+                highScore.value = value
             }
 
             const setCurrentScore = (value) => {
                 currentScore.value = value
-
                 if (value > highScore.value) {
                     highScore.value = value
+                    isNewHighScore.value = true
                 }
             }
 
@@ -291,6 +292,7 @@
                 currentAmmo,
                 ammoAmount,
                 isGameOver,
+                isNewHighScore,
             }
         },
     }

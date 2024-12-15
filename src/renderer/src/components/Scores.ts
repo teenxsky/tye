@@ -1,5 +1,5 @@
 export const loadScore = () => {
-    const savedScore = localStorage.getItem('highscore')
+    const savedScore = localStorage.getItem('tye-highscore')
     if (savedScore !== null) {
         return JSON.parse(savedScore)
     }
@@ -7,6 +7,6 @@ export const loadScore = () => {
 }
 
 export const saveScore = (score: number) => {
-    localStorage.removeItem('highscore')
-    localStorage.setItem('highscore', JSON.stringify(score))
+    localStorage.removeItem('tye-highscore')
+    localStorage.setItem('tye-highscore', JSON.stringify(score))
 }
