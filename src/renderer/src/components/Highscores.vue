@@ -14,25 +14,27 @@
         </template>
         <template v-else>
             <h1 class="non-highlighted">HIGH SCORES</h1>
-            <div class="scores-table">
+            <div class="scores-table" ref="scoresTableRef">
                 <div class="table-header">
                     <div class="rank">#</div>
                     <div class="name">NAME</div>
                     <div class="score">SCORE</div>
                 </div>
-                <div class="table-body">
-                    <Button
-                        v-for="(score, index) in scores"
-                        :key="index"
-                        :isSelected="selectedScoreIndex === index"
-                        class="score-row"
-                    >
-                        <div class="score-content">
-                            <span class="rank">{{ index + 1 }}</span>
-                            <span class="name">{{ score.username }}</span>
-                            <span class="score">{{ score.highScore }}</span>
-                        </div>
-                    </Button>
+                <div class="table-body-container">
+                    <div class="table-body">
+                        <Button
+                            v-for="(score, index) in scores"
+                            :key="index"
+                            :isSelected="selectedScoreIndex === index"
+                            class="score-row"
+                        >
+                            <div class="score-content">
+                                <span class="rank">{{ index + 1 }}</span>
+                                <span class="name">{{ score.username }}</span>
+                                <span class="score">{{ score.highScore }}</span>
+                            </div>
+                        </Button>
+                    </div>
                 </div>
             </div>
         </template>
@@ -60,11 +62,20 @@
             const scores = ref(null)
             const isLoading = ref(true)
             const loadingText = ref('Loading')
+            const scoresTableRef = ref(null)
 
             const fetchScores = async () => {
                 try {
                     const result = await getScores()
                     if (result) {
+                        if (result.length < 10) {
+                            for (let i = result.length; i < 10; i++) {
+                                result.push({
+                                    username: 'NULL',
+                                    highScore: 0,
+                                })
+                            }
+                        }
                         scores.value = result
                     }
                 } catch (err) {
@@ -75,6 +86,8 @@
             }
 
             const handleKeyPress = (event: KeyboardEvent) => {
+                // if (!scores.value || !scoresTableRef.value) return
+
                 if (
                     event.key === 'ArrowUp' ||
                     event.key === 'W' ||
@@ -86,6 +99,16 @@
                         (selectedScoreIndex.value - 1 + scores.value.length) %
                         scores.value.length
                     playSound(keySound)
+
+                    const selectedElement = scoresTableRef.value.querySelector(
+                        `.score-row:nth-child(${selectedScoreIndex.value + 1})`
+                    )
+                    if (selectedElement) {
+                        selectedElement.scrollIntoView({
+                            behavior: 'auto',
+                            block: 'nearest',
+                        })
+                    }
                 } else if (
                     event.key === 'ArrowDown' ||
                     event.key === 'S' ||
@@ -96,6 +119,17 @@
                     selectedScoreIndex.value =
                         (selectedScoreIndex.value + 1) % scores.value.length
                     playSound(keySound)
+
+                    const selectedElement = scoresTableRef.value.querySelector(
+                        `.score-row:nth-child(${selectedScoreIndex.value + 1})`
+                    )
+                    console.log(selectedElement, selectedScoreIndex.value)
+                    if (selectedElement) {
+                        selectedElement.scrollIntoView({
+                            behavior: 'auto',
+                            block: 'end',
+                        })
+                    }
                 } else if (event.key === 'Escape') {
                     playSound(keyEnterSound)
                     setMenuScene('options')
@@ -128,7 +162,13 @@
                 window.removeEventListener('keydown', handleKeyPress)
             })
 
-            return { selectedScoreIndex, scores, isLoading, loadingText }
+            return {
+                selectedScoreIndex,
+                scores,
+                isLoading,
+                loadingText,
+                scoresTableRef,
+            }
         },
     }
 </script>
@@ -175,6 +215,12 @@
         gap: 1rem;
         max-height: 60vh;
         overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .scores-table::-webkit-scrollbar {
+        display: none;
     }
 
     .table-header {
@@ -195,11 +241,20 @@
         gap: 0.5rem;
     }
 
+    .table-body-container {
+        height: 19.5rem;
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
     .score-row {
         width: 100%;
         padding: 0.5rem 1rem;
+        height: 2rem;
         margin: 0;
         text-align: left;
+        pointer-events: none;
     }
 
     .score-content {

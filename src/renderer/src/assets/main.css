@@ -37,6 +37,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    pointer-events: none;
 }
 
 body {
@@ -56,21 +57,21 @@ body {
 }
 
 .titlebar {
-    height: 70px;
+    height: 35px;
     display: flex;
     align-items: center;
-    background: black;
+    background: transparent;
     app-region: drag;
 }
 
 .non-highlighted {
     color: white;
-    text-shadow: rgb(50, 90, 230) 6px 6px 0;
+    text-shadow: rgb(50, 90, 230) 3px 3px 0;
 }
 
 .highlighted {
     color: rgb(240, 230, 20);
-    text-shadow: rgb(250, 0, 10) 6px 6px 0;
+    text-shadow: rgb(250, 0, 10) 3px 3px 0;
 }
 
 .unavailable {

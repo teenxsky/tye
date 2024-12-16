@@ -42,9 +42,11 @@ class GameProcess {
         this.handlers.setCurrentScore(this.currentScore)
     }
 
-    playerShot(player, laser) {
+    playerShot(player, laser = null) {
         console.log('playerShot')
-        laser.explode()
+        if (laser) {
+            laser.explode()
+        }
         this.currentLives -= 1
         this.handlers.setCurrentLives(this.currentLives)
 
@@ -82,6 +84,10 @@ class GameProcess {
                 const enemy = this.enemyWave.enemiesOnTheScene[i][j]
                 enemy.lookAt(this.player.position)
 
+                if (enemy.position.z > -80) {
+                    this.playerShot(this.player)
+                }
+
                 for (const laser of enemy.lasers) {
                     if (
                         laser.position.distanceTo(this.player.root.position) <
@@ -97,20 +103,19 @@ class GameProcess {
     }
 
     generateNextWave() {
-        this.currentWave += 1
-        this.handlers.setCurrentWave(this.currentWave)
-
-        const spawnPosition = new THREE.Vector3(
-            this.player.position.x,
-            this.player.position.y,
-            this.player.position.z - 25 // Смещение на 25 единиц вперёд по оси Z
-        )
-
-        this.enemyWave.generateWave(
-            Math.max(4 + this.currentWave, 10),
-            5000 - this.currentWave * 100,
-            spawnPosition
-        )
+        if (this.enemyWave.isWaveCleared()) {
+            this.currentWave += 1
+            console.log(this.currentWave)
+            this.handlers.setCurrentWave(this.currentWave)
+            console.log(this.currentWave)
+            const spawnPosition = new THREE.Vector3(
+                this.player.position.x,
+                this.player.position.y,
+                this.player.position.z - 25 // Смещение на 25 единиц вперёд по оси Z
+            )
+            console.log('generateNextWave')
+            this.enemyWave.generateWave(10, 3000, spawnPosition)
+        }
     }
 
     gameOver() {
@@ -125,15 +130,13 @@ class GameProcess {
 
         this.enemyWave.moveWave(delta)
 
-        if (this.enemyWave.enemiesOnTheScene.length === 0) {
-            this.generateNextWave()
-        }
+        this.generateNextWave()
     }
 
     cleanup() {
         // Очистка лазеров
         if (this.player && this.player.lasers) {
-            this.player.lasers.forEach(laser => {
+            this.player.lasers.forEach((laser) => {
                 if (laser && laser.dispose) {
                     laser.dispose()
                 }
@@ -143,9 +146,9 @@ class GameProcess {
 
         // Очистка врагов
         if (this.enemyWave && this.enemyWave.enemiesOnTheScene) {
-            this.enemyWave.enemiesOnTheScene.forEach(enemy => {
+            this.enemyWave.enemiesOnTheScene.forEach((enemy) => {
                 if (enemy && enemy.lasers) {
-                    enemy.lasers.forEach(laser => {
+                    enemy.lasers.forEach((laser) => {
                         if (laser && laser.dispose) {
                             laser.dispose()
                         }

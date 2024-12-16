@@ -74,6 +74,9 @@
         keySound,
         music,
         stopSound,
+        stopAllThemes,
+        highScoreBeatedSound,
+        highScoreBeatedTheme,
         gameOverTheme,
     } from '@renderer/components/Audio'
     import Button from './Button.vue'
@@ -130,14 +133,13 @@
 
             const gameOver = () => {
                 isGameOver.value = true
-                isNewHighScore.value = true
                 if (isNewHighScore.value) {
                     saveScore(currentScore.value)
-                }
+    
+                } 
                 for (const theme of music) {
                     stopSound(theme)
                 }
-                playSound(gameOverTheme)
             }
 
             const setHighScore = (value) => {
@@ -148,6 +150,9 @@
                 currentScore.value = value
                 if (value > highScore.value) {
                     highScore.value = value
+                    if (!isNewHighScore.value) {
+                        playSound(highScoreBeatedSound)
+                    }
                     isNewHighScore.value = true
                 }
             }
@@ -212,9 +217,7 @@
                     } else if (showMenu.value) {
                         resumeGame()
                     } else {
-                        showMenu.value = true
-                        selectedButtonIndex.value = 0
-                        scene.stop()
+                        pauseGame()
                     }
                     playSound(keyEnterSound)
                 } else if (event.key === 'Enter') {
@@ -242,6 +245,12 @@
             const resumeGame = () => {
                 showMenu.value = false
                 scene.start()
+            }
+
+            const pauseGame = () => {
+                showMenu.value = true
+                selectedButtonIndex.value = 0
+                scene.stop()
             }
 
             const quitGame = () => {

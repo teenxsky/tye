@@ -13,12 +13,12 @@
                     <span class="name non-highlighted">ARTEM SVIRIN</span>
                 </div>
             </div>
-            <div class="credit-section">
+            <!-- <div class="credit-section">
                 <h4>
                     ©<span class="non-highlighted">2024</span> Tell Your
                     Friends
                 </h4>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -110,7 +110,7 @@
         margin: 0.5rem 0;
         transition: transform 0.2s ease;
     }
-    
+
     .name {
         color: white;
         text-shadow: rgb(50, 90, 230) 3px 3px 0;

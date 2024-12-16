@@ -29,7 +29,7 @@ function createSpace(starsCount = 1500) {
     for (let i = 0; i < starsCount; i++) {
         const vertex = new THREE.Vector3()
         vertex.x = Math.random() * 550 - 275
-        vertex.y = Math.random() * 550 - 275
+        vertex.y = Math.random() * 700 - 350
         vertex.z = -Math.random() * 1000 - 500
         points.push(vertex)
 

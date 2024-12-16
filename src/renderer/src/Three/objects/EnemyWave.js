@@ -60,6 +60,7 @@ class EnemyWave {
         shootingInterval = 3000,
         playerPosition = new THREE.Vector3(0, 0, 0)
     ) {
+        this.elapsedTime = 0
         let maxX = 28
         const spawnDistanceZ = 50
         for (let i = 0; i < rows; i++) {
@@ -127,18 +128,18 @@ class EnemyWave {
                 const velocityZ = new THREE.Vector3(0, 0, this.waveSpeed)
 
                 // Установка новой позиции
-                enemy.position.x += waveOffsetX * delta // Волнообразное движение
-                enemy.position.add(velocityZ.multiplyScalar(delta)) // Движение вперед
+                enemy.position.x += waveOffsetX * delta
+                enemy.position.add(velocityZ.multiplyScalar(delta))
             }
         }
 
-        if (this.isWaveCleared()) {
-            console.log('Wave cleared')
-            this.generateWave(this.rows)
-        }
+        // if (this.isWaveCleared()) {
+        //     console.log('Wave cleared')
+        //     this.generateWave(this.rows)
+        // }
 
         // Увеличение времени для синусоиды
-        this.elapsedTime += delta
+        this.elapsedTime = delta
     }
 
     tick(delta) {}

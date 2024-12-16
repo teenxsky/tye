@@ -6,7 +6,7 @@ import signatureMiddleware from '../middleware/signatureMiddleware.js'
 
 const router = express.Router()
 
-const MAX_RECORDS = 5
+const MAX_RECORDS = 10
 
 router.post(
     '/submit-score',

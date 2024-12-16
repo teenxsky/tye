@@ -62,18 +62,21 @@ declare module '@renderer/Three/MenuScene.jsx' {
 
 declare module '@renderer/Three/GameScene.jsx' {
     export class GameScene {
-        constructor(container: HTMLElement | null, callbacks: {
-            setLoading: (value: boolean) => void;
-            setHighScore: (value: number) => void;
-            setCurrentScore: (value: number) => void;
-            setCurrentLives: (value: number) => void;
-            setLivesAmount: (value: number) => void;
-            setCurrentWave: (value: number) => void;
-            setCurrentAmmo: (value: number) => void;
-            setAmmoAmount: (value: number) => void;
-            gameOver: () => void;
-            onGameOver: () => void;
-        })
+        constructor(
+            container: HTMLElement | null,
+            callbacks: {
+                setLoading: (value: boolean) => void
+                setHighScore: (value: number) => void
+                setCurrentScore: (value: number) => void
+                setCurrentLives: (value: number) => void
+                setLivesAmount: (value: number) => void
+                setCurrentWave: (value: number) => void
+                setCurrentAmmo: (value: number) => void
+                setAmmoAmount: (value: number) => void
+                gameOver: () => void
+                onGameOver: () => void
+            }
+        )
         start(): void
         stop(): void
     }
@@ -87,8 +90,13 @@ declare module '@renderer/components/Audio' {
     export const music: any[]
     export const sounds: any[]
     export const gameOverTheme: any
+    export const highScoreBeatedSound: any
+    export const highScoreBeatedTheme: any
+    export const highScoreTheme: any
+    export const gameThemes: any[]
     export function setMusicVolume(volume: number): void
     export function setSoundVolume(volume: number): void
+    export function stopAllThemes(): void
 }
 
 declare module '@renderer/components/Scores' {

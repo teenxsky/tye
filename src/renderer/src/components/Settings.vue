@@ -197,6 +197,7 @@
     label {
         display: block;
         font-size: min(5vw, 5rem);
+        width: 18rem;
         margin: 1rem;
     }
 

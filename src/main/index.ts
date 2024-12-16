@@ -41,8 +41,7 @@ function createWindow(): void {
             sandbox: false,
             nodeIntegration: true,
             contextIsolation: false,
-            // webSecurity: false,
-            // devTools: false, // TODO: DISABLE DEVTOOLS WHEN RELEASING
+            devTools: true, // TODO: DISABLE DEVTOOLS WHEN RELEASING
         },
         titleBarStyle: 'hidden',
         ...(process.platform !== 'darwin' ? { titleBarOverlay: true } : {}),
@@ -80,18 +79,6 @@ function createWindow(): void {
     } else {
         Menu.setApplicationMenu(null)
     }
-
-    // mainWindow.on('will-resize', (event, size) => {
-    //     event.preventDefault()
-
-    //     const currentBounds = mainWindow.getBounds()
-    //     if (
-    //         currentBounds.width != size.width &&
-    //         currentBounds.height != size.height
-    //     ) {
-    //         mainWindow.setSize(size.width, size.height)
-    //     }
-    // })
 
     mainWindow.on('ready-to-show', () => {
         mainWindow.show()

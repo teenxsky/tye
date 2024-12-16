@@ -20,10 +20,8 @@ const mongooseOptions = {
 const connectDB = async () => {
     try {
         await connect(MONGO_URI, mongooseOptions)
-        console.log('Connected to MongoDB Atlas')
     } catch (error) {
         await connection.close()
-        console.error('MongoDB connection error')
     }
 }
 
@@ -36,9 +34,6 @@ const startServer = () => {
     })
     return server
 }
-// TODO: delete this line when releasing app
-// startServer()
-
 const monitorConnection = async () => {
     if (connection.readyState === 0) {
         connectDB()

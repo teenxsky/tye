@@ -1,14 +1,18 @@
 <template>
     <div class="game-over-container" @focus="false">
         <div class="game-over-content">
-            <div v-if="isLoading || isSubmitting" class="loading non-highlighted">
+            <div v-if="isLoading" class="loading non-highlighted">
                 {{ loadingText }}
             </div>
             <template v-else>
                 <h1 class="title">GAME OVER</h1>
 
-                <p v-if="showUsernameInput" class="new-record">LET'S SAVE YOUR NEW HIGH SCORE TO LEADERBOARD!</p>
-                <p v-else class="new-record">NEW HIGH SCORE!</p>
+                <p v-if="showUsernameInput" class="new-record">
+                    YOU BEATED THE WORLD RECORD!
+                </p>
+                <p v-else-if="isNewHighScore" class="new-record">
+                    NEW HIGH SCORE!
+                </p>
 
                 <div class="scores">
                     <p class="score">YOUR SCORE: {{ currentScore }}</p>
@@ -17,235 +21,259 @@
 
                 <div v-if="showUsernameInput" class="username-section">
                     <div class="input-container">
-                        <Button :isSelected="selectedIndex === 0">
+                        <Button>
                             <input
                                 v-model="username"
                                 :class="{ error: showError }"
-                                placeholder="PRESS ENTER TO TYPE NAME"
-                                maxlength="21"
+                                placeholder="ENTER YOUR USERNAME"
+                                maxlength="20"
                                 ref="usernameInput"
-                                :disabled="true"
+                                :disabled="false"
+                                autofocus
                             />
                         </Button>
                         <p v-if="showError" class="error-message">
                             {{ errorMessage }}
                         </p>
                     </div>
-                    <Button class="submit-btn":isSelected="selectedIndex === 1">
+                    <!-- <Button class="submit-btn":isSelected="selectedIndex === 1">
                         SUBMIT
-                    </Button>
+                    </Button> -->
                 </div>
 
                 <div v-if="showSuccess" class="success-message">
                     <p>SUCCESS!</p>
                 </div>
 
-                <div v-if="showConnectionError" class="connection-error">
+                <!-- <div v-if="showConnectionError" class="connection-error">
                     <p>CONNECTION ERROR</p>
                     <p class="subtitle">SCORE WILL BE SAVED LOCALLY</p>
-                </div>
+                </div> -->
 
-                <p v-if="!showUsernameInput" class="press-key">PRESS ESC TO CONTINUE</p>
+                <p v-if="!showUsernameInput" class="press-key">
+                    PRESS ESC TO CONTINUE
+                </p>
+                <p v-else-if="showUsernameInput" class="press-key">
+                    PRESS ENTER TO SUBMIT
+                </p>
             </template>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import Button from '@renderer/components/Button.vue'
-import { defineComponent, ref, computed, onMounted, onUnmounted } from 'vue'
-import { isTopScore, usernameIsUnique, setScore } from '../../../../server/api/LeaderBoard'
-import { playSound, keySound, keyEnterSound } from '@renderer/components/Audio'
-import { setMenuScene, setScene } from '@renderer/components/Scenes'
+    import Button from '@renderer/components/Button.vue'
+    import { defineComponent, ref, computed, onMounted, onUnmounted } from 'vue'
+    import {
+        isTopScore,
+        usernameIsUnique,
+        setScore,
+    } from '../../../../server/api/LeaderBoard'
+    import {
+        playSound,
+        keySound,
+        keyEnterSound,
+        stopAllThemes,
+        highScoreBeatedTheme,
+        gameOverTheme,
+    } from '@renderer/components/Audio'
+    import { setMenuScene, setScene } from '@renderer/components/Scenes'
 
-export default defineComponent({
-    name: 'GameOver',
-    components: {
-        Button,
-    },
-    props: {
-        currentScore: {
-            type: Number,
-            required: true,
+    export default defineComponent({
+        name: 'GameOver',
+        components: {
+            Button,
         },
-        highScore: {
-            type: Number,
-            required: true,
+        props: {
+            currentScore: {
+                type: Number,
+                required: true,
+            },
+            highScore: {
+                type: Number,
+                required: true,
+            },
+            isNewHighScore: {
+                type: Boolean,
+                required: true,
+            },
         },
-        isNewHighScore: {
-            type: Boolean,
-            required: true,
-        },
-    },
-    setup(props) {
-        const username = ref('')
-        const showUsernameInput = ref(false)
-        const showError = ref(false)
-        const errorMessage = ref('')
-        const showSuccess = ref(false)
-        const showConnectionError = ref(false)
-        const isLoading = ref(true)
-        const isSubmitting = ref(false)
-        const loadingText = ref('Loading')
-        const selectedIndex = ref(0)
-        const isInputMode = ref(false)
-        const usernameInput = ref<HTMLInputElement | null>(null)
+        setup(props) {
+            const username = ref('')
+            const showUsernameInput = ref(false)
+            const showError = ref(false)
+            const errorMessage = ref('')
+            const showSuccess = ref(false)
+            const showConnectionError = ref(false)
+            const isLoading = ref(true)
+            const isSubmitting = ref(false)
+            const loadingText = ref('Loading')
+            const selectedIndex = ref(0)
+            const isInputMode = ref(true)
+            const usernameInput = ref<HTMLInputElement | null>(null)
 
-        const handleKeyEvents = (event: KeyboardEvent) => {
-            if (event.key === 'Enter') {
+            const handleKeyEvents = (event: KeyboardEvent) => {
+                if (event.key === 'Enter') {
+                    if (isInputMode.value) {
+                        isInputMode.value = false
+                        if (usernameInput.value) {
+                            usernameInput.value.disabled = true
+                            usernameInput.value.autofocus = false
+                            usernameInput.value.blur()
+                        }
+                        submitUsername()
+                        playSound(keyEnterSound)
+                        event.preventDefault()
+                    } else {
+                        isInputMode.value = true
+                        event.preventDefault()
+                    }
+                    return
+                }
+
                 if (isInputMode.value) {
-                    isInputMode.value = false
-                    if (usernameInput.value) {
-                        usernameInput.value.disabled = true
-                        usernameInput.value.blur()
-                    }
-                    selectedIndex.value = 1
-                    event.preventDefault()
-                } else if (selectedIndex.value === 1) {
-                    submitUsername()
-                    playSound(keyEnterSound)
-                    event.preventDefault()
-                } else {
-                    isInputMode.value = true
-                    if (usernameInput.value) {
-                        usernameInput.value.disabled = false
-                        usernameInput.value.focus()
-                    }
-                    event.preventDefault()
+                    return
                 }
-                return
+
+                switch (event.key) {
+                    case 'Escape':
+                        setMenuScene('start')
+                        setScene('menu')
+                        playSound(keyEnterSound)
+                        break
+
+                    case 'ArrowUp':
+                    case 'W':
+                    case 'w':
+                    case 'Ц':
+                    case 'ц':
+                        selectedIndex.value = (selectedIndex.value - 1 + 2) % 2
+                        playSound(keySound)
+                        break
+
+                    case 'ArrowDown':
+                    case 'S':
+                    case 's':
+                    case 'Ы':
+                    case 'ы':
+                        selectedIndex.value = (selectedIndex.value + 1) % 2
+                        playSound(keySound)
+                        break
+                }
             }
 
-            if (isInputMode.value) {
-                return
-            }
+            const handleKeyDown = handleKeyEvents
+            const handleKeyPress = handleKeyEvents
 
-            switch (event.key) {
-                case 'Escape':
-                    setMenuScene('start')
-                    setScene('menu') 
-                    playSound(keyEnterSound)
-                    break
+            const submitUsername = async () => {
+                if (!username.value.trim()) {
+                    showError.value = true
+                    errorMessage.value = 'NAME CANNOT BE EMPTY'
+                    return
+                }
 
-                case 'ArrowUp':
-                case 'W':
-                case 'w':
-                case 'Ц':
-                case 'ц':
-                    selectedIndex.value = (selectedIndex.value - 1 + 2) % 2
-                    playSound(keySound)
-                    break
+                isSubmitting.value = true
 
-                case 'ArrowDown': 
-                case 'S':
-                case 's':
-                case 'Ы':
-                case 'ы':
-                    selectedIndex.value = (selectedIndex.value + 1) % 2
-                    playSound(keySound)
-                    break
-            }
-        }
+                const isUnique = await usernameIsUnique(username.value)
 
-        const handleKeyDown = handleKeyEvents
-        const handleKeyPress = handleKeyEvents
-
-        const submitUsername = async () => {
-            if (!username.value.trim()) {
-                showError.value = true
-                errorMessage.value = 'NAME CANNOT BE EMPTY'
-                return
-            }
-
-            isSubmitting.value = true
-
-            const isUnique = await usernameIsUnique(username.value)
-            
-            if (isUnique === null) {
-                showConnectionError.value = true
-                isSubmitting.value = false
-                return
-            }
-
-            if (!isUnique) {
-                showError.value = true
-                errorMessage.value = 'NAME ALREADY EXISTS'
-                isSubmitting.value = false
-                return
-            }
-
-            const success = await setScore(username.value, props.currentScore)
-            
-            if (success === null) {
-                showConnectionError.value = true
-                isSubmitting.value = false
-                return
-            }
-
-            if (success) {
-                showUsernameInput.value = false
-                showSuccess.value = true
-            }
-            isSubmitting.value = false
-        }
-
-        const checkTopScore = async () => {
-            if (props.isNewHighScore) {
-                const isTop = await isTopScore(props.currentScore)
-                if (isTop === null) {
+                if (isUnique === null) {
                     showConnectionError.value = true
-                } else if (isTop) {
-                    showUsernameInput.value = true
+                    isSubmitting.value = false
+                    return
                 }
+
+                if (!isUnique) {
+                    showError.value = true
+                    errorMessage.value = 'NAME ALREADY EXISTS'
+                    isSubmitting.value = false
+                    return
+                }
+
+                const success = await setScore(
+                    username.value,
+                    props.currentScore
+                )
+
+                if (success === null) {
+                    showConnectionError.value = true
+                    isSubmitting.value = false
+                    return
+                }
+
+                if (success) {
+                    showUsernameInput.value = false
+                    showSuccess.value = true
+                }
+                isSubmitting.value = false
             }
-            isLoading.value = false
-        }
 
-        onMounted(() => {
-            window.addEventListener('keydown', handleKeyPress)
+            const checkTopScore = async () => {
+                if (props.isNewHighScore) {
+                    const isTop = await isTopScore(props.currentScore)
+                    if (isTop === null) {
+                        showConnectionError.value = true
+                    } else if (isTop) {
+                        showUsernameInput.value = true
+                    }
+                }
+                isLoading.value = false
+            }
 
-            const loadingStates = [
-                'Loading',
-                'Loading.',
-                'Loading..',
-                'Loading...',
-            ]
+            onMounted(() => {
+                window.addEventListener('keydown', handleKeyPress)
 
-            let currentIndex = 0
+                const loadingStates = [
+                    'Loading',
+                    'Loading.',
+                    'Loading..',
+                    'Loading...',
+                ]
 
-            const loadingInterval = setInterval(() => {
-                currentIndex = (currentIndex + 1) % loadingStates.length
-                loadingText.value = loadingStates[currentIndex]
-            }, 700)
+                let currentIndex = 0
 
-            checkTopScore()
+                const loadingInterval = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % loadingStates.length
+                    loadingText.value = loadingStates[currentIndex]
+                }, 700)
 
-            return () => clearInterval(loadingInterval)
-        })
+                checkTopScore()
 
-        onUnmounted(() => {
-            window.removeEventListener('keydown', handleKeyPress)
-        })
+                return () => clearInterval(loadingInterval)
+            })
 
-        return {
-            username,
-            showUsernameInput,
-            showError,
-            errorMessage,
-            showSuccess,
-            showConnectionError,
-            isNewHighScore: props.isNewHighScore,
-            submitUsername,
-            isLoading,
-            isSubmitting,
-            loadingText,
-            selectedIndex,
-            isInputMode,
-            handleKeyDown,
-            usernameInput
-        }
-    },
-})
+            onMounted(() => {
+                window.addEventListener('keydown', handleKeyPress)
+                stopAllThemes()
+                if (props.isNewHighScore) {
+                    playSound(highScoreBeatedTheme)
+                } else {
+                    playSound(gameOverTheme)
+                }
+            })
+
+            onUnmounted(() => {
+                window.removeEventListener('keydown', handleKeyPress)
+            })
+
+            return {
+                username,
+                showUsernameInput,
+                showError,
+                errorMessage,
+                showSuccess,
+                showConnectionError,
+                isNewHighScore: props.isNewHighScore,
+                submitUsername,
+                isLoading,
+                isSubmitting,
+                loadingText,
+                selectedIndex,
+                isInputMode,
+                handleKeyDown,
+                usernameInput,
+            }
+        },
+    })
 </script>
 
 <style scoped>

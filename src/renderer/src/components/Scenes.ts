@@ -3,8 +3,7 @@ import {
     music,
     startTheme,
     optionsTheme,
-    gameTheme,
-    gameOverTheme,
+    gameThemes,
     stopSound,
     playSound,
 } from './Audio'
@@ -50,12 +49,41 @@ export const setScene = (scene: string) => {
     state.value.currentScene = scene
 }
 
+let currentGameThemeIndex = -1
+let shuffledGameThemes: HTMLAudioElement[] = []
+
+const shuffleGameThemes = () => {
+    shuffledGameThemes = [...gameThemes]
+    for (let i = shuffledGameThemes.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[shuffledGameThemes[i], shuffledGameThemes[j]] = [shuffledGameThemes[j], shuffledGameThemes[i]]
+    }
+}
+
 export const setGameScene = (scene: string) => {
     if (scene === 'start') {
         for (const theme of music) {
             stopSound(theme)
         }
-        playSound(gameTheme)
+        
+        if (currentGameThemeIndex === -1 || currentGameThemeIndex >= shuffledGameThemes.length - 1) {
+            shuffleGameThemes()
+            currentGameThemeIndex = 0
+        } else {
+            currentGameThemeIndex++
+        }
+
+        const currentTheme = shuffledGameThemes[currentGameThemeIndex]
+        currentTheme.addEventListener('ended', () => {
+            currentGameThemeIndex++
+            if (currentGameThemeIndex >= shuffledGameThemes.length) {
+                shuffleGameThemes()
+                currentGameThemeIndex = 0
+            }
+            playSound(shuffledGameThemes[currentGameThemeIndex])
+        })
+        
+        playSound(currentTheme)
     }
     state.value.currentGameScene = scene
 }

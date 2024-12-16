@@ -28,6 +28,7 @@
         background-color: transparent;
         font-size: min(5vw, 5rem);
         border: none;
+        pointer-events: none;
     }
 
     button.selected {
