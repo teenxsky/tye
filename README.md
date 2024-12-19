@@ -26,10 +26,8 @@
 </br>
 
 <p align="center">
-  **TELL YOUR ENEMIES** is a battle for survival, a cosmic test of reflexes and resolve. Inspired by Space Invaders but reimagined in stunning 3D, it's an epic journey through endless waves of enemies and relentless challenges.
+  </strong>TELL YOUR ENEMIES</strong> is a battle for survival, a cosmic test of reflexes and resolve. Inspired by Space Invaders but reimagined in stunning 3D, it's an epic journey through endless waves of enemies and relentless challenges.
 </p>
-
-**TELL YOUR ENEMIES** is a battle for survival, a cosmic test of reflexes and resolve. Inspired by Space Invaders but reimagined in stunning 3D, it's an epic journey through endless waves of enemies and relentless challenges.
 
 <p align="center">
   <a href="https://iimg.su/i/cBUOA">
