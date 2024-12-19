@@ -1,85 +1,102 @@
 <div align="center">
-  <h1 style="font-size: 48px; font-weight: bold;">🛸Tell Your Enemies🛸</h1>
+  <h1 style="font-size: 56px; font-weight: bold;">🛸 Tell Your Enemies 🛸</h1>
 </div>
 
 <div align="center">
   <a href="https://github.com/teenxsky/tye">
-    <img src="https://img.shields.io/badge/TYE-v0.0.1-blue?style=flat-&labelColor=gray" alt="Static Badge">
+    <img src="https://img.shields.io/badge/TYE-v0.0.1-blue?style=for-the-badge&labelColor=1a1a1a" alt="Version Badge">
   </a>
   <a href="https://www.npmjs.com/package/npm/v/10.9.0">
-    <img src="https://img.shields.io/badge/10.9.0-version?style=flat&logo=npm&label=Version&labelColor=gray&color=red" alt="Static Badge">
+    <img src="https://img.shields.io/badge/10.9.0-version?style=for-the-badge&logo=npm&label=NPM&labelColor=1a1a1a&color=cb3837" alt="NPM Badge">
   </a>
-
   <a href="https://github.com/teenxsky/tye?tab=GPL-3.0-1-ov-file#readme">
-    <img src="https://img.shields.io/badge/GNU-Licence?style=flat&label=Licence&labelColor=gray&color=blue" alt="License">
+    <img src="https://img.shields.io/badge/GNU-License?style=for-the-badge&label=License&labelColor=1a1a1a&color=blue" alt="License Badge">
   </a>
 </div>
 
 <div align="center">
   <a href="https://github.com/teenxsky/tye/releases/tag/0.0.1">
-    <img src="https://img.shields.io/badge/Support-macos?style=flat&label=MacOS&labelColor=gray&color=green" alt="Static Badge">
+    <img src="https://img.shields.io/badge/Support-macos?style=for-the-badge&logo=apple&label=MacOS&labelColor=1a1a1a&color=success" alt="MacOS Badge">
   </a>
   <a href="https://github.com/teenxsky/tye/releases/tag/0.0.1">
-    <img src="https://img.shields.io/badge/Support-windows?style=flat&label=Windows&labelColor=gray&color=green" alt="Static Badge">
+    <img src="https://img.shields.io/badge/Support-windows?style=for-the-badge&logo=windows&label=Windows&labelColor=1a1a1a&color=success" alt="Windows Badge">
   </a>
 </div>
 
-[![logo.png](https://s.iimg.su/s/03/YtHXunSeVlf3aKxP0q7fUhhN4kiLntVQmxQaETFH.png)](https://iimg.su/i/cBUOA)
+<br/>
 
-[![gameplay.png](https://iimg.su/s/19/Cjli54TFoX6Okq9xeJTmEDPDT0x71hsOssOZcpJk.png)](https://iimg.su/i/dcw7s)
+<p align="center">
+  <a href="https://iimg.su/i/cBUOA">
+    <img src="https://s.iimg.su/s/03/YtHXunSeVlf3aKxP0q7fUhhN4kiLntVQmxQaETFH.png" alt="Tell Your Enemies Logo" width="100%">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://iimg.su/i/dcw7s">
+    <img src="https://iimg.su/s/19/Cjli54TFoX6Okq9xeJTmEDPDT0x71hsOssOZcpJk.png" alt="Gameplay Screenshot" width="100%">
+  </a>
+</p>
 
 ## 👽 Overview
 
-**Tell Your Enemies** is a battle for survival, a cosmic test of reflexes and resolve. Inspired by Space Invaders, reimagined in 3D, it’s a journey through endless waves of enemies and relentless challenges.
+**Tell Your Enemies** is a battle for survival, a cosmic test of reflexes and resolve. Inspired by Space Invaders but reimagined in stunning 3D, it's an epic journey through endless waves of enemies and relentless challenges.
 
-With a retro-futuristic atmosphere, explosive visuals powered by Three.js, and a soundtrack that feels like it’s alive, this is more than a game — it’s a confrontation with destiny.
+Featuring a retro-futuristic atmosphere, explosive visuals powered by Three.js, and a dynamic soundtrack that pulses with the action, this is more than just a game — it's a confrontation with destiny.
 
-## ☄️Features
+## ☄️ Features
 
-- **World Leaderboard**: Compete with players worldwide and aim for the top of the leaderboard.
-- **3D Graphics**: Experience the classic gameplay with a modern twist, featuring 3D visuals powered by Three.js.
-- **Endless Waves**: Battle through infinite waves of enemies, each more challenging than the last.
-- **Dynamic Soundtrack**: Immerse yourself in a soundtrack that evolves with the intensity of the game.
-- **Explosive Visuals**: Enjoy vibrant and explosive visual effects that bring the pixel art style to life.
+- 🏆 **World Leaderboard**: Compete globally and claim your place among the stars
+- 🎮 **3D Graphics**: Classic gameplay reimagined with modern Three.js-powered visuals
+- 🌊 **Endless Waves**: Face infinite waves of increasingly challenging enemies
+- 🎵 **Dynamic Soundtrack**: Immerse yourself in an evolving, reactive soundscape
+- 💥 **Explosive Visuals**: Experience stunning visual effects in vibrant pixel art style
 
 ## 🚀 Installation
 
-To install and run the game, follow these steps:
+Getting started is as easy as 1-2-3:
 
-1. Download the game from the [official website](https://github.com/teenxsky/tye/releases/tag/0.0.1)
-
-2. Install the game
-
-3. Run the game
+1. Download the latest release from our [official page](https://github.com/teenxsky/tye/releases/tag/0.0.1)
+2. Run the installer for your platform
+3. Launch the game and begin your cosmic journey!
 
 ## 🎮 Controls
-- **Arrow Keys/WASD**: Navigate through the menu and control your spaceship.
-- **Enter**: Select menu options and confirm actions.
-- **Escape**: Pause the game or return to the previous menu.
-- **Space**: Shoot
+
+| Key | Action |
+|-----|--------|
+| `W/↑` `A/←` `S/↓` `D/→` | Move your ship |
+| `Space` | Fire weapons |
+| `Enter` | Confirm selection |
+| `Escape` | Pause/Menu |
 
 ## 🤝 Contributing
 
-We welcome contributions from the community. If you want to contribute, please fork the repository and submit a pull request.
+We welcome warriors from across the galaxy! To contribute:
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
 
 ## 📜 License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+This project is protected under the MIT License. See [LICENSE](LICENSE) for details.
 
-## 🤝 Credits
+## 🌟 Credits
+
+Meet the team behind the invasion:
 
 - [@Kutorgin Ruslan](https://github.com/teenxsky)
 - [@Roman Sokolovsky](https://github.com/r0manch1k)
 - [@Artem Svirin](https://github.com/EmotionlessDev)
 
-## ⚙️ Report a bug
+## ⚙️ Bug Reports
 
-If you find a bug, please report it to the [GitHub issue tracker](https://github.com/teenxsky/tye/issues).
+Found a glitch in the matrix? Report it on our [Issue Tracker](https://github.com/teenxsky/tye/issues).
 
 ---
 
 <div align="center">
-  <span style="font-size: 18px; font-weight: bold;">🛸Tell Your Enemies</span>
-  <span style="font-size: 18px;">They’re waiting for you.🛸</span>
+  <h3>🛸 Tell Your Enemies 🛸</h3>
+  <p><em>They're waiting for you in the darkness of space...</em> 🌌</p>
 </div>
-
