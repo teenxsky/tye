@@ -78,7 +78,7 @@ We welcome warriors from across the galaxy! To contribute:
 
 ## 📜 License
 
-This project is protected under the MIT License. See [LICENSE](LICENSE) for details.
+This project is protected under the GNU License. See [LICENSE](LICENSE) for details.
 
 ## 🌟 Credits
 
