@@ -1,4 +1,6 @@
-# 🛸 Tell Your Enemies 🛸
+<div align="center">
+  <h1 style="font-size: 56px; font-weight: bold;">🛸 Tell Your Enemies 🛸</h1>
+</div>
 
 <div align="center">
   <a href="https://github.com/teenxsky/tye">
@@ -21,7 +23,9 @@
   </a>
 </div>
 
-<br/>
+> **Tell Your Enemies** is a battle for survival, a cosmic test of reflexes and resolve. Inspired by Space Invaders but reimagined in stunning 3D, it's an epic journey through endless waves of enemies and relentless challenges.
+
+Featuring a retro-futuristic atmosphere, explosive visuals powered by Three.js, and a dynamic soundtrack that pulses with the action, this is more than just a game — it's a confrontation with destiny.
 
 <p align="center">
   <a href="https://iimg.su/i/cBUOA">
@@ -34,12 +38,6 @@
     <img src="https://iimg.su/s/19/Cjli54TFoX6Okq9xeJTmEDPDT0x71hsOssOZcpJk.png" alt="Gameplay Screenshot" width="100%">
   </a>
 </p>
-
-## 👽 Overview
-
-**Tell Your Enemies** is a battle for survival, a cosmic test of reflexes and resolve. Inspired by Space Invaders but reimagined in stunning 3D, it's an epic journey through endless waves of enemies and relentless challenges.
-
-Featuring a retro-futuristic atmosphere, explosive visuals powered by Three.js, and a dynamic soundtrack that pulses with the action, this is more than just a game — it's a confrontation with destiny.
 
 ## ☄️ Features
 
