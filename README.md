@@ -1,5 +1,5 @@
 <div align="center">
-  <h1 style="font-size: 56px; font-weight: bold;">🛸 Tell Your Enemies 🛸</h1>
+  <h1 style="font-size: 56px; font-weight: bold;">Tell Your Enemies</h1>
 </div>
 
 <div align="center">
@@ -41,14 +41,6 @@ Featuring a retro-futuristic atmosphere, explosive visuals powered by Three.js, 
   </a>
 </p>
 
-## ☄️ Features
-
-- 🏆 **World Leaderboard**: Compete globally and claim your place among the stars
-- 🎮 **3D Graphics**: Classic gameplay reimagined with modern Three.js-powered visuals
-- 🌊 **Endless Waves**: Face infinite waves of increasingly challenging enemies
-- 🎵 **Dynamic Soundtrack**: Immerse yourself in an evolving, reactive soundscape
-- 💥 **Explosive Visuals**: Experience stunning visual effects in vibrant pixel art style
-
 ## 🚀 Installation
 
 Getting started is as easy as 1-2-3:
@@ -56,29 +48,6 @@ Getting started is as easy as 1-2-3:
 1. Download the latest release from our [official page](https://github.com/teenxsky/tye/releases/tag/0.0.1)
 2. Run the installer for your platform
 3. Launch the game and begin your cosmic journey!
-
-## 🎮 Controls
-
-| Key | Action |
-|-----|--------|
-| `W/↑` `A/←` `S/↓` `D/→` | Move your ship |
-| `Space` | Fire weapons |
-| `Enter` | Confirm selection |
-| `Escape` | Pause/Menu |
-
-## 🤝 Contributing
-
-We welcome warriors from across the galaxy! To contribute:
-
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
-
-## 📜 License
-
-This project is protected under the GNU License. See [LICENSE](LICENSE) for details.
 
 ## 🌟 Credits
 
@@ -91,10 +60,3 @@ Meet the team behind the invasion:
 ## ⚙️ Bug Reports
 
 Found a glitch in the matrix? Report it on our [Issue Tracker](https://github.com/teenxsky/tye/issues).
-
----
-
-<div align="center">
-  <h3>🛸 Tell Your Enemies 🛸</h3>
-  <p><em>They're waiting for you in the darkness of space...</em> 🌌</p>
-</div>
