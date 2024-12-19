@@ -1,5 +1,5 @@
 <div align="center">
-  <p style="font-size: 48px; font-weight: bold;">🛸Tell Your Enemies🛸</p>
+  <h1>🛸TELL YOUR ENEMIES🛸</h1>
 </div>
 
 <div align="center">
@@ -79,7 +79,7 @@ If you find a bug, please report it to the [GitHub issue tracker](https://github
 ---
 
 <div align="center">
-  <span style="font-size: 18px; font-weight: bold;">🛸Tell Your Enemies</span>
+  <span style="font-size: 18px; font-weight: bold;">🛸Tell Your Enemies. </span>
   <span style="font-size: 18px;">They’re waiting for you.🛸</span>
 </div>
 
