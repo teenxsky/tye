@@ -23,7 +23,9 @@
   </a>
 </div>
 
-> **Tell Your Enemies** is a battle for survival, a cosmic test of reflexes and resolve. Inspired by Space Invaders but reimagined in stunning 3D, it's an epic journey through endless waves of enemies and relentless challenges.
+</br>
+
+**Tell Your Enemies** is a battle for survival, a cosmic test of reflexes and resolve. Inspired by Space Invaders but reimagined in stunning 3D, it's an epic journey through endless waves of enemies and relentless challenges.
 
 Featuring a retro-futuristic atmosphere, explosive visuals powered by Three.js, and a dynamic soundtrack that pulses with the action, this is more than just a game — it's a confrontation with destiny.
 
