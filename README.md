@@ -1,5 +1,5 @@
 <div align="center">
-  <h1 style="font-size: 56px; font-weight: bold;">Tell Your Enemies</h1>
+  <h1 style="font-size: 56px; font-weight: bold;">TELL YOUR ENEMIES</h1>
 </div>
 
 <div align="center">
@@ -25,9 +25,7 @@
 
 </br>
 
-**Tell Your Enemies** is a battle for survival, a cosmic test of reflexes and resolve. Inspired by Space Invaders but reimagined in stunning 3D, it's an epic journey through endless waves of enemies and relentless challenges.
-
-Featuring a retro-futuristic atmosphere, explosive visuals powered by Three.js, and a dynamic soundtrack that pulses with the action, this is more than just a game — it's a confrontation with destiny.
+**TELL YOUR ENEMIES** is a battle for survival, a cosmic test of reflexes and resolve. Inspired by Space Invaders but reimagined in stunning 3D, it's an epic journey through endless waves of enemies and relentless challenges.
 
 <p align="center">
   <a href="https://iimg.su/i/cBUOA">
@@ -43,15 +41,11 @@ Featuring a retro-futuristic atmosphere, explosive visuals powered by Three.js, 
 
 ## 🚀 Installation
 
-Getting started is as easy as 1-2-3:
-
 1. Download the latest release from our [official page](https://github.com/teenxsky/tye/releases/tag/0.0.1)
 2. Run the installer for your platform
 3. Launch the game and begin your cosmic journey!
 
 ## 🌟 Credits
-
-Meet the team behind the invasion:
 
 - [@Kutorgin Ruslan](https://github.com/teenxsky)
 - [@Roman Sokolovsky](https://github.com/r0manch1k)
