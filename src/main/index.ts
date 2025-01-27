@@ -1,5 +1,7 @@
 import { app, shell, BrowserWindow, ipcMain, Menu } from 'electron'
 import { join } from 'path'
+import path from 'path'
+import url from 'url'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { startServer, stopServer } from '../../server/app.js'
@@ -47,6 +49,14 @@ function createWindow(): void {
         ...(process.platform !== 'darwin' ? { titleBarOverlay: true } : {}),
         trafficLightPosition: { x: 10, y: 10 },
     })
+
+    mainWindow.loadURL(
+        url.format({
+            pathname: path.join(__dirname, '../renderer/index.html'),
+            protocol: 'file:',
+            slashes: true,
+        })
+    )
 
     const template: Electron.MenuItemConstructorOptions[] = [
         {
