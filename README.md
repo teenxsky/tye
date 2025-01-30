@@ -1,5 +1,5 @@
 <div align="center">
-  <h1 style="font-size: 56px; font-weight: bold;">🛸 Tell Your Enemies 🛸</h1>
+  <h1 style="font-size: 56px; font-weight: bold; border-bottom: none;">🛸 Tell Your Enemies 🛸</h1>
 </div>
 
 <div align="center">
