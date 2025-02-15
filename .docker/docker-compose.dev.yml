@@ -1,0 +1,14 @@
+services:
+  frontend:
+    container_name: tye_frontend
+    build:
+      context: ../.
+      dockerfile: ./.docker/dev/Dockerfile.frontend.dev
+    restart: unless-stopped
+    volumes:
+      - ../frontend:/tye/
+      - /tye/node_modules/
+    ports:
+      - "8080:5173"
+    env_file:
+      - ./dev/conf/.env.dev
