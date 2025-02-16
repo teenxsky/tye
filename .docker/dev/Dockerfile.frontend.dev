@@ -1,10 +1,6 @@
-# syntax=docker/dockerfile:1
+FROM node:23-alpine
 
-ARG NODE_VERSION=23
-
-FROM node:${NODE_VERSION}-alpine
-
-ENV NODE_ENV development
+ENV NODE_ENV=development
 
 WORKDIR /tye
 
@@ -13,6 +9,6 @@ RUN --mount=type=bind,source=/frontend/package.json,target=package.json \
     --mount=type=cache,target=/root/.npm \
     npm ci
 
-EXPOSE 5173
+EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]

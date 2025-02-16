@@ -1,22 +1,21 @@
 {
   "name": "backend",
+  "private": true,
   "version": "1.0.0",
-  "description": "Tell Your Enemies",
-  "main": "index.js",
+  "main": "src/server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "tsc && node dist/app.js",
+    "lint": "eslint ."
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/r0manch1k/tye.git"
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "@types/express": "^5.0.0",
+    "eslint": "^9.20.1",
+    "globals": "^15.15.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.0"
   },
-  "keywords": [
-    "three"
-  ],
-  "author": "Roman Sokolovsky, Ruslan Kutorgin, Artem Svirin",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/r0manch1k/tye/issues"
-  },
-  "homepage": "https://github.com/r0manch1k/tye#readme"
+  "dependencies": {
+    "express": "^4.21.2"
+  }
 }
