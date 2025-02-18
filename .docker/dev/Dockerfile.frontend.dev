@@ -9,6 +9,6 @@ RUN --mount=type=bind,source=/frontend/package.json,target=package.json \
     --mount=type=cache,target=/root/.npm \
     npm ci
 
-EXPOSE 3000
+EXPOSE 5173
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "dev"]
