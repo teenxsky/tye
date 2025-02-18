@@ -14,9 +14,9 @@ rm-networks:
 	docker network prune -f
 
 rm-system: 
-	docker system prune --volumes
+	docker system prune --volumes -f
 
-rm-all: rm-volumes rm-images rm-containers rm-networks
+rm-all: rm-volumes rm-images rm-containers rm-system rm-networks
 
 # DEV
 

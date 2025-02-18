@@ -5,9 +5,8 @@
   "version": "1.0.0",
   "main": "src/server.ts",
   "scripts": {
-    "start": "tsc && node dist/app.js",
-    "lint": "eslint .",
-    "lint --debug": "npx eslint --debug ."
+    "dev": "nodemon -L src/server.ts",
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@eslint/js": "^9.20.0",
@@ -17,8 +16,11 @@
     "@typescript-eslint/eslint-plugin": "^8.24.0",
     "@typescript-eslint/parser": "^8.24.0",
     "eslint": "^9.20.1",
+    "eslint-config-prettier": "^10.0.1",
     "globals": "^15.15.0",
     "jiti": "^2.4.2",
+    "prettier": "^3.5.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.24.0"
   },

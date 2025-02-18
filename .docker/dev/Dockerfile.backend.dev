@@ -9,6 +9,8 @@ RUN --mount=type=bind,source=/backend/package.json,target=package.json \
     --mount=type=cache,target=/root/.npm \
     npm ci
 
+RUN  npm install -g nodemon
+
 EXPOSE 3000
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "dev"]
