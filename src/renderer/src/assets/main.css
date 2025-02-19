@@ -1,0 +1,90 @@
+@font-face {
+    font-family: 'VCR';
+    font-style: normal;
+    src: url('/fonts/VCR.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Press Start 2P';
+    font-style: normal;
+    src: url('/fonts/PressStart2P.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Limit';
+    font-style: normal;
+    src: url('/fonts/Limit.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Binary Waters';
+    font-style: normal;
+    src: url('/fonts/BinaryWaters.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'JMH';
+    font-style: normal;
+    src: url('/fonts/JMH.otf') format('truetype');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    overflow: hidden;
+}
+
+.scene-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.titlebar {
+    height: 35px;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    app-region: drag;
+}
+
+.non-highlighted {
+    color: white;
+    text-shadow: rgb(50, 90, 230) 3px 3px 0;
+}
+
+.highlighted {
+    color: rgb(240, 230, 20);
+    text-shadow: rgb(250, 0, 10) 3px 3px 0;
+}
+
+.unavailable {
+    color: rgb(250, 0, 10);
+    text-shadow: rgb(130, 0, 4) 6px 6px 0;
+}
+
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}

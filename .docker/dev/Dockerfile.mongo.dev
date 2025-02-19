@@ -1,9 +1,0 @@
-FROM mongo:latest
-
-COPY /.docker/dev/conf/mongo/mongo.js /docker-entrypoint-initdb.d/mogno.js
-
-COPY /.docker/dev/conf/mongo/mongo.conf /etc/mongo.conf
-
-EXPOSE 27017
-
-CMD ["mongod", "-f", "/etc/mongo.conf"]
