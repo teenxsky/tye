@@ -1,0 +1,53 @@
+services:
+  frontend:
+    container_name: tye_frontend
+    build:
+      context: ../.
+      dockerfile: ./.docker/dev/Dockerfile.frontend.dev
+    restart: unless-stopped
+    volumes:
+      - ../frontend:/tye/
+      - /tye/node_modules/
+    ports:
+      - "8080:5173"
+    env_file:
+      - ./dev/conf/.env.dev
+
+  mongo:
+    container_name: tye_mongo
+    build:
+      context: ../.
+      dockerfile: ./.docker/dev/Dockerfile.mongo.dev
+    restart: unless-stopped
+    volumes:
+      - v-mongo:/data/db
+    ports:
+      - "27017:27017"
+    env_file:
+      - ./dev/conf/.env.dev
+
+  mongo-express:
+    container_name: tye_mongo-express
+    image: mongo-express:latest
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    env_file:
+      - ./dev/conf/.env.dev
+
+  backend:
+    container_name: tye_backend
+    build:
+      context: ../.
+      dockerfile: ./.docker/dev/Dockerfile.backend.dev
+    restart: unless-stopped
+    volumes:
+      - ../backend:/tye/
+      - /tye/node_modules/
+    ports:
+      - "8000:3000"
+    env_file:
+      - ./dev/conf/.env.dev
+
+volumes:
+  v-mongo:
