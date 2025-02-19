@@ -2,9 +2,11 @@ DOCKER_COMPOSE_DEV = docker-compose -f ./.docker/docker-compose.dev.yml
 DOCKER_COMPOSE_PROD = docker-compose -f ./.docker/docker-compose.prod.yml -p tye
 
 rm-volumes:
-	docker volume prune -f
+	$(DOCKER_COMPOSE_DEV) down -v
+	docker volume prune -a -f
 
 rm-images:
+	$(DOCKER_COMPOSE_DEV) down -rmi
 	docker image prune -a -f
 
 rm-containers:
