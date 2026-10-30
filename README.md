@@ -24,15 +24,15 @@
 </div>
 
 <p align="center">
-  <a href="https://iimg.su/i/cBUOA">
-    <img src="https://s.iimg.su/s/03/YtHXunSeVlf3aKxP0q7fUhhN4kiLntVQmxQaETFH.png" alt="Tell Your Enemies Logo" width="100%">
-  </a>
+  <img src="resources/icon.png" alt="Tell Your Enemies Logo" width="256">
 </p>
 
 <p align="center">
-  <a href="https://iimg.su/i/dcw7s">
-    <img src="https://iimg.su/s/19/Cjli54TFoX6Okq9xeJTmEDPDT0x71hsOssOZcpJk.png" alt="Gameplay Screenshot" width="100%">
-  </a>
+  <img src="resources/start.png" alt="Gameplay Screenshot" width="1473">
+</p>
+
+<p align="center">
+  <img src="resources/gameplay.png" alt="Gameplay Screenshot" width="1473">
 </p>
 
 ## 👽 Overview
